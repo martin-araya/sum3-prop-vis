@@ -1,0 +1,395 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1320 900" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <linearGradient id="phoneFrame" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1F2937"/><stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+    <linearGradient id="navyHeader" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0A2540"/><stop offset="100%" stop-color="#1E3A8A"/>
+    </linearGradient>
+    <filter id="phoneShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="24" flood-color="#0F172A" flood-opacity="0.18"/>
+    </filter>
+    <filter id="cardShadowM" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="6" flood-color="#0F172A" flood-opacity="0.06"/>
+    </filter>
+    <clipPath id="phoneClip1"><rect x="60" y="40" width="380" height="820" rx="46"/></clipPath>
+    <clipPath id="phoneClip2"><rect x="500" y="40" width="380" height="820" rx="46"/></clipPath>
+    <clipPath id="phoneClip3"><rect x="940" y="40" width="380" height="820" rx="46"/></clipPath>
+  </defs>
+
+  <rect width="1320" height="900" fill="#F1F5F9"/>
+
+  <!-- Caption -->
+  <text x="660" y="28" fill="#0F172A" font-size="14" font-weight="700" text-anchor="middle">Propuesta móvil — AuditChain</text>
+
+  <!-- ========== PHONE 1: Dashboard ========== -->
+  <g filter="url(#phoneShadow)">
+    <rect x="50" y="30" width="400" height="840" rx="56" fill="url(#phoneFrame)"/>
+    <rect x="60" y="40" width="380" height="820" rx="46" fill="#FFFFFF"/>
+    <!-- Notch -->
+    <rect x="200" y="40" width="100" height="22" rx="11" fill="#0F172A"/>
+  </g>
+
+  <g clip-path="url(#phoneClip1)">
+    <!-- Header -->
+    <rect x="60" y="40" width="380" height="200" fill="url(#navyHeader)"/>
+    <text x="84" y="88" fill="#94A3B8" font-size="11">9:41</text>
+    <g transform="translate(380, 76)" fill="#FFFFFF">
+      <rect width="14" height="8" rx="1" opacity="0.9"/>
+      <rect x="20" y="-2" width="22" height="10" rx="2" fill="none" stroke="#FFFFFF" stroke-width="1"/>
+      <rect x="22" width="16" height="6" rx="1"/>
+    </g>
+    <!-- Greeting -->
+    <text x="84" y="128" fill="#94A3B8" font-size="12">Buenos días</text>
+    <text x="84" y="152" fill="#FFFFFF" font-size="22" font-weight="700">Jane Doe 👋</text>
+    <text x="84" y="172" fill="#67E8F9" font-size="11">Administradora · 26 oct</text>
+
+    <!-- Avatar top right -->
+    <circle cx="404" cy="148" r="22" fill="#06B6D4"/>
+    <text x="404" y="153" fill="#0A2540" font-size="13" font-weight="700" text-anchor="middle">JD</text>
+    <circle cx="420" cy="132" r="6" fill="#EF4444" stroke="#0A2540" stroke-width="2"/>
+
+    <!-- Quick search -->
+    <rect x="84" y="194" width="332" height="40" rx="12" fill="#FFFFFF" opacity="0.12"/>
+    <circle cx="104" cy="214" r="6" fill="none" stroke="#94A3B8" stroke-width="1.5"/>
+    <text x="120" y="219" fill="#94A3B8" font-size="13">Buscar sucursales o auditorías</text>
+
+    <!-- KPI cards row -->
+    <g transform="translate(84, 260)">
+      <rect width="156" height="92" rx="14" fill="#FFFFFF" filter="url(#cardShadowM)"/>
+      <text x="14" y="26" fill="#64748B" font-size="11">Total auditorías</text>
+      <text x="14" y="58" fill="#0F172A" font-size="22" font-weight="700">1.452</text>
+      <g transform="translate(14, 70)">
+        <rect width="48" height="18" rx="9" fill="#DCFCE7"/>
+        <text x="24" y="13" fill="#15803D" font-size="10" font-weight="700" text-anchor="middle">↑ 8.5%</text>
+      </g>
+    </g>
+    <g transform="translate(260, 260)">
+      <rect width="156" height="92" rx="14" fill="#FFFFFF" filter="url(#cardShadowM)"/>
+      <text x="14" y="26" fill="#64748B" font-size="11">Compliance</text>
+      <text x="14" y="58" fill="#0F172A" font-size="22" font-weight="700">91,2%</text>
+      <rect x="14" y="74" width="120" height="6" rx="3" fill="#E2E8F0"/>
+      <rect x="14" y="74" width="109" height="6" rx="3" fill="#06B6D4"/>
+    </g>
+    <g transform="translate(84, 360)">
+      <rect width="156" height="92" rx="14" fill="#FFFFFF" filter="url(#cardShadowM)"/>
+      <text x="14" y="26" fill="#64748B" font-size="11">Pendientes</text>
+      <text x="14" y="58" fill="#F59E0B" font-size="22" font-weight="700">128</text>
+      <text x="14" y="78" fill="#94A3B8" font-size="10">Requieren acción</text>
+    </g>
+    <g transform="translate(260, 360)">
+      <rect width="156" height="92" rx="14" fill="#FFFFFF" filter="url(#cardShadowM)"/>
+      <text x="14" y="26" fill="#64748B" font-size="11">Auditores</text>
+      <text x="14" y="58" fill="#0F172A" font-size="22" font-weight="700">45</text>
+      <g transform="translate(14, 70)">
+        <circle cx="6" cy="6" r="6" fill="#1E3A8A"/>
+        <circle cx="16" cy="6" r="6" fill="#0EA5E9"/>
+        <circle cx="26" cy="6" r="6" fill="#06B6D4"/>
+        <circle cx="36" cy="6" r="6" fill="#94A3B8"/>
+      </g>
+    </g>
+
+    <!-- Chart card -->
+    <g transform="translate(84, 472)">
+      <rect width="332" height="160" rx="14" fill="#FFFFFF" filter="url(#cardShadowM)"/>
+      <text x="16" y="28" fill="#0F172A" font-size="13" font-weight="600">Estado de auditorías</text>
+      <!-- mini donut -->
+      <g transform="translate(80, 100)">
+        <circle r="36" fill="none" stroke="#1E3A8A" stroke-width="14"
+          stroke-dasharray="158.3 226.2" transform="rotate(-90)"/>
+        <circle r="36" fill="none" stroke="#06B6D4" stroke-width="14"
+          stroke-dasharray="45.2 226.2" stroke-dashoffset="-158.3" transform="rotate(-90)"/>
+        <circle r="36" fill="none" stroke="#94A3B8" stroke-width="14"
+          stroke-dasharray="22.6 226.2" stroke-dashoffset="-203.5" transform="rotate(-90)"/>
+        <text y="4" fill="#0F172A" font-size="14" font-weight="700" text-anchor="middle">70%</text>
+      </g>
+      <g transform="translate(160, 60)" font-size="11">
+        <circle cx="6" cy="6" r="4" fill="#1E3A8A"/><text x="16" y="10" fill="#0F172A">Completadas · 70%</text>
+        <circle cx="6" cy="32" r="4" fill="#06B6D4"/><text x="16" y="36" fill="#0F172A">Pendientes · 20%</text>
+        <circle cx="6" cy="58" r="4" fill="#94A3B8"/><text x="16" y="62" fill="#0F172A">Vencidas · 10%</text>
+      </g>
+    </g>
+
+    <!-- Recent audits list -->
+    <text x="84" y="664" fill="#0F172A" font-size="13" font-weight="600">Auditorías recientes</text>
+    <text x="416" y="664" fill="#1E3A8A" font-size="12" font-weight="600" text-anchor="end">Ver todas →</text>
+
+    <g transform="translate(84, 680)">
+      <rect width="332" height="62" rx="12" fill="#FFFFFF" filter="url(#cardShadowM)"/>
+      <text x="16" y="22" fill="#0F172A" font-size="13" font-weight="600">Downtown Philly</text>
+      <text x="16" y="40" fill="#64748B" font-size="11">John Doe · 25 oct</text>
+      <text x="16" y="54" fill="#15803D" font-size="11" font-weight="700">94%</text>
+      <rect x="270" y="20" width="50" height="20" rx="10" fill="#DCFCE7"/>
+      <text x="295" y="34" fill="#15803D" font-size="10" font-weight="600" text-anchor="middle">OK</text>
+    </g>
+    <g transform="translate(84, 754)">
+      <rect width="332" height="62" rx="12" fill="#FFFFFF" filter="url(#cardShadowM)"/>
+      <text x="16" y="22" fill="#0F172A" font-size="13" font-weight="600">Austin Central</text>
+      <text x="16" y="40" fill="#64748B" font-size="11">Jane Smith · 24 oct</text>
+      <text x="16" y="54" fill="#92400E" font-size="11" font-weight="700">Pendiente</text>
+      <rect x="266" y="20" width="58" height="20" rx="10" fill="#FEF3C7"/>
+      <text x="295" y="34" fill="#92400E" font-size="10" font-weight="600" text-anchor="middle">PEND.</text>
+    </g>
+
+    <!-- Bottom nav -->
+    <rect x="60" y="800" width="380" height="60" fill="#FFFFFF"/>
+    <line x1="60" y1="800" x2="440" y2="800" stroke="#E2E8F0"/>
+    <g transform="translate(108, 814)">
+      <rect width="20" height="20" rx="2" fill="none" stroke="#1E3A8A" stroke-width="2"/>
+      <line x1="6" y1="14" x2="6" y2="14" stroke="#1E3A8A" stroke-width="2"/>
+      <text x="10" y="40" fill="#1E3A8A" font-size="10" font-weight="600" text-anchor="middle">Inicio</text>
+    </g>
+    <g transform="translate(188, 814)" stroke="#94A3B8" stroke-width="1.6" fill="none">
+      <rect x="2" y="2" width="16" height="14" rx="2"/>
+      <line x1="2" y1="8" x2="18" y2="8"/>
+      <line x1="10" y1="2" x2="10" y2="16"/>
+      <text x="10" y="40" fill="#94A3B8" font-size="10" stroke="none" text-anchor="middle" font-weight="500">Sucursales</text>
+    </g>
+    <g transform="translate(264, 800)">
+      <circle cx="32" cy="22" r="22" fill="#1E3A8A" filter="url(#cardShadowM)"/>
+      <line x1="24" y1="22" x2="40" y2="22" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="32" y1="14" x2="32" y2="30" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(348, 814)" stroke="#94A3B8" stroke-width="1.6" fill="none">
+      <circle cx="10" cy="8" r="4"/>
+      <path d="M2 18 Q10 12 18 18"/>
+      <text x="10" y="40" fill="#94A3B8" font-size="10" stroke="none" text-anchor="middle" font-weight="500">Auditores</text>
+    </g>
+    <g transform="translate(408, 814)" stroke="#94A3B8" stroke-width="1.6" fill="none">
+      <rect x="2" y="2" width="14" height="18" rx="1.5"/>
+      <line x1="5" y1="7" x2="13" y2="7"/>
+      <line x1="5" y1="11" x2="13" y2="11"/>
+      <line x1="5" y1="15" x2="11" y2="15"/>
+      <text x="9" y="40" fill="#94A3B8" font-size="10" stroke="none" text-anchor="middle" font-weight="500">Auditorías</text>
+    </g>
+  </g>
+
+  <!-- ========== PHONE 2: Audit Form ========== -->
+  <g filter="url(#phoneShadow)">
+    <rect x="490" y="30" width="400" height="840" rx="56" fill="url(#phoneFrame)"/>
+    <rect x="500" y="40" width="380" height="820" rx="46" fill="#F8FAFC"/>
+    <rect x="640" y="40" width="100" height="22" rx="11" fill="#0F172A"/>
+  </g>
+
+  <g clip-path="url(#phoneClip2)">
+    <!-- Status bar -->
+    <text x="524" y="88" fill="#0F172A" font-size="11">9:41</text>
+    <!-- Header bar -->
+    <rect x="500" y="100" width="380" height="68" fill="#FFFFFF"/>
+    <line x1="500" y1="168" x2="880" y2="168" stroke="#E2E8F0"/>
+    <g transform="translate(518, 124)" stroke="#0F172A" stroke-width="2" fill="none">
+      <path d="M14 4 L4 14 L14 24" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text x="554" y="142" fill="#0F172A" font-size="15" font-weight="700">Nueva auditoría</text>
+    <text x="554" y="158" fill="#64748B" font-size="11">Paso 2 de 4 · Evaluación</text>
+    <text x="862" y="142" fill="#1E3A8A" font-size="13" font-weight="600" text-anchor="end">Borrador</text>
+
+    <!-- Progress -->
+    <rect x="520" y="180" width="80" height="4" rx="2" fill="#1E3A8A"/>
+    <rect x="610" y="180" width="80" height="4" rx="2" fill="#1E3A8A"/>
+    <rect x="700" y="180" width="80" height="4" rx="2" fill="#E2E8F0"/>
+    <rect x="790" y="180" width="80" height="4" rx="2" fill="#E2E8F0"/>
+
+    <!-- Card: branch -->
+    <g transform="translate(520, 204)">
+      <rect width="340" height="80" rx="14" fill="#FFFFFF" filter="url(#cardShadowM)"/>
+      <rect x="14" y="16" width="48" height="48" rx="12" fill="#DBEAFE"/>
+      <text x="38" y="46" fill="#1E3A8A" font-size="20" font-weight="700" text-anchor="middle">DP</text>
+      <text x="76" y="32" fill="#0F172A" font-size="14" font-weight="700">Downtown Philly</text>
+      <text x="76" y="50" fill="#64748B" font-size="11">Región Norte · Centro #1245</text>
+      <g transform="translate(76, 56)" font-size="10">
+        <rect width="76" height="18" rx="9" fill="#F1F5F9"/>
+        <text x="38" y="13" fill="#475569" font-weight="600" text-anchor="middle">12 auditorías</text>
+      </g>
+    </g>
+
+    <!-- Section: score -->
+    <text x="520" y="312" fill="#0F172A" font-size="13" font-weight="600">Puntaje general</text>
+    <g transform="translate(520, 324)">
+      <rect width="340" height="116" rx="14" fill="#FFFFFF" filter="url(#cardShadowM)"/>
+      <text x="170" y="56" fill="#0F172A" font-size="46" font-weight="700" text-anchor="middle">94</text>
+      <text x="222" y="56" fill="#94A3B8" font-size="16" font-weight="500">/100</text>
+      <!-- slider -->
+      <g transform="translate(20, 76)">
+        <rect width="300" height="6" rx="3" fill="#E2E8F0"/>
+        <rect width="282" height="6" rx="3" fill="#1E3A8A"/>
+        <circle cx="282" cy="3" r="11" fill="#FFFFFF" stroke="#1E3A8A" stroke-width="3"/>
+      </g>
+      <g font-size="10" fill="#94A3B8">
+        <text x="540" y="436">0</text>
+        <text x="700" y="436" text-anchor="middle">50</text>
+        <text x="860" y="436" text-anchor="end">100</text>
+      </g>
+    </g>
+
+    <!-- Categories -->
+    <text x="520" y="468" fill="#0F172A" font-size="13" font-weight="600">Categorías</text>
+    <g transform="translate(520, 480)">
+      <rect width="340" height="56" rx="12" fill="#FFFFFF" filter="url(#cardShadowM)"/>
+      <text x="14" y="24" fill="#0F172A" font-size="13" font-weight="600">Limpieza</text>
+      <text x="14" y="42" fill="#94A3B8" font-size="10">Estado de áreas comunes y baños</text>
+      <g transform="translate(258, 18)">
+        <rect width="68" height="22" rx="11" fill="#DCFCE7"/>
+        <text x="34" y="15" fill="#15803D" font-size="11" font-weight="700" text-anchor="middle">96%</text>
+      </g>
+    </g>
+    <g transform="translate(520, 544)">
+      <rect width="340" height="56" rx="12" fill="#FFFFFF" filter="url(#cardShadowM)"/>
+      <text x="14" y="24" fill="#0F172A" font-size="13" font-weight="600">Atención al cliente</text>
+      <text x="14" y="42" fill="#94A3B8" font-size="10">Tiempos de espera y trato</text>
+      <g transform="translate(258, 18)">
+        <rect width="68" height="22" rx="11" fill="#DCFCE7"/>
+        <text x="34" y="15" fill="#15803D" font-size="11" font-weight="700" text-anchor="middle">92%</text>
+      </g>
+    </g>
+    <g transform="translate(520, 608)">
+      <rect width="340" height="56" rx="12" fill="#FFFFFF" filter="url(#cardShadowM)"/>
+      <text x="14" y="24" fill="#0F172A" font-size="13" font-weight="600">Inventario</text>
+      <text x="14" y="42" fill="#94A3B8" font-size="10">Stock y rotación de productos</text>
+      <g transform="translate(258, 18)">
+        <rect width="68" height="22" rx="11" fill="#FEF3C7"/>
+        <text x="34" y="15" fill="#92400E" font-size="11" font-weight="700" text-anchor="middle">82%</text>
+      </g>
+    </g>
+    <g transform="translate(520, 672)">
+      <rect width="340" height="56" rx="12" fill="#FFFFFF" filter="url(#cardShadowM)"/>
+      <text x="14" y="24" fill="#0F172A" font-size="13" font-weight="600">Seguridad</text>
+      <text x="14" y="42" fill="#94A3B8" font-size="10">Protocolos y señalética</text>
+      <g transform="translate(258, 18)">
+        <rect width="68" height="22" rx="11" fill="#FEE2E2"/>
+        <text x="34" y="15" fill="#B91C1C" font-size="11" font-weight="700" text-anchor="middle">68%</text>
+      </g>
+    </g>
+
+    <!-- Photos chip -->
+    <g transform="translate(520, 744)">
+      <rect width="160" height="36" rx="18" fill="#FFFFFF" stroke="#E2E8F0"/>
+      <circle cx="20" cy="18" r="8" fill="none" stroke="#1E3A8A" stroke-width="1.5"/>
+      <circle cx="20" cy="18" r="3" fill="#1E3A8A"/>
+      <text x="38" y="22" fill="#1E3A8A" font-size="12" font-weight="600">+ Adjuntar fotos</text>
+    </g>
+    <g transform="translate(692, 744)">
+      <rect width="168" height="36" rx="18" fill="#FFFFFF" stroke="#E2E8F0"/>
+      <path d="M14 12 L20 18 L14 24 M22 18 H30" stroke="#1E3A8A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <text x="44" y="22" fill="#1E3A8A" font-size="12" font-weight="600">Notas de voz</text>
+    </g>
+
+    <!-- CTA -->
+    <g transform="translate(520, 798)">
+      <rect width="160" height="48" rx="14" fill="#FFFFFF" stroke="#E2E8F0"/>
+      <text x="80" y="30" fill="#475569" font-size="13" font-weight="600" text-anchor="middle">Guardar borrador</text>
+    </g>
+    <g transform="translate(692, 798)">
+      <rect width="168" height="48" rx="14" fill="#1E3A8A"/>
+      <text x="84" y="30" fill="#FFFFFF" font-size="13" font-weight="700" text-anchor="middle">Continuar →</text>
+    </g>
+  </g>
+
+  <!-- ========== PHONE 3: Branch Detail ========== -->
+  <g filter="url(#phoneShadow)">
+    <rect x="930" y="30" width="400" height="840" rx="56" fill="url(#phoneFrame)"/>
+    <rect x="940" y="40" width="380" height="820" rx="46" fill="#FFFFFF"/>
+    <rect x="1080" y="40" width="100" height="22" rx="11" fill="#0F172A"/>
+  </g>
+
+  <g clip-path="url(#phoneClip3)">
+    <text x="964" y="88" fill="#0F172A" font-size="11">9:41</text>
+
+    <!-- Hero header -->
+    <rect x="940" y="100" width="380" height="220" fill="url(#navyHeader)"/>
+    <g transform="translate(958, 124)" stroke="#FFFFFF" stroke-width="2" fill="none">
+      <path d="M14 4 L4 14 L14 24" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text x="1300" y="142" fill="#FFFFFF" font-size="13" font-weight="600" text-anchor="end">⋯</text>
+
+    <text x="964" y="180" fill="#67E8F9" font-size="11" font-weight="600">SUCURSAL · NORTE</text>
+    <text x="964" y="210" fill="#FFFFFF" font-size="22" font-weight="700">Downtown Philly</text>
+    <text x="964" y="232" fill="#94A3B8" font-size="12">123 Market St, Philadelphia, PA</text>
+
+    <!-- Score badge floating -->
+    <g transform="translate(964, 260)">
+      <rect width="332" height="76" rx="14" fill="#FFFFFF" filter="url(#cardShadowM)"/>
+      <text x="20" y="32" fill="#94A3B8" font-size="11" font-weight="600">PROMEDIO HISTÓRICO</text>
+      <text x="20" y="62" fill="#0F172A" font-size="28" font-weight="700">91,5</text>
+      <text x="92" y="62" fill="#94A3B8" font-size="14">/100</text>
+      <!-- mini sparkline -->
+      <polyline points="160,50 180,42 200,46 220,30 240,38 260,28 280,32 300,22"
+        fill="none" stroke="#1E3A8A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="300" cy="22" r="4" fill="#1E3A8A"/>
+      <text x="316" y="64" fill="#15803D" font-size="11" font-weight="700" text-anchor="end">↑ 3.2%</text>
+    </g>
+
+    <!-- Tabs -->
+    <g transform="translate(964, 358)" font-size="13">
+      <text x="0" y="14" fill="#1E3A8A" font-weight="700">Resumen</text>
+      <rect x="-4" y="22" width="68" height="3" rx="1.5" fill="#1E3A8A"/>
+      <text x="92" y="14" fill="#94A3B8" font-weight="500">Auditorías</text>
+      <text x="184" y="14" fill="#94A3B8" font-weight="500">Equipo</text>
+      <text x="248" y="14" fill="#94A3B8" font-weight="500">Acciones</text>
+    </g>
+    <line x1="940" y1="384" x2="1320" y2="384" stroke="#E2E8F0"/>
+
+    <!-- Stats grid -->
+    <g transform="translate(964, 400)">
+      <rect width="156" height="80" rx="12" fill="#F8FAFC"/>
+      <text x="14" y="26" fill="#64748B" font-size="11">Auditorías totales</text>
+      <text x="14" y="56" fill="#0F172A" font-size="22" font-weight="700">12</text>
+    </g>
+    <g transform="translate(1140, 400)">
+      <rect width="156" height="80" rx="12" fill="#F8FAFC"/>
+      <text x="14" y="26" fill="#64748B" font-size="11">Última auditoría</text>
+      <text x="14" y="56" fill="#0F172A" font-size="14" font-weight="700">25 oct 2023</text>
+      <text x="14" y="72" fill="#15803D" font-size="11" font-weight="600">94% — OK</text>
+    </g>
+
+    <!-- Categories radar visual -->
+    <text x="964" y="510" fill="#0F172A" font-size="13" font-weight="600">Desempeño por categoría</text>
+    <g transform="translate(964, 522)">
+      <rect width="332" height="160" rx="14" fill="#F8FAFC"/>
+      <!-- radar -->
+      <g transform="translate(80, 80)" stroke="#E2E8F0" fill="none">
+        <polygon points="0,-60 52,-30 52,30 0,60 -52,30 -52,-30"/>
+        <polygon points="0,-40 35,-20 35,20 0,40 -35,20 -35,-20"/>
+        <polygon points="0,-20 17,-10 17,10 0,20 -17,10 -17,-10"/>
+      </g>
+      <polygon points="80,28 130,55 132,108 80,142 28,110 30,55"
+        transform="translate(0, 0)" fill="#1E3A8A" fill-opacity="0.2" stroke="#1E3A8A" stroke-width="2"/>
+      <g font-size="10" fill="#475569" font-weight="600">
+        <text x="80" y="20" text-anchor="middle">Limpieza</text>
+        <text x="156" y="58" text-anchor="middle">Atención</text>
+        <text x="156" y="118" text-anchor="middle">Inventario</text>
+        <text x="80" y="156" text-anchor="middle">Seguridad</text>
+        <text x="4" y="118" text-anchor="middle">Procesos</text>
+        <text x="4" y="58" text-anchor="middle">Imagen</text>
+      </g>
+
+      <g transform="translate(176, 28)" font-size="11">
+        <circle cx="6" cy="6" r="4" fill="#1E3A8A"/>
+        <text x="16" y="10" fill="#0F172A" font-weight="600">Esta sucursal</text>
+        <circle cx="6" cy="32" r="4" fill="#94A3B8"/>
+        <text x="16" y="36" fill="#0F172A" font-weight="600">Promedio región</text>
+        <text x="0" y="74" fill="#475569" font-size="10">Mejor categoría:</text>
+        <text x="0" y="92" fill="#15803D" font-size="12" font-weight="700">Limpieza · 96%</text>
+        <text x="0" y="118" fill="#475569" font-size="10">Para mejorar:</text>
+        <text x="0" y="136" fill="#B91C1C" font-size="12" font-weight="700">Seguridad · 68%</text>
+      </g>
+    </g>
+
+    <!-- Action -->
+    <g transform="translate(964, 706)">
+      <rect width="332" height="48" rx="14" fill="#1E3A8A"/>
+      <line x1="156" y1="20" x2="172" y2="20" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+      <line x1="164" y1="12" x2="164" y2="28" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+      <text x="184" y="30" fill="#FFFFFF" font-size="13" font-weight="700">Iniciar nueva auditoría</text>
+    </g>
+    <g transform="translate(964, 766)">
+      <rect width="332" height="48" rx="14" fill="#FFFFFF" stroke="#E2E8F0"/>
+      <text x="166" y="30" fill="#1E3A8A" font-size="13" font-weight="600" text-anchor="middle">Ver historial completo</text>
+    </g>
+  </g>
+
+  <!-- Captions under phones -->
+  <text x="250" y="884" fill="#475569" font-size="12" font-weight="600" text-anchor="middle">Dashboard móvil</text>
+  <text x="690" y="884" fill="#475569" font-size="12" font-weight="600" text-anchor="middle">Captura de auditoría</text>
+  <text x="1130" y="884" fill="#475569" font-size="12" font-weight="600" text-anchor="middle">Detalle de sucursal</text>
+</svg>
