@@ -1,0 +1,392 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <linearGradient id="sidebarGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0A2540"/>
+      <stop offset="100%" stop-color="#051C36"/>
+    </linearGradient>
+    <linearGradient id="bar1" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#0A2540"/><stop offset="100%" stop-color="#1E3A8A"/>
+    </linearGradient>
+    <linearGradient id="bar2" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#0EA5E9"/><stop offset="100%" stop-color="#38BDF8"/>
+    </linearGradient>
+    <linearGradient id="bar3" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#06B6D4"/><stop offset="100%" stop-color="#67E8F9"/>
+    </linearGradient>
+    <linearGradient id="bar4" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#94A3B8"/><stop offset="100%" stop-color="#CBD5E1"/>
+    </linearGradient>
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="12" flood-color="#0F172A" flood-opacity="0.06"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1440" height="900" fill="#F8FAFC"/>
+
+  <!-- Sidebar -->
+  <rect x="0" y="0" width="240" height="900" fill="url(#sidebarGrad)"/>
+  <!-- Logo -->
+  <g transform="translate(28, 32)">
+    <circle cx="16" cy="16" r="16" fill="#06B6D4" opacity="0.2"/>
+    <path d="M8 22 L16 8 L24 22 M11 17 H21" stroke="#67E8F9" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="44" y="22" fill="#FFFFFF" font-size="18" font-weight="700">AuditChain</text>
+  </g>
+
+  <!-- Nav items -->
+  <g font-size="14" font-weight="500">
+    <!-- Active: Dashboard -->
+    <rect x="16" y="100" width="208" height="44" rx="10" fill="#1E3A8A"/>
+    <rect x="16" y="100" width="3" height="44" rx="2" fill="#67E8F9"/>
+    <rect x="36" y="114" width="16" height="16" rx="2" fill="none" stroke="#67E8F9" stroke-width="1.8"/>
+    <line x1="40" y1="118" x2="40" y2="126" stroke="#67E8F9" stroke-width="1.8"/>
+    <line x1="44" y1="120" x2="44" y2="126" stroke="#67E8F9" stroke-width="1.8"/>
+    <line x1="48" y1="116" x2="48" y2="126" stroke="#67E8F9" stroke-width="1.8"/>
+    <text x="64" y="128" fill="#FFFFFF">Dashboard</text>
+
+    <rect x="36" y="166" width="16" height="14" rx="1.5" fill="none" stroke="#94A3B8" stroke-width="1.5"/>
+    <line x1="36" y1="172" x2="52" y2="172" stroke="#94A3B8" stroke-width="1.5"/>
+    <line x1="42" y1="166" x2="42" y2="180" stroke="#94A3B8" stroke-width="1.5"/>
+    <text x="64" y="178" fill="#CBD5E1">Sucursales</text>
+
+    <circle cx="44" cy="222" r="4" fill="none" stroke="#94A3B8" stroke-width="1.5"/>
+    <path d="M36 232 Q44 226 52 232" fill="none" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round"/>
+    <text x="64" y="228" fill="#CBD5E1">Auditores</text>
+
+    <rect x="38" y="266" width="12" height="16" rx="1" fill="none" stroke="#94A3B8" stroke-width="1.5"/>
+    <line x1="41" y1="270" x2="47" y2="270" stroke="#94A3B8" stroke-width="1.5"/>
+    <line x1="41" y1="274" x2="47" y2="274" stroke="#94A3B8" stroke-width="1.5"/>
+    <line x1="41" y1="278" x2="45" y2="278" stroke="#94A3B8" stroke-width="1.5"/>
+    <text x="64" y="278" fill="#CBD5E1">Auditorías</text>
+
+    <line x1="36" y1="320" x2="44" y2="320" stroke="#94A3B8" stroke-width="1.5"/>
+    <line x1="36" y1="316" x2="48" y2="316" stroke="#94A3B8" stroke-width="1.5"/>
+    <line x1="36" y1="324" x2="48" y2="324" stroke="#94A3B8" stroke-width="1.5"/>
+    <text x="64" y="328" fill="#CBD5E1">Reportes</text>
+
+    <circle cx="44" cy="372" r="6" fill="none" stroke="#94A3B8" stroke-width="1.5"/>
+    <path d="M44 366 V360 M44 384 V378 M50 372 H56 M32 372 H38" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round"/>
+    <text x="64" y="378" fill="#CBD5E1">Configuración</text>
+  </g>
+
+  <!-- User chip bottom -->
+  <g transform="translate(16, 820)">
+    <rect width="208" height="56" rx="10" fill="#FFFFFF" opacity="0.06"/>
+    <circle cx="28" cy="28" r="16" fill="#06B6D4"/>
+    <text x="28" y="33" fill="#0A2540" font-size="13" font-weight="700" text-anchor="middle">JD</text>
+    <text x="56" y="26" fill="#FFFFFF" font-size="13" font-weight="600">Jane Doe</text>
+    <text x="56" y="42" fill="#94A3B8" font-size="11">Administrador</text>
+  </g>
+
+  <!-- Top bar -->
+  <rect x="240" y="0" width="1200" height="72" fill="#FFFFFF"/>
+  <line x1="240" y1="72" x2="1440" y2="72" stroke="#E2E8F0"/>
+
+  <!-- Search -->
+  <g transform="translate(272, 20)">
+    <rect width="360" height="32" rx="8" fill="#F1F5F9" stroke="#E2E8F0"/>
+    <circle cx="16" cy="16" r="5" fill="none" stroke="#94A3B8" stroke-width="1.5"/>
+    <line x1="20" y1="20" x2="24" y2="24" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round"/>
+    <text x="34" y="20" fill="#94A3B8" font-size="13">Buscar sucursales, auditores, auditorías…</text>
+    <rect x="296" y="6" width="58" height="20" rx="4" fill="#FFFFFF" stroke="#E2E8F0"/>
+    <text x="325" y="20" fill="#64748B" font-size="11" text-anchor="middle">⌘ K</text>
+  </g>
+
+  <!-- Top right icons -->
+  <g transform="translate(1260, 20)">
+    <rect width="32" height="32" rx="8" fill="#F1F5F9"/>
+    <path d="M11 12 H21 M11 16 H21 M11 20 H17" stroke="#475569" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="22" cy="11" r="4" fill="#EF4444"/>
+    <text x="22" y="14" fill="#FFFFFF" font-size="9" font-weight="700" text-anchor="middle">3</text>
+
+    <rect x="44" width="32" height="32" rx="8" fill="#F1F5F9"/>
+    <path d="M55 11 C52 11 50 13 50 16 V20 L48 22 H62 L60 20 V16 C60 13 58 11 55 11 Z" fill="none" stroke="#475569" stroke-width="1.5" stroke-linejoin="round"/>
+    <circle cx="64" cy="11" r="3" fill="#06B6D4"/>
+
+    <circle cx="104" cy="16" r="16" fill="#1E3A8A"/>
+    <text x="104" y="21" fill="#FFFFFF" font-size="12" font-weight="700" text-anchor="middle">JD</text>
+  </g>
+
+  <!-- Page title -->
+  <text x="280" y="120" fill="#0F172A" font-size="24" font-weight="700">Bienvenida, Jane 👋</text>
+  <text x="280" y="142" fill="#64748B" font-size="13">26 de octubre, 2023 · Sistema de Auditorías de Franquicias</text>
+
+  <!-- Right action group -->
+  <g transform="translate(1180, 100)">
+    <rect width="100" height="36" rx="8" fill="#FFFFFF" stroke="#E2E8F0"/>
+    <path d="M16 13 L23 18 L16 23" stroke="#475569" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <text x="34" y="22" fill="#0F172A" font-size="13" font-weight="500">Exportar</text>
+    <rect x="112" width="120" height="36" rx="8" fill="#1E3A8A"/>
+    <text x="124" y="23" fill="#FFFFFF" font-size="13" font-weight="600">+ Nueva auditoría</text>
+  </g>
+
+  <!-- Section: KPIs -->
+  <text x="280" y="186" fill="#0F172A" font-size="15" font-weight="600">Resumen estadístico</text>
+
+  <!-- KPI 1 -->
+  <g filter="url(#cardShadow)">
+    <rect x="280" y="200" width="240" height="120" rx="14" fill="#FFFFFF"/>
+  </g>
+  <text x="296" y="226" fill="#64748B" font-size="12">Total auditorías</text>
+  <text x="296" y="270" fill="#0F172A" font-size="32" font-weight="700">1.452</text>
+  <g transform="translate(380, 254)">
+    <rect width="58" height="22" rx="11" fill="#DCFCE7"/>
+    <path d="M10 14 L14 9 L18 14" stroke="#16A34A" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="22" y="16" fill="#15803D" font-size="11" font-weight="600">8.5%</text>
+  </g>
+  <text x="296" y="304" fill="#94A3B8" font-size="11">vs. mes anterior</text>
+
+  <!-- KPI 2 -->
+  <g filter="url(#cardShadow)">
+    <rect x="280" y="336" width="240" height="120" rx="14" fill="#FFFFFF"/>
+  </g>
+  <text x="296" y="362" fill="#64748B" font-size="12">Compliance global</text>
+  <text x="296" y="406" fill="#0F172A" font-size="32" font-weight="700">91,2%</text>
+  <g transform="translate(380, 390)">
+    <rect width="58" height="22" rx="11" fill="#DCFCE7"/>
+    <path d="M10 14 L14 9 L18 14" stroke="#16A34A" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="22" y="16" fill="#15803D" font-size="11" font-weight="600">1.2%</text>
+  </g>
+  <!-- mini bars -->
+  <g transform="translate(296, 425)">
+    <rect width="6" height="14" rx="1" fill="#E0F2FE"/>
+    <rect x="10" width="6" height="22" y="-8" rx="1" fill="#BAE6FD"/>
+    <rect x="20" width="6" height="18" y="-4" rx="1" fill="#7DD3FC"/>
+    <rect x="30" width="6" height="26" y="-12" rx="1" fill="#38BDF8"/>
+    <rect x="40" width="6" height="20" y="-6" rx="1" fill="#0EA5E9"/>
+    <rect x="50" width="6" height="28" y="-14" rx="1" fill="#0284C7"/>
+  </g>
+
+  <!-- Bar chart card -->
+  <g filter="url(#cardShadow)">
+    <rect x="540" y="200" width="420" height="256" rx="14" fill="#FFFFFF"/>
+  </g>
+  <text x="560" y="226" fill="#0F172A" font-size="14" font-weight="600">Compliance por región</text>
+  <text x="560" y="244" fill="#94A3B8" font-size="11">Trimestre actual vs. histórico</text>
+  <!-- Legend -->
+  <g transform="translate(720, 218)" font-size="11">
+    <rect width="10" height="10" rx="2" fill="#1E3A8A"/><text x="14" y="9" fill="#475569">Norte</text>
+    <rect x="60" width="10" height="10" rx="2" fill="#0EA5E9"/><text x="74" y="9" fill="#475569">Sur</text>
+    <rect x="115" width="10" height="10" rx="2" fill="#06B6D4"/><text x="129" y="9" fill="#475569">Este</text>
+    <rect x="170" width="10" height="10" rx="2" fill="#94A3B8"/><text x="184" y="9" fill="#475569">Oeste</text>
+  </g>
+  <!-- Y axis labels -->
+  <g font-size="10" fill="#94A3B8" text-anchor="end">
+    <text x="582" y="278">100</text>
+    <text x="582" y="318">75</text>
+    <text x="582" y="358">50</text>
+    <text x="582" y="398">25</text>
+    <text x="582" y="438">0</text>
+  </g>
+  <!-- Grid lines -->
+  <g stroke="#F1F5F9">
+    <line x1="592" y1="274" x2="940" y2="274"/>
+    <line x1="592" y1="314" x2="940" y2="314"/>
+    <line x1="592" y1="354" x2="940" y2="354"/>
+    <line x1="592" y1="394" x2="940" y2="394"/>
+  </g>
+  <line x1="592" y1="434" x2="940" y2="434" stroke="#E2E8F0"/>
+  <!-- Bars: 4 quarters x 4 regions -->
+  <g>
+    <!-- Q1 -->
+    <rect x="612" y="320" width="14" height="114" rx="3" fill="url(#bar1)"/>
+    <rect x="628" y="335" width="14" height="99"  rx="3" fill="url(#bar2)"/>
+    <rect x="644" y="345" width="14" height="89"  rx="3" fill="url(#bar3)"/>
+    <rect x="660" y="360" width="14" height="74"  rx="3" fill="url(#bar4)"/>
+    <text x="643" y="452" fill="#64748B" font-size="11" text-anchor="middle">Q1</text>
+    <!-- Q2 -->
+    <rect x="700" y="305" width="14" height="129" rx="3" fill="url(#bar1)"/>
+    <rect x="716" y="318" width="14" height="116" rx="3" fill="url(#bar2)"/>
+    <rect x="732" y="332" width="14" height="102" rx="3" fill="url(#bar3)"/>
+    <rect x="748" y="345" width="14" height="89"  rx="3" fill="url(#bar4)"/>
+    <text x="731" y="452" fill="#64748B" font-size="11" text-anchor="middle">Q2</text>
+    <!-- Q3 -->
+    <rect x="788" y="295" width="14" height="139" rx="3" fill="url(#bar1)"/>
+    <rect x="804" y="305" width="14" height="129" rx="3" fill="url(#bar2)"/>
+    <rect x="820" y="318" width="14" height="116" rx="3" fill="url(#bar3)"/>
+    <rect x="836" y="335" width="14" height="99"  rx="3" fill="url(#bar4)"/>
+    <text x="819" y="452" fill="#64748B" font-size="11" text-anchor="middle">Q3</text>
+    <!-- Q4 -->
+    <rect x="876" y="282" width="14" height="152" rx="3" fill="url(#bar1)"/>
+    <rect x="892" y="292" width="14" height="142" rx="3" fill="url(#bar2)"/>
+    <rect x="908" y="306" width="14" height="128" rx="3" fill="url(#bar3)"/>
+    <rect x="924" y="320" width="14" height="114" rx="3" fill="url(#bar4)"/>
+    <text x="907" y="452" fill="#64748B" font-size="11" text-anchor="middle">Q4</text>
+  </g>
+
+  <!-- Donut chart card -->
+  <g filter="url(#cardShadow)">
+    <rect x="980" y="200" width="300" height="256" rx="14" fill="#FFFFFF"/>
+  </g>
+  <text x="1000" y="226" fill="#0F172A" font-size="14" font-weight="600">Estado de auditorías</text>
+  <text x="1000" y="244" fill="#94A3B8" font-size="11">Distribución actual</text>
+  <!-- Donut: 70 / 20 / 10 -->
+  <g transform="translate(1100, 340)">
+    <!-- 70% completed -->
+    <circle r="58" fill="none" stroke="#1E3A8A" stroke-width="22"
+      stroke-dasharray="255.3 364.4" stroke-dashoffset="0" transform="rotate(-90)"/>
+    <!-- 20% pending -->
+    <circle r="58" fill="none" stroke="#06B6D4" stroke-width="22"
+      stroke-dasharray="72.9 364.4" stroke-dashoffset="-255.3" transform="rotate(-90)"/>
+    <!-- 10% overdue -->
+    <circle r="58" fill="none" stroke="#94A3B8" stroke-width="22"
+      stroke-dasharray="36.4 364.4" stroke-dashoffset="-328.2" transform="rotate(-90)"/>
+    <text y="-2" fill="#0F172A" font-size="22" font-weight="700" text-anchor="middle">1.452</text>
+    <text y="16" fill="#64748B" font-size="11" text-anchor="middle">total</text>
+  </g>
+  <!-- Donut legend -->
+  <g transform="translate(1000, 420)" font-size="11">
+    <circle cx="6" cy="6" r="5" fill="#1E3A8A"/>
+    <text x="18" y="10" fill="#0F172A" font-weight="600">70% Completadas</text>
+
+    <circle cx="106" cy="6" r="5" fill="#06B6D4"/>
+    <text x="118" y="10" fill="#0F172A" font-weight="600">20% Pendientes</text>
+
+    <circle cx="206" cy="6" r="5" fill="#94A3B8"/>
+    <text x="218" y="10" fill="#0F172A" font-weight="600">10% Vencidas</text>
+  </g>
+
+  <!-- KPI 3 + 4 -->
+  <g filter="url(#cardShadow)">
+    <rect x="540" y="476" width="200" height="100" rx="14" fill="#FFFFFF"/>
+  </g>
+  <text x="556" y="500" fill="#64748B" font-size="12">Auditorías pendientes</text>
+  <text x="556" y="538" fill="#F59E0B" font-size="28" font-weight="700">128</text>
+  <rect x="556" y="552" width="80" height="6" rx="3" fill="#FEF3C7"/>
+  <rect x="556" y="552" width="48" height="6" rx="3" fill="#F59E0B"/>
+
+  <g filter="url(#cardShadow)">
+    <rect x="760" y="476" width="200" height="100" rx="14" fill="#FFFFFF"/>
+  </g>
+  <text x="776" y="500" fill="#64748B" font-size="12">Auditores activos</text>
+  <text x="776" y="538" fill="#0F172A" font-size="28" font-weight="700">45</text>
+  <g transform="translate(776, 548)">
+    <circle cx="8" cy="8" r="8" fill="#1E3A8A"/><text x="8" y="11" fill="#FFFFFF" font-size="9" font-weight="700" text-anchor="middle">JD</text>
+    <circle cx="22" cy="8" r="8" fill="#0EA5E9"/><text x="22" y="11" fill="#FFFFFF" font-size="9" font-weight="700" text-anchor="middle">JS</text>
+    <circle cx="36" cy="8" r="8" fill="#06B6D4"/><text x="36" y="11" fill="#FFFFFF" font-size="9" font-weight="700" text-anchor="middle">ML</text>
+    <circle cx="50" cy="8" r="8" fill="#94A3B8"/><text x="50" y="11" fill="#FFFFFF" font-size="9" font-weight="700" text-anchor="middle">+42</text>
+  </g>
+
+  <g filter="url(#cardShadow)">
+    <rect x="980" y="476" width="300" height="100" rx="14" fill="#FFFFFF"/>
+  </g>
+  <text x="1000" y="500" fill="#64748B" font-size="12">Sucursales con riesgo</text>
+  <text x="1000" y="538" fill="#EF4444" font-size="28" font-weight="700">7</text>
+  <text x="1000" y="558" fill="#94A3B8" font-size="11">Compliance &lt; 70%</text>
+  <g transform="translate(1180, 510)">
+    <rect width="84" height="32" rx="8" fill="#FEF2F2" stroke="#FECACA"/>
+    <text x="42" y="21" fill="#DC2626" font-size="12" font-weight="600" text-anchor="middle">Ver detalle →</text>
+  </g>
+
+  <!-- Recent audits table -->
+  <g filter="url(#cardShadow)">
+    <rect x="280" y="600" width="1000" height="270" rx="14" fill="#FFFFFF"/>
+  </g>
+  <text x="300" y="630" fill="#0F172A" font-size="14" font-weight="600">Auditorías recientes</text>
+  <g transform="translate(960, 614)">
+    <rect width="76" height="32" rx="8" fill="#F1F5F9"/>
+    <path d="M14 14 H22 M16 18 H20" stroke="#475569" stroke-width="1.5" stroke-linecap="round"/>
+    <text x="46" y="20" fill="#0F172A" font-size="12" font-weight="500">Filtrar</text>
+    <rect x="84" width="120" height="32" rx="8" fill="#F1F5F9"/>
+    <text x="98" y="20" fill="#475569" font-size="12">Últimos 30 días ▾</text>
+    <rect x="212" width="86" height="32" rx="8" fill="#1E3A8A"/>
+    <text x="255" y="21" fill="#FFFFFF" font-size="12" font-weight="600" text-anchor="middle">Ver todas</text>
+  </g>
+
+  <!-- Table header -->
+  <g transform="translate(300, 660)" font-size="11" font-weight="600" fill="#94A3B8">
+    <text x="0">ID</text>
+    <text x="80">SUCURSAL</text>
+    <text x="280">AUDITOR</text>
+    <text x="450">FECHA</text>
+    <text x="600">PUNTAJE</text>
+    <text x="720">ESTADO</text>
+    <text x="880">ACCIONES</text>
+  </g>
+  <line x1="300" y1="672" x2="1260" y2="672" stroke="#E2E8F0"/>
+
+  <!-- Rows -->
+  <g font-size="13" fill="#0F172A">
+    <!-- Row 1 -->
+    <text x="300" y="700" fill="#64748B" font-family="monospace">#1045</text>
+    <text x="380" y="700" font-weight="600">Downtown Philly</text>
+    <g transform="translate(580, 690)">
+      <circle cx="10" cy="10" r="10" fill="#1E3A8A"/>
+      <text x="10" y="13" fill="#FFFFFF" font-size="9" font-weight="700" text-anchor="middle">JD</text>
+      <text x="28" y="14" fill="#0F172A">John Doe</text>
+    </g>
+    <text x="750" y="700" fill="#475569">25 oct 2023</text>
+    <g transform="translate(900, 686)">
+      <text x="0" y="14" fill="#0F172A" font-weight="700">94%</text>
+      <rect x="34" y="6" width="60" height="6" rx="3" fill="#E2E8F0"/>
+      <rect x="34" y="6" width="56" height="6" rx="3" fill="#16A34A"/>
+    </g>
+    <g transform="translate(1020, 688)">
+      <rect width="86" height="22" rx="11" fill="#DCFCE7"/>
+      <circle cx="14" cy="11" r="3" fill="#16A34A"/>
+      <text x="42" y="15" fill="#15803D" font-size="11" font-weight="600">Completada</text>
+    </g>
+    <g transform="translate(1180, 688)" fill="#94A3B8">
+      <circle cx="6" cy="11" r="1.5"/><circle cx="14" cy="11" r="1.5"/><circle cx="22" cy="11" r="1.5"/>
+    </g>
+
+    <!-- Row 2 -->
+    <line x1="300" y1="722" x2="1260" y2="722" stroke="#F1F5F9"/>
+    <text x="300" y="750" fill="#64748B" font-family="monospace">#1044</text>
+    <text x="380" y="750" font-weight="600">Austin Central</text>
+    <g transform="translate(580, 740)">
+      <circle cx="10" cy="10" r="10" fill="#0EA5E9"/>
+      <text x="10" y="13" fill="#FFFFFF" font-size="9" font-weight="700" text-anchor="middle">JS</text>
+      <text x="28" y="14" fill="#0F172A">Jane Smith</text>
+    </g>
+    <text x="750" y="750" fill="#475569">24 oct 2023</text>
+    <g transform="translate(900, 736)">
+      <text x="0" y="14" fill="#0F172A" font-weight="700">88%</text>
+      <rect x="34" y="6" width="60" height="6" rx="3" fill="#E2E8F0"/>
+      <rect x="34" y="6" width="53" height="6" rx="3" fill="#0EA5E9"/>
+    </g>
+    <g transform="translate(1020, 738)">
+      <rect width="86" height="22" rx="11" fill="#FEF3C7"/>
+      <circle cx="14" cy="11" r="3" fill="#F59E0B"/>
+      <text x="42" y="15" fill="#92400E" font-size="11" font-weight="600">Pendiente</text>
+    </g>
+    <g transform="translate(1180, 738)" fill="#94A3B8">
+      <circle cx="6" cy="11" r="1.5"/><circle cx="14" cy="11" r="1.5"/><circle cx="22" cy="11" r="1.5"/>
+    </g>
+
+    <!-- Row 3 -->
+    <line x1="300" y1="772" x2="1260" y2="772" stroke="#F1F5F9"/>
+    <text x="300" y="800" fill="#64748B" font-family="monospace">#1043</text>
+    <text x="380" y="800" font-weight="600">Miami Beach</text>
+    <g transform="translate(580, 790)">
+      <circle cx="10" cy="10" r="10" fill="#06B6D4"/>
+      <text x="10" y="13" fill="#FFFFFF" font-size="9" font-weight="700" text-anchor="middle">ML</text>
+      <text x="28" y="14" fill="#0F172A">Mark Lee</text>
+    </g>
+    <text x="750" y="800" fill="#475569">23 oct 2023</text>
+    <g transform="translate(900, 786)">
+      <text x="0" y="14" fill="#0F172A" font-weight="700">91%</text>
+      <rect x="34" y="6" width="60" height="6" rx="3" fill="#E2E8F0"/>
+      <rect x="34" y="6" width="55" height="6" rx="3" fill="#16A34A"/>
+    </g>
+    <g transform="translate(1020, 788)">
+      <rect width="86" height="22" rx="11" fill="#DCFCE7"/>
+      <circle cx="14" cy="11" r="3" fill="#16A34A"/>
+      <text x="42" y="15" fill="#15803D" font-size="11" font-weight="600">Completada</text>
+    </g>
+    <g transform="translate(1180, 788)" fill="#94A3B8">
+      <circle cx="6" cy="11" r="1.5"/><circle cx="14" cy="11" r="1.5"/><circle cx="22" cy="11" r="1.5"/>
+    </g>
+  </g>
+
+  <!-- Pagination -->
+  <g transform="translate(1100, 836)" font-size="12" fill="#64748B">
+    <text x="0" y="14">Página 1 / 24</text>
+    <g transform="translate(80, 0)" stroke="#CBD5E1" fill="none">
+      <rect width="28" height="28" rx="6"/>
+      <path d="M14 9 L9 14 L14 19" stroke-width="1.5"/>
+      <rect x="32" width="28" height="28" rx="6"/>
+      <path d="M14 9 L19 14 L14 19" stroke-width="1.5" transform="translate(32, 0)"/>
+    </g>
+  </g>
+</svg>
