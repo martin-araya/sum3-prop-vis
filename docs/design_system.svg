@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <filter id="cardSh" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="10" flood-color="#0F172A" flood-opacity="0.06"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="900" fill="#F8FAFC"/>
+
+  <!-- Title -->
+  <text x="60" y="60" fill="#0F172A" font-size="28" font-weight="700">AuditChain — Design System</text>
+  <text x="60" y="86" fill="#64748B" font-size="13">Paleta, tipografía, espaciado y componentes base</text>
+
+  <!-- Section: Color palette -->
+  <text x="60" y="138" fill="#0F172A" font-size="16" font-weight="700">Paleta cromática</text>
+  <line x1="60" y1="148" x2="1140" y2="148" stroke="#E2E8F0"/>
+
+  <!-- Brand primary scale -->
+  <text x="60" y="180" fill="#475569" font-size="12" font-weight="600">PRIMARY · Navy (autoridad y confianza)</text>
+  <g transform="translate(60, 192)">
+    <g><rect width="100" height="80" rx="12" fill="#F0F4F8"/><text x="10" y="56" fill="#0F172A" font-size="11" font-weight="700">50</text><text x="10" y="72" fill="#475569" font-size="9" font-family="monospace">#F0F4F8</text></g>
+    <g transform="translate(110)"><rect width="100" height="80" rx="12" fill="#DBEAFE"/><text x="10" y="56" fill="#0F172A" font-size="11" font-weight="700">100</text><text x="10" y="72" fill="#475569" font-size="9" font-family="monospace">#DBEAFE</text></g>
+    <g transform="translate(220)"><rect width="100" height="80" rx="12" fill="#93C5FD"/><text x="10" y="56" fill="#0F172A" font-size="11" font-weight="700">300</text><text x="10" y="72" fill="#475569" font-size="9" font-family="monospace">#93C5FD</text></g>
+    <g transform="translate(330)"><rect width="100" height="80" rx="12" fill="#3B82F6"/><text x="10" y="56" fill="#FFFFFF" font-size="11" font-weight="700">500</text><text x="10" y="72" fill="#DBEAFE" font-size="9" font-family="monospace">#3B82F6</text></g>
+    <g transform="translate(440)"><rect width="100" height="80" rx="12" fill="#1E3A8A"/><text x="10" y="56" fill="#FFFFFF" font-size="11" font-weight="700">700 ★</text><text x="10" y="72" fill="#BFDBFE" font-size="9" font-family="monospace">#1E3A8A</text></g>
+    <g transform="translate(550)"><rect width="100" height="80" rx="12" fill="#0A2540"/><text x="10" y="56" fill="#FFFFFF" font-size="11" font-weight="700">900 ★</text><text x="10" y="72" fill="#94A3B8" font-size="9" font-family="monospace">#0A2540</text></g>
+    <g transform="translate(660)"><rect width="100" height="80" rx="12" fill="#051C36"/><text x="10" y="56" fill="#FFFFFF" font-size="11" font-weight="700">950</text><text x="10" y="72" fill="#94A3B8" font-size="9" font-family="monospace">#051C36</text></g>
+  </g>
+
+  <!-- Cyan accent scale -->
+  <text x="60" y="312" fill="#475569" font-size="12" font-weight="600">ACCENT · Cyan (energía y datos en vivo)</text>
+  <g transform="translate(60, 324)">
+    <g><rect width="100" height="80" rx="12" fill="#ECFEFF"/><text x="10" y="56" fill="#0F172A" font-size="11" font-weight="700">50</text><text x="10" y="72" fill="#475569" font-size="9" font-family="monospace">#ECFEFF</text></g>
+    <g transform="translate(110)"><rect width="100" height="80" rx="12" fill="#CFFAFE"/><text x="10" y="56" fill="#0F172A" font-size="11" font-weight="700">100</text><text x="10" y="72" fill="#475569" font-size="9" font-family="monospace">#CFFAFE</text></g>
+    <g transform="translate(220)"><rect width="100" height="80" rx="12" fill="#67E8F9"/><text x="10" y="56" fill="#0F172A" font-size="11" font-weight="700">300</text><text x="10" y="72" fill="#475569" font-size="9" font-family="monospace">#67E8F9</text></g>
+    <g transform="translate(330)"><rect width="100" height="80" rx="12" fill="#06B6D4"/><text x="10" y="56" fill="#FFFFFF" font-size="11" font-weight="700">500 ★</text><text x="10" y="72" fill="#ECFEFF" font-size="9" font-family="monospace">#06B6D4</text></g>
+    <g transform="translate(440)"><rect width="100" height="80" rx="12" fill="#0E7490"/><text x="10" y="56" fill="#FFFFFF" font-size="11" font-weight="700">700</text><text x="10" y="72" fill="#A5F3FC" font-size="9" font-family="monospace">#0E7490</text></g>
+    <g transform="translate(550)"><rect width="100" height="80" rx="12" fill="#0EA5E9"/><text x="10" y="56" fill="#FFFFFF" font-size="11" font-weight="700">SKY</text><text x="10" y="72" fill="#E0F2FE" font-size="9" font-family="monospace">#0EA5E9</text></g>
+    <g transform="translate(660)"><rect width="100" height="80" rx="12" fill="#38BDF8"/><text x="10" y="56" fill="#0F172A" font-size="11" font-weight="700">SKY-400</text><text x="10" y="72" fill="#0C4A6E" font-size="9" font-family="monospace">#38BDF8</text></g>
+  </g>
+
+  <!-- Semantic colors -->
+  <text x="60" y="444" fill="#475569" font-size="12" font-weight="600">SEMANTIC · Estados de auditoría y feedback</text>
+  <g transform="translate(60, 456)">
+    <g>
+      <rect width="160" height="80" rx="12" fill="#10B981"/>
+      <text x="14" y="30" fill="#FFFFFF" font-size="13" font-weight="700">Success</text>
+      <text x="14" y="50" fill="#D1FAE5" font-size="10">Auditoría completada</text>
+      <text x="14" y="68" fill="#D1FAE5" font-size="10" font-family="monospace">#10B981</text>
+    </g>
+    <g transform="translate(176)">
+      <rect width="160" height="80" rx="12" fill="#F59E0B"/>
+      <text x="14" y="30" fill="#FFFFFF" font-size="13" font-weight="700">Warning</text>
+      <text x="14" y="50" fill="#FEF3C7" font-size="10">Pendiente / atención</text>
+      <text x="14" y="68" fill="#FEF3C7" font-size="10" font-family="monospace">#F59E0B</text>
+    </g>
+    <g transform="translate(352)">
+      <rect width="160" height="80" rx="12" fill="#EF4444"/>
+      <text x="14" y="30" fill="#FFFFFF" font-size="13" font-weight="700">Error</text>
+      <text x="14" y="50" fill="#FEE2E2" font-size="10">Incumplimiento crítico</text>
+      <text x="14" y="68" fill="#FEE2E2" font-size="10" font-family="monospace">#EF4444</text>
+    </g>
+    <g transform="translate(528)">
+      <rect width="160" height="80" rx="12" fill="#94A3B8"/>
+      <text x="14" y="30" fill="#FFFFFF" font-size="13" font-weight="700">Neutral</text>
+      <text x="14" y="50" fill="#F1F5F9" font-size="10">Vencida / inactiva</text>
+      <text x="14" y="68" fill="#F1F5F9" font-size="10" font-family="monospace">#94A3B8</text>
+    </g>
+  </g>
+
+  <!-- Neutrals -->
+  <text x="60" y="576" fill="#475569" font-size="12" font-weight="600">NEUTRAL · Slate (texto y fondos)</text>
+  <g transform="translate(60, 588)">
+    <g><rect width="80" height="64" rx="10" fill="#FFFFFF" stroke="#E2E8F0"/><text x="10" y="40" fill="#0F172A" font-size="10" font-weight="700">white</text><text x="10" y="56" fill="#475569" font-size="9" font-family="monospace">#FFFFFF</text></g>
+    <g transform="translate(90)"><rect width="80" height="64" rx="10" fill="#F8FAFC"/><text x="10" y="40" fill="#0F172A" font-size="10" font-weight="700">50</text><text x="10" y="56" fill="#475569" font-size="9" font-family="monospace">#F8FAFC</text></g>
+    <g transform="translate(180)"><rect width="80" height="64" rx="10" fill="#F1F5F9"/><text x="10" y="40" fill="#0F172A" font-size="10" font-weight="700">100</text><text x="10" y="56" fill="#475569" font-size="9" font-family="monospace">#F1F5F9</text></g>
+    <g transform="translate(270)"><rect width="80" height="64" rx="10" fill="#E2E8F0"/><text x="10" y="40" fill="#0F172A" font-size="10" font-weight="700">200</text><text x="10" y="56" fill="#475569" font-size="9" font-family="monospace">#E2E8F0</text></g>
+    <g transform="translate(360)"><rect width="80" height="64" rx="10" fill="#CBD5E1"/><text x="10" y="40" fill="#0F172A" font-size="10" font-weight="700">300</text><text x="10" y="56" fill="#475569" font-size="9" font-family="monospace">#CBD5E1</text></g>
+    <g transform="translate(450)"><rect width="80" height="64" rx="10" fill="#94A3B8"/><text x="10" y="40" fill="#FFFFFF" font-size="10" font-weight="700">400</text><text x="10" y="56" fill="#F1F5F9" font-size="9" font-family="monospace">#94A3B8</text></g>
+    <g transform="translate(540)"><rect width="80" height="64" rx="10" fill="#64748B"/><text x="10" y="40" fill="#FFFFFF" font-size="10" font-weight="700">500</text><text x="10" y="56" fill="#E2E8F0" font-size="9" font-family="monospace">#64748B</text></g>
+    <g transform="translate(630)"><rect width="80" height="64" rx="10" fill="#475569"/><text x="10" y="40" fill="#FFFFFF" font-size="10" font-weight="700">600</text><text x="10" y="56" fill="#CBD5E1" font-size="9" font-family="monospace">#475569</text></g>
+    <g transform="translate(720)"><rect width="80" height="64" rx="10" fill="#334155"/><text x="10" y="40" fill="#FFFFFF" font-size="10" font-weight="700">700</text><text x="10" y="56" fill="#94A3B8" font-size="9" font-family="monospace">#334155</text></g>
+    <g transform="translate(810)"><rect width="80" height="64" rx="10" fill="#1E293B"/><text x="10" y="40" fill="#FFFFFF" font-size="10" font-weight="700">800</text><text x="10" y="56" fill="#94A3B8" font-size="9" font-family="monospace">#1E293B</text></g>
+    <g transform="translate(900)"><rect width="80" height="64" rx="10" fill="#0F172A"/><text x="10" y="40" fill="#FFFFFF" font-size="10" font-weight="700">900</text><text x="10" y="56" fill="#94A3B8" font-size="9" font-family="monospace">#0F172A</text></g>
+  </g>
+
+  <!-- Typography -->
+  <text x="60" y="708" fill="#0F172A" font-size="16" font-weight="700">Tipografía — Inter (UI) + JetBrains Mono (datos/IDs)</text>
+  <line x1="60" y1="718" x2="1140" y2="718" stroke="#E2E8F0"/>
+
+  <g filter="url(#cardSh)">
+    <rect x="60" y="734" width="700" height="146" rx="14" fill="#FFFFFF"/>
+  </g>
+  <text x="80" y="766" fill="#0F172A" font-size="32" font-weight="700">Display · 32 / 700</text>
+  <text x="80" y="794" fill="#0F172A" font-size="22" font-weight="600">Title · 22 / 600</text>
+  <text x="80" y="816" fill="#0F172A" font-size="16" font-weight="600">Subtitle · 16 / 600</text>
+  <text x="80" y="838" fill="#0F172A" font-size="14" font-weight="400">Body · 14 / 400 — texto base de párrafos</text>
+  <text x="80" y="858" fill="#64748B" font-size="12" font-weight="400">Caption · 12 / 400 — descripciones secundarias</text>
+  <text x="80" y="876" fill="#94A3B8" font-size="11" font-family="JetBrains Mono, monospace">#audit-1045 · monospace para IDs</text>
+
+  <!-- Spacing & radii -->
+  <g filter="url(#cardSh)">
+    <rect x="780" y="734" width="360" height="146" rx="14" fill="#FFFFFF"/>
+  </g>
+  <text x="800" y="762" fill="#0F172A" font-size="13" font-weight="700">Espaciado · escala 4pt</text>
+  <g transform="translate(800, 776)" font-size="10" fill="#475569">
+    <rect width="4" height="14" fill="#1E3A8A"/><text x="10" y="11">4</text>
+    <rect x="40" width="8" height="14" fill="#1E3A8A"/><text x="54" y="11">8</text>
+    <rect x="84" width="12" height="14" fill="#1E3A8A"/><text x="102" y="11">12</text>
+    <rect x="132" width="16" height="14" fill="#1E3A8A"/><text x="154" y="11">16</text>
+    <rect x="184" width="24" height="14" fill="#1E3A8A"/><text x="214" y="11">24</text>
+    <rect x="246" width="32" height="14" fill="#1E3A8A"/><text x="284" y="11">32</text>
+  </g>
+  <text x="800" y="822" fill="#0F172A" font-size="13" font-weight="700">Border radius</text>
+  <g transform="translate(800, 836)" font-size="10" fill="#475569">
+    <rect width="32" height="32" rx="4" fill="#DBEAFE"/><text x="0" y="44">4</text>
+    <rect x="50" width="32" height="32" rx="8" fill="#DBEAFE"/><text x="50" y="44">8</text>
+    <rect x="100" width="32" height="32" rx="12" fill="#DBEAFE"/><text x="100" y="44">12</text>
+    <rect x="150" width="32" height="32" rx="14" fill="#DBEAFE"/><text x="150" y="44">14 ★</text>
+    <rect x="210" width="32" height="32" rx="999" fill="#DBEAFE"/><text x="210" y="44">full</text>
+  </g>
+</svg>
