@@ -19,7 +19,7 @@ Desarrollar una solución tecnológica que permita mejorar el control y seguimie
 - Backend: conexión entre sistemas
 
 ## Repositorio
-https://github.com/TU-USUARIO/sum3-prop-vis
+https://github.com/martin-araya/sum3-prop-vis
 
 ## Integrantes
 - Martin Araya Espinoza
