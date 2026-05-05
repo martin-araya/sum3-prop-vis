@@ -22,5 +22,7 @@ Desarrollar una solución tecnológica que permita mejorar el control y seguimie
 https://github.com/TU-USUARIO/sum3-prop-vis
 
 ## Integrantes
-- Nombre 1
-- Nombre 2
+- Martin Araya Espinoza
+- Yerko Barrera Pantoja
+- Karol Bermudez Rojas
+- Bruno Fernandez Pastor
