@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>AuditChain · AppSidebar + AppTopbar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<style>
+  :root {
+    /* AppColors — tomados de la spec del usuario y pubspec actual */
+    --primary-900: #0A2540;
+    --primary-800: #11355C;
+    --primary-700: #1A4778;
+    --accent-500:  #00B4D8;
+    --slate-50:    #F8FAFC;
+    --slate-100:   #F1F5F9;
+    --slate-200:   #E2E8F0;
+    --slate-500:   #64748B;
+    --slate-700:   #334155;
+    --slate-900:   #0F172A;
+    --danger:      #EF4444;
+
+    /* AppSpacing */
+    --sp-xxs: 4px;
+    --sp-xs:  6px;
+    --sp-sm:  8px;
+    --sp-md:  16px;
+    --sp-lg:  24px;
+    --sp-xl:  32px;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    font-family: 'Inter', 'Roboto', system-ui, sans-serif;
+    color: var(--slate-900);
+    background: var(--slate-100);
+    -webkit-font-smoothing: antialiased;
+  }
+  /* Shell */
+  .shell { display: flex; height: 100vh; min-height: 720px; }
+
+  /* ── SIDEBAR ─────────────────────────────────────────────────────────── */
+  .sidebar {
+    width: 240px;
+    flex: 0 0 240px;
+    background: var(--primary-900);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+  }
+  .sidebar-header {
+    padding: var(--sp-lg) var(--sp-lg) var(--sp-md);
+  }
+  .sidebar-header .brand {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
+  .sidebar-header .subtitle {
+    margin-top: var(--sp-xxs);
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.3;
+  }
+  .nav {
+    flex: 1 1 auto;
+    padding: var(--sp-xs) var(--sp-sm);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-xxs);
+    overflow: auto;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px var(--sp-md);
+    border-radius: 8px;
+    color: rgba(255,255,255,0.75);
+    font-size: 14px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: background-color 120ms ease, color 120ms ease;
+    user-select: none;
+  }
+  .nav-item .material-icons-outlined,
+  .nav-item .material-icons { font-size: 20px; }
+  .nav-item:hover {
+    background: var(--primary-700);
+    color: #fff;
+  }
+  .nav-item.active {
+    background: var(--primary-800);
+    color: #fff;
+    font-weight: 500;
+  }
+  .nav-item.active:hover { background: var(--primary-800); }
+  .sidebar-footer {
+    padding: var(--sp-md);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--accent-500);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    flex: 0 0 auto;
+  }
+  .user-meta { min-width: 0; }
+  .user-meta .name {
+    font-size: 13px;
+    font-weight: 500;
+    color: #fff;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .user-meta .role {
+    margin-top: var(--sp-xxs);
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.2;
+  }
+
+  /* ── MAIN ────────────────────────────────────────────────────────────── */
+  .main {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: var(--slate-100);
+  }
+
+  /* ── TOPBAR ──────────────────────────────────────────────────────────── */
+  .topbar {
+    height: 64px;
+    background: #fff;
+    border-bottom: 1px solid var(--slate-200);
+    display: flex;
+    align-items: center;
+    padding: 0 var(--sp-lg);
+    gap: var(--sp-lg);
+    flex: 0 0 64px;
+  }
+  .topbar .title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--slate-900);
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+  .search {
+    flex: 1 1 auto;
+    max-width: 420px;
+    height: 40px;
+    background: var(--slate-50);
+    border: 1px solid var(--slate-200);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: var(--sp-sm);
+    padding: 0 12px;
+    color: var(--slate-500);
+  }
+  .search .material-icons-outlined { font-size: 18px; }
+  .search .placeholder {
+    font-size: 14px;
+    color: var(--slate-500);
+  }
+  .topbar-spacer { flex: 1 1 auto; }
+  .bell {
+    position: relative;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--slate-700);
+    cursor: pointer;
+  }
+  .bell:hover { background: var(--slate-100); }
+  .bell .material-icons-outlined { font-size: 22px; }
+  .badge {
+    position: absolute;
+    top: 6px;
+    right: 4px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    background: var(--danger);
+    color: #fff;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid #fff;
+    line-height: 1;
+  }
+
+  /* ── CONTENT ─────────────────────────────────────────────────────────── */
+  .content {
+    flex: 1 1 auto;
+    padding: var(--sp-xl);
+    overflow: auto;
+  }
+  .breadcrumb {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    color: var(--slate-500);
+    margin-bottom: var(--sp-md);
+    letter-spacing: 0.02em;
+  }
+  .section-label {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    color: var(--slate-500);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 12px;
+  }
+
+  /* KpiCard */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .kpi-card {
+    background: #fff;
+    border: 1px solid var(--slate-200);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .kpi-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #64748B;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+  .kpi-value {
+    font-size: 28px;
+    font-weight: 600;
+    color: #0F172A;
+    line-height: 1.1;
+    margin-top: 8px;
+  }
+  .kpi-delta {
+    margin-top: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+  .kpi-delta.up   { color: #059669; }
+  .kpi-delta.down { color: #DC2626; }
+  .kpi-delta.neutral { color: #64748B; }
+  .kpi-delta .material-icons-outlined { font-size: 14px; }
+
+  /* AuditStatusBadge */
+  .badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 99px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+  }
+  .pill-completada       { background: #D1FAE5; color: #065F46; }
+  .pill-pendiente        { background: #FEF3C7; color: #92400E; }
+  .pill-con_observaciones{ background: #E0F2FE; color: #075985; }
+  .pill-vencida          { background: #F1F5F9; color: #475569; }
+  .pill-default          { background: var(--slate-100); color: #475569; }
+
+  /* Tabla demo para mostrar badges en contexto */
+  .table-card {
+    background: #fff;
+    border: 1px solid var(--slate-200);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  table.demo {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  table.demo th {
+    text-align: left;
+    padding: 12px 20px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--slate-500);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: var(--slate-50);
+    border-bottom: 1px solid var(--slate-200);
+  }
+  table.demo td {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--slate-200);
+    color: var(--slate-700);
+    vertical-align: middle;
+  }
+  table.demo tr:last-child td { border-bottom: 0; }
+  table.demo td.code {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    color: var(--slate-900);
+    font-weight: 500;
+  }
+
+  /* Picker de ruta para previsualizar el estado activo */
+  .route-picker {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    background: #fff;
+    border: 1px solid var(--slate-200);
+    border-radius: 10px;
+    padding: 8px;
+    display: flex;
+    gap: 4px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    z-index: 10;
+  }
+  .route-picker button {
+    border: 0;
+    background: transparent;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font: inherit;
+    color: var(--slate-700);
+  }
+  .route-picker button:hover { background: var(--slate-100); }
+  .route-picker button.on {
+    background: var(--primary-900);
+    color: #fff;
+  }
+</style>
+</head>
+<body>
+
+<div class="shell" id="shell">
+
+  <!-- ─── SIDEBAR ──────────────────────────────────────────────────────── -->
+  <aside class="sidebar" data-screen-label="AppSidebar">
+    <div class="sidebar-header">
+      <div class="brand">AuditChain</div>
+      <div class="subtitle">Red de franquicias</div>
+    </div>
+
+    <nav class="nav" id="nav">
+      <div class="nav-item" data-route="/dashboard">
+        <span class="material-icons-outlined">dashboard</span>
+        <span>Dashboard</span>
+      </div>
+      <div class="nav-item" data-route="/sucursales">
+        <span class="material-icons-outlined">store</span>
+        <span>Sucursales</span>
+      </div>
+      <div class="nav-item" data-route="/audits">
+        <span class="material-icons-outlined">assignment</span>
+        <span>Auditorías</span>
+      </div>
+      <div class="nav-item" data-route="/auditors">
+        <span class="material-icons-outlined">person</span>
+        <span>Auditores</span>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="avatar">CA</div>
+      <div class="user-meta">
+        <div class="name">Carlos Administrador</div>
+        <div class="role">Admin</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ─── MAIN ─────────────────────────────────────────────────────────── -->
+  <main class="main">
+
+    <!-- ─── TOPBAR ─────────────────────────────────────────────────────── -->
+    <header class="topbar" data-screen-label="AppTopbar">
+      <div class="title" id="title">Dashboard</div>
+      <div class="search" role="search" aria-label="Buscar">
+        <span class="material-icons-outlined" aria-hidden="true">search</span>
+        <span class="placeholder">Buscar...</span>
+      </div>
+      <div class="topbar-spacer"></div>
+      <div class="bell" role="button" aria-label="Notificaciones">
+        <span class="material-icons-outlined">notifications</span>
+        <span class="badge">3</span>
+      </div>
+      <div class="avatar" title="Carlos Administrador">CA</div>
+    </header>
+
+    <!-- Contenido placeholder -->
+    <section class="content">
+      <div class="breadcrumb" id="crumb">// route: /dashboard</div>
+
+      <p class="section-label">// KpiCard</p>
+      <div class="kpi-row">
+        <div class="kpi-card">
+          <div class="kpi-label">Auditorías totales</div>
+          <div class="kpi-value">248</div>
+          <div class="kpi-delta up">
+            <span class="material-icons-outlined">arrow_upward</span>
+            <span>+12% vs mes anterior</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Completadas</div>
+          <div class="kpi-value">186</div>
+          <div class="kpi-delta up">
+            <span class="material-icons-outlined">arrow_upward</span>
+            <span>+8.4%</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Con observaciones</div>
+          <div class="kpi-value">42</div>
+          <div class="kpi-delta down">
+            <span class="material-icons-outlined">arrow_downward</span>
+            <span>-3 esta semana</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Sucursales activas</div>
+          <div class="kpi-value">37</div>
+        </div>
+      </div>
+
+      <p class="section-label">// AuditStatusBadge — todos los estados</p>
+      <div class="badge-row">
+        <span class="pill pill-completada">Completada</span>
+        <span class="pill pill-pendiente">Pendiente</span>
+        <span class="pill pill-con_observaciones">Con obs.</span>
+        <span class="pill pill-vencida">Vencida</span>
+        <span class="pill pill-default">Reprogramada</span>
+      </div>
+
+      <p class="section-label">// AuditStatusBadge en contexto</p>
+      <div class="table-card">
+        <table class="demo">
+          <thead>
+            <tr>
+              <th>Sucursal</th>
+              <th>Auditor</th>
+              <th>Fecha</th>
+              <th>Puntaje</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="code">SUC-014 · Providencia</td>
+              <td>María González</td>
+              <td>04 May 2026</td>
+              <td>92%</td>
+              <td><span class="pill pill-completada">Completada</span></td>
+            </tr>
+            <tr>
+              <td class="code">SUC-022 · Las Condes</td>
+              <td>Diego Soto</td>
+              <td>06 May 2026</td>
+              <td>—</td>
+              <td><span class="pill pill-pendiente">Pendiente</span></td>
+            </tr>
+            <tr>
+              <td class="code">SUC-007 · Ñuñoa</td>
+              <td>Camila Rojas</td>
+              <td>02 May 2026</td>
+              <td>74%</td>
+              <td><span class="pill pill-con_observaciones">Con obs.</span></td>
+            </tr>
+            <tr>
+              <td class="code">SUC-031 · Maipú</td>
+              <td>Andrés Pérez</td>
+              <td>28 Abr 2026</td>
+              <td>61%</td>
+              <td><span class="pill pill-vencida">Vencida</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Selector de ruta sólo para previsualizar el estado activo -->
+<div class="route-picker" aria-label="Cambiar ruta activa">
+  <button data-pick="/dashboard" class="on">/dashboard</button>
+  <button data-pick="/sucursales">/sucursales</button>
+  <button data-pick="/audits">/audits</button>
+  <button data-pick="/auditors">/auditors</button>
+</div>
+
+<script>
+  const TITLES = {
+    '/dashboard': 'Dashboard',
+    '/sucursales': 'Sucursales',
+    '/audits': 'Auditorías',
+    '/auditors': 'Auditores',
+  };
+
+  function setRoute(route) {
+    // sidebar active state
+    document.querySelectorAll('.nav-item').forEach(el => {
+      el.classList.toggle('active', el.dataset.route === route);
+    });
+    // picker
+    document.querySelectorAll('.route-picker button').forEach(b => {
+      b.classList.toggle('on', b.dataset.pick === route);
+    });
+    // topbar title
+    document.getElementById('title').textContent = TITLES[route] || 'AuditChain';
+    // crumb
+    document.getElementById('crumb').textContent = '// route: ' + route;
+  }
+
+  document.querySelectorAll('.nav-item').forEach(el => {
+    el.addEventListener('click', () => setRoute(el.dataset.route));
+  });
+  document.querySelectorAll('.route-picker button').forEach(b => {
+    b.addEventListener('click', () => setRoute(b.dataset.pick));
+  });
+
+  // initial
+  setRoute('/dashboard');
+</script>
+
+</body>
+</html>
