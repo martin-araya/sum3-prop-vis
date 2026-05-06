@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Evidence Gallery</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Work+Sans:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#f39461",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#00164e",
+                        "on-secondary-fixed-variant": "#004e5c",
+                        "secondary-container": "#57dffe",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#6e2c00",
+                        "on-surface-variant": "#444651",
+                        "background": "#faf8ff",
+                        "surface-bright": "#faf8ff",
+                        "tertiary": "#4b1c00",
+                        "on-secondary-container": "#006172",
+                        "on-primary-fixed-variant": "#264191",
+                        "cyan-accent": "#06B6D4",
+                        "surface-variant": "#e3e1e9",
+                        "outline": "#757682",
+                        "surface": "#faf8ff",
+                        "error-destructive": "#EF4444",
+                        "inverse-surface": "#2f3036",
+                        "on-background": "#1a1b21",
+                        "info-bg": "#E0F2FE",
+                        "primary-fixed": "#dce1ff",
+                        "primary-fixed-dim": "#b6c4ff",
+                        "secondary-fixed-dim": "#4cd7f6",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb691",
+                        "surface-dim": "#dad9e1",
+                        "info-text": "#075985",
+                        "on-surface": "#1a1b21",
+                        "success-bg": "#D1FAE5",
+                        "inverse-on-surface": "#f1f0f7",
+                        "tertiary-fixed": "#ffdbcb",
+                        "navy-deep": "#0A2540",
+                        "surface-container-highest": "#e3e1e9",
+                        "primary": "#00236f",
+                        "on-secondary": "#ffffff",
+                        "primary-container": "#1e3a8a",
+                        "navy-primary": "#1E3A8A",
+                        "background-page": "#F8FAFC",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#acedff",
+                        "warning-bg": "#FEF3C7",
+                        "secondary": "#00687a",
+                        "neutral-slate": "#334155",
+                        "surface-container-low": "#f4f3fa",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#90a8ff",
+                        "on-tertiary-fixed-variant": "#773205",
+                        "warning-text": "#92400E",
+                        "surface-tint": "#4059aa",
+                        "on-secondary-fixed": "#001f26",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#e9e7ef",
+                        "success-text": "#065F46",
+                        "cyan-text": "#0E7490",
+                        "surface-container": "#eeedf4",
+                        "inverse-primary": "#b6c4ff",
+                        "on-tertiary-fixed": "#341100",
+                        "error": "#ba1a1a",
+                        "outline-variant": "#c5c5d3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "space-1": "4px",
+                        "space-10": "40px",
+                        "space-8": "32px",
+                        "space-6": "24px",
+                        "space-3": "12px",
+                        "space-4": "16px",
+                        "space-2": "8px",
+                        "space-5": "20px",
+                        "space-12": "48px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "caption": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "data-mono": ["Work Sans"],
+                        "title-md": ["Inter"],
+                        "display-xl": ["Inter"],
+                        "display-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "caption": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "title-lg": ["22px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "display-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "data-mono": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+                        "title-md": ["18px", { "lineHeight": "26px", "fontWeight": "600" }],
+                        "display-xl": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "display-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background-page text-on-surface font-body-md min-h-screen flex flex-col">
+<!-- Top Navigation (Task-Focused - Minimal Header) -->
+<header class="bg-surface-container-lowest border-b border-outline-variant flex items-center h-16 px-space-6 shadow-sm sticky top-0 z-40">
+<button class="text-on-surface-variant hover:text-on-surface focus:ring-2 focus:ring-cyan-accent focus:ring-offset-2 rounded-full p-2 -ml-2 transition-colors mr-space-4">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-title-lg text-title-lg text-on-surface">Evidencia: Sucursal Norte</h1>
+</header>
+<!-- Main Content -->
+<main class="flex-grow p-space-4 md:p-space-6 pb-32">
+<div class="max-w-4xl mx-auto space-y-space-8">
+<!-- Photos Section -->
+<section>
+<div class="flex items-center justify-between mb-space-4">
+<h2 class="font-title-md text-title-md text-on-surface">Fotografías</h2>
+<span class="font-caption text-caption text-on-surface-variant bg-surface-container px-3 py-1 rounded-full">4 elementos</span>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-space-4">
+<!-- Photo Card 1 -->
+<div class="relative group rounded-[14px] overflow-hidden shadow-sm hover:shadow-md transition-shadow aspect-square bg-surface-container-low cursor-pointer">
+<img alt="Audit site front entrance" class="w-full h-full object-cover" data-alt="A clear, high-resolution photograph of a modern commercial building front entrance, taken during daytime. The scene is evenly lit, showing clear architectural details. The aesthetic is professional and objective, suitable for a compliance audit report. The overall color palette is realistic with neutral tones." src="https://lh3.googleusercontent.com/aida/ADBb0uiay9h_8iTY_2QnArGwso1TahQyfjIdtbmQzvyODifhdh3JQgByRDR29pGY2qCEFGFCzzJtq3S6slE-w80whKvuaOMn48RVn30KUIhHZElvHGO8wkzpzyFVKHWwrtq7kIO3HYr8bm5cXKgUZ39SPnGpe-fwfMrarcvKTD5DDi1Vfv7CqVMJolOa4qLUMZuQETKmYbKEswdoT-L3ms4GlGdc48XltYfgHaihoObnMXLU8vucZCr5LuC5Qw"/>
+<div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-space-3 pt-space-6">
+<p class="font-caption text-caption text-white">10/24/23</p>
+<p class="font-data-mono text-data-mono text-white/90">09:15 AM</p>
+</div>
+</div>
+<!-- Placeholder Photos for Gallery layout -->
+<div class="relative group rounded-[14px] overflow-hidden shadow-sm hover:shadow-md transition-shadow aspect-square bg-surface-container-low cursor-pointer">
+<div class="w-full h-full bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-outline-variant text-4xl">image</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-space-3 pt-space-6">
+<p class="font-caption text-caption text-white">10/24/23</p>
+<p class="font-data-mono text-data-mono text-white/90">09:30 AM</p>
+</div>
+</div>
+<div class="relative group rounded-[14px] overflow-hidden shadow-sm hover:shadow-md transition-shadow aspect-square bg-surface-container-low cursor-pointer">
+<div class="w-full h-full bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-outline-variant text-4xl">image</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-space-3 pt-space-6">
+<p class="font-caption text-caption text-white">10/24/23</p>
+<p class="font-data-mono text-data-mono text-white/90">09:45 AM</p>
+</div>
+</div>
+<div class="relative group rounded-[14px] overflow-hidden shadow-sm hover:shadow-md transition-shadow aspect-square bg-surface-container-low cursor-pointer">
+<div class="w-full h-full bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-outline-variant text-4xl">image</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-space-3 pt-space-6">
+<p class="font-caption text-caption text-white">10/24/23</p>
+<p class="font-data-mono text-data-mono text-white/90">10:00 AM</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Audio Notes Section -->
+<section>
+<div class="flex items-center justify-between mb-space-4">
+<h2 class="font-title-md text-title-md text-on-surface">Notas de Voz</h2>
+</div>
+<div class="bg-surface-container-lowest rounded-[14px] p-space-4 shadow-sm border border-surface-variant flex items-center gap-space-4">
+<button class="w-12 h-12 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center hover:bg-navy-primary hover:text-white transition-colors focus:ring-2 focus:ring-cyan-accent focus:ring-offset-2 flex-shrink-0">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+<div class="flex-grow flex flex-col justify-center">
+<div class="flex justify-between mb-1">
+<span class="font-caption text-caption text-on-surface-variant">Entrevista al gerente</span>
+<span class="font-data-mono text-data-mono text-on-surface-variant">00:45 / 02:30</span>
+</div>
+<!-- Simulated Waveform -->
+<div class="h-8 flex items-center gap-[2px] w-full">
+<div class="h-full w-1 bg-cyan-accent rounded-full opacity-100"></div>
+<div class="h-3/4 w-1 bg-cyan-accent rounded-full opacity-100"></div>
+<div class="h-1/2 w-1 bg-cyan-accent rounded-full opacity-100"></div>
+<div class="h-4/5 w-1 bg-cyan-accent rounded-full opacity-100"></div>
+<div class="h-full w-1 bg-cyan-accent rounded-full opacity-100"></div>
+<div class="h-2/3 w-1 bg-cyan-accent rounded-full opacity-100"></div>
+<div class="h-1/3 w-1 bg-outline-variant rounded-full opacity-50"></div>
+<div class="h-1/2 w-1 bg-outline-variant rounded-full opacity-50"></div>
+<div class="h-3/4 w-1 bg-outline-variant rounded-full opacity-50"></div>
+<div class="h-1/4 w-1 bg-outline-variant rounded-full opacity-50"></div>
+<div class="h-2/3 w-1 bg-outline-variant rounded-full opacity-50"></div>
+<div class="h-full w-1 bg-outline-variant rounded-full opacity-50"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Comments Section -->
+<section>
+<div class="flex items-center justify-between mb-space-4">
+<h2 class="font-title-md text-title-md text-on-surface">Observaciones</h2>
+</div>
+<div class="bg-surface-container-lowest rounded-[14px] p-space-4 shadow-sm border border-surface-variant space-y-space-4">
+<div class="flex gap-space-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center flex-shrink-0 text-on-surface-variant font-caption">
+                            A1
+                        </div>
+<div>
+<div class="flex items-baseline gap-space-2 mb-1">
+<span class="font-caption text-caption text-on-surface font-semibold">Auditor Principal</span>
+<span class="font-caption text-caption text-on-surface-variant">10:15 AM</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                                Se detectaron discrepancias en los registros de inventario físico frente al sistema. La evidencia fotográfica adjunta muestra estantes vacíos que figuran como abastecidos.
+                            </p>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Sticky Bottom Actions -->
+<div class="fixed bottom-0 left-0 w-full bg-surface-container-lowest border-t border-outline-variant p-space-4 shadow-[0_-4px_6px_-1px_rgba(15,23,42,0.05)] z-50">
+<div class="max-w-4xl mx-auto flex flex-col md:flex-row gap-space-4 justify-end">
+<button class="bg-white text-navy-deep border border-navy-deep font-caption text-caption px-space-6 py-space-3 rounded-[14px] hover:bg-surface-container-low focus:ring-2 focus:ring-cyan-accent focus:ring-offset-2 transition-colors w-full md:w-auto text-center flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">add_a_photo</span>
+                Añadir más evidencia
+            </button>
+<button class="bg-navy-primary text-white font-caption text-caption px-space-6 py-space-3 rounded-[14px] hover:bg-primary focus:ring-2 focus:ring-cyan-accent focus:ring-offset-2 transition-colors w-full md:w-auto text-center flex items-center justify-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-lg">check_circle</span>
+                Finalizar revisión
+            </button>
+</div>
+</div>
+</body></html>
