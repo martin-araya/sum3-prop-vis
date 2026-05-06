@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+
+<html lang="es-CL"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AuditChain - Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Work+Sans:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#acedff",
+                        "inverse-primary": "#b6c4ff",
+                        "outline": "#757682",
+                        "secondary": "#00687a",
+                        "cyan-accent": "#06B6D4",
+                        "tertiary-fixed": "#ffdbcb",
+                        "surface-dim": "#dad9e1",
+                        "info-bg": "#E0F2FE",
+                        "error-container": "#ffdad6",
+                        "warning-bg": "#FEF3C7",
+                        "surface": "#faf8ff",
+                        "tertiary-fixed-dim": "#ffb691",
+                        "on-primary": "#ffffff",
+                        "on-background": "#1a1b21",
+                        "on-secondary-fixed-variant": "#004e5c",
+                        "on-surface": "#1a1b21",
+                        "surface-container-lowest": "#ffffff",
+                        "cyan-text": "#0E7490",
+                        "navy-deep": "#0A2540",
+                        "surface-bright": "#faf8ff",
+                        "on-tertiary-fixed-variant": "#773205",
+                        "background": "#faf8ff",
+                        "inverse-on-surface": "#f1f0f7",
+                        "primary": "#00236f",
+                        "success-text": "#065F46",
+                        "surface-variant": "#e3e1e9",
+                        "tertiary-container": "#6e2c00",
+                        "background-page": "#F8FAFC",
+                        "surface-tint": "#4059aa",
+                        "secondary-container": "#57dffe",
+                        "on-surface-variant": "#444651",
+                        "on-primary-fixed": "#00164e",
+                        "primary-container": "#1e3a8a",
+                        "on-tertiary-container": "#f39461",
+                        "outline-variant": "#c5c5d3",
+                        "primary-fixed-dim": "#b6c4ff",
+                        "navy-primary": "#1E3A8A",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed": "#dce1ff",
+                        "error-destructive": "#EF4444",
+                        "neutral-slate": "#334155",
+                        "on-error": "#ffffff",
+                        "success-bg": "#D1FAE5",
+                        "on-primary-fixed-variant": "#264191",
+                        "on-secondary-container": "#006172",
+                        "surface-container-low": "#f4f3fa",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#4cd7f6",
+                        "on-secondary-fixed": "#001f26",
+                        "on-primary-container": "#90a8ff",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#e3e1e9",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#2f3036",
+                        "warning-text": "#92400E",
+                        "surface-container": "#eeedf4",
+                        "surface-container-high": "#e9e7ef",
+                        "on-tertiary-fixed": "#341100",
+                        "tertiary": "#4b1c00",
+                        "info-text": "#075985"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "space-3": "12px",
+                        "space-4": "16px",
+                        "space-10": "40px",
+                        "space-12": "48px",
+                        "space-8": "32px",
+                        "space-1": "4px",
+                        "space-5": "20px",
+                        "space-6": "24px",
+                        "space-2": "8px"
+                    },
+                    "fontFamily": {
+                        "data-mono": ["Work Sans"],
+                        "title-md": ["Inter"],
+                        "display-md": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "caption": ["Inter"],
+                        "display-xl": ["Inter"]
+                    },
+                    "fontSize": {
+                        "data-mono": ["13px", {"lineHeight": "18px", "fontWeight": "500"}],
+                        "title-md": ["18px", {"lineHeight": "26px", "fontWeight": "600"}],
+                        "display-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "title-lg": ["22px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "display-lg": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "caption": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "display-xl": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background-page text-on-background antialiased flex h-screen overflow-hidden">
+<!-- Navigation Drawer -->
+<nav class="hidden md:flex flex-col bg-surface-container-low dark:bg-surface-container-lowest fixed left-0 top-0 h-full w-60 flex flex-col gap-space-2 py-space-6 border-r border-outline-variant dark:border-outline z-20">
+<div class="px-space-4 mb-space-6 flex items-center gap-space-2">
+<img alt="AuditChain Logo" class="w-8 h-8 object-contain" data-alt="Modern professional logo for a franchise audit app called 'AuditChain'. Navy blue and cyan color palette. Clean geometric lines, representing security, compliance, and data. White background, flat vector style. High-contrast corporate modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnDDQ7kYTI3E_UZKRs4acqCgg110p9UUT41EcgYYwppqWF7bB4u4gw6StIfG3F_J6tH8bzPPo-GJFdZmBaVFv1kvay2MB0l4xolMnUUE9V9Hu5UzWh6NGNKaF92IEvyyJj1Z1_ecTJyZ1L_sbSqPR8gRW2HKznfpKfvXyPqPwEPBX0X8JLs-ObJbgxOEoDtrK1nfYM5MCBHZDUa_0DEShTD4nw6DXYVNNDLBA0Zrq7zcGNVoai_uttZQLbYNLZLc-Z77gjwLHcdYw"/>
+<span class="font-display-lg text-display-lg text-navy-primary dark:text-primary-fixed-dim">AuditChain Admin</span>
+</div>
+<ul class="flex flex-col gap-space-1 px-space-2">
+<li>
+<a class="flex items-center gap-space-3 px-space-3 py-space-2 bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed font-semibold rounded-lg mx-space-2 hover:bg-surface-variant dark:hover:bg-surface-container-high transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-space-3 px-space-3 py-space-2 text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant dark:hover:bg-surface-container-high mx-space-2 rounded-lg hover:bg-surface-variant dark:hover:bg-surface-container-high transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+<span class="font-body-md text-body-md">Branches</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-space-3 px-space-3 py-space-2 text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant dark:hover:bg-surface-container-high mx-space-2 rounded-lg hover:bg-surface-variant dark:hover:bg-surface-container-high transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="badge">badge</span>
+<span class="font-body-md text-body-md">Auditors</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-space-3 px-space-3 py-space-2 text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant dark:hover:bg-surface-container-high mx-space-2 rounded-lg hover:bg-surface-variant dark:hover:bg-surface-container-high transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+<span class="font-body-md text-body-md">Audits</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-space-3 px-space-3 py-space-2 text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant dark:hover:bg-surface-container-high mx-space-2 rounded-lg hover:bg-surface-variant dark:hover:bg-surface-container-high transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-body-md text-body-md">Reports</span>
+</a>
+</li>
+<li class="mt-auto">
+<a class="flex items-center gap-space-3 px-space-3 py-space-2 text-on-surface-variant dark:text-outline-variant hover:bg-surface-variant dark:hover:bg-surface-container-high mx-space-2 rounded-lg hover:bg-surface-variant dark:hover:bg-surface-container-high transition-all active:translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col md:ml-60 w-full overflow-y-auto">
+<!-- TopAppBar (Mobile) -->
+<header class="md:hidden flex justify-between items-center w-full px-space-4 py-space-3 bg-surface dark:bg-surface-container-low shadow-sm sticky top-0 z-10">
+<div class="flex items-center gap-space-3">
+<button class="text-primary dark:text-primary-fixed cursor-pointer active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<span class="font-display-md text-display-md font-bold text-navy-primary dark:text-primary-fixed">AuditChain</span>
+</div>
+<button class="flex items-center gap-space-1 text-outline dark:text-outline-variant font-caption text-caption hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors px-space-2 py-space-1 rounded">
+<span class="material-symbols-outlined text-[18px]">search</span>
+<span>⌘K</span>
+</button>
+</header>
+<!-- Top Header Area (Desktop context) -->
+<div class="hidden md:flex justify-between items-center px-space-8 py-space-4 bg-surface shadow-sm sticky top-0 z-10 border-b border-surface-variant">
+<div class="flex items-center gap-space-4 w-full max-w-md">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-cyan-accent focus:ring-offset-1 transition-all h-10" placeholder="Buscar..." type="text"/>
+<div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 text-outline-variant font-caption text-caption border border-outline-variant px-1.5 rounded bg-surface">
+<span>⌘</span><span>K</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-4">
+<button class="relative p-2 text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1 right-1 w-2.5 h-2.5 bg-error-destructive rounded-full border-2 border-surface"></span>
+</button>
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-title-md text-title-md">
+                    JD
+                </div>
+</div>
+</div>
+<!-- Dashboard Content Canvas -->
+<main class="flex-1 p-space-4 md:p-space-8 max-w-[1440px] mx-auto w-full">
+<!-- Welcome Header -->
+<div class="flex flex-col md:flex-row md:justify-between md:items-end mb-space-8 gap-space-4">
+<div>
+<h1 class="font-display-xl text-display-xl text-navy-deep mb-space-1">Bienvenida, Jane 👋</h1>
+<p class="font-body-lg text-body-lg text-outline">Aquí está el resumen de operaciones de auditoría.</p>
+</div>
+<div class="flex items-center gap-space-2 text-outline font-body-md text-body-md bg-surface px-space-4 py-space-2 rounded-lg border border-surface-variant shadow-sm">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+<span>26 oct 2023</span>
+</div>
+</div>
+<!-- KPI Row (Rule of 8, 4-col span) -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-space-4 mb-space-8">
+<!-- KPI 1 -->
+<div class="bg-surface rounded-[14px] p-space-4 shadow-sm border border-surface-variant flex flex-col justify-between min-h-[120px]">
+<div class="flex justify-between items-start mb-space-2">
+<span class="font-caption text-caption uppercase text-neutral-slate tracking-wider">Total Audits</span>
+<div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined text-[18px]">assignment</span>
+</div>
+</div>
+<div class="flex items-baseline gap-space-2 mt-auto">
+<span class="font-display-md text-display-md text-navy-deep">1.452</span>
+<span class="font-caption text-caption text-success-text flex items-center bg-success-bg px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span> 8,5%
+                        </span>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="bg-surface rounded-[14px] p-space-4 shadow-sm border border-surface-variant flex flex-col justify-between min-h-[120px]">
+<div class="flex justify-between items-start mb-space-2">
+<span class="font-caption text-caption uppercase text-neutral-slate tracking-wider">General Compliance</span>
+<div class="w-8 h-8 rounded bg-info-bg flex items-center justify-center text-info-text">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</div>
+</div>
+<div class="flex items-baseline gap-space-2 mt-auto">
+<span class="font-display-md text-display-md text-navy-deep">91,2%</span>
+<span class="font-caption text-caption text-success-text flex items-center bg-success-bg px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span> 1,2%
+                        </span>
+</div>
+</div>
+<!-- KPI 3 -->
+<div class="bg-surface rounded-[14px] p-space-4 shadow-sm border border-surface-variant flex flex-col justify-between min-h-[120px] ring-1 ring-warning-text/20">
+<div class="flex justify-between items-start mb-space-2">
+<span class="font-caption text-caption uppercase text-neutral-slate tracking-wider">Pending</span>
+<div class="w-8 h-8 rounded bg-warning-bg flex items-center justify-center text-warning-text">
+<span class="material-symbols-outlined text-[18px]">pending_actions</span>
+</div>
+</div>
+<div class="flex items-baseline gap-space-2 mt-auto">
+<span class="font-display-md text-display-md text-navy-deep">128</span>
+<span class="font-caption text-caption text-warning-text flex items-center bg-warning-bg px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span> 3,1%
+                        </span>
+</div>
+</div>
+<!-- KPI 4 -->
+<div class="bg-surface rounded-[14px] p-space-4 shadow-sm border border-surface-variant flex flex-col justify-between min-h-[120px]">
+<div class="flex justify-between items-start mb-space-2">
+<span class="font-caption text-caption uppercase text-neutral-slate tracking-wider">Active Auditors</span>
+<div class="w-8 h-8 rounded bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-[18px]">groups</span>
+</div>
+</div>
+<div class="flex items-baseline gap-space-2 mt-auto">
+<span class="font-display-md text-display-md text-navy-deep">45</span>
+<span class="font-caption text-caption text-success-text flex items-center bg-success-bg px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span> 2,2%
+                        </span>
+</div>
+</div>
+<!-- KPI 5 -->
+<div class="bg-surface rounded-[14px] p-space-4 shadow-sm border border-surface-variant flex flex-col justify-between min-h-[120px]">
+<div class="flex justify-between items-start mb-space-2">
+<span class="font-caption text-caption uppercase text-neutral-slate tracking-wider">Network Score</span>
+<div class="w-8 h-8 rounded bg-surface-tint/10 flex items-center justify-center text-surface-tint">
+<span class="material-symbols-outlined text-[18px]">score</span>
+</div>
+</div>
+<div class="flex items-baseline gap-space-2 mt-auto">
+<span class="font-display-md text-display-md text-navy-deep">87,6</span>
+<span class="font-body-md text-body-md text-outline">/100</span>
+</div>
+</div>
+</div>
+<!-- Bento Grid Layout for Charts and Risk -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-6 mb-space-8">
+<!-- Grouped Bar Chart Container -->
+<div class="bg-surface rounded-[14px] p-space-6 shadow-sm border border-surface-variant lg:col-span-2">
+<div class="flex justify-between items-center mb-space-6">
+<h2 class="font-title-lg text-title-lg text-navy-deep">Compliance by Region</h2>
+<button class="p-1 rounded hover:bg-surface-variant text-outline transition-colors">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+<!-- CSS-only Bar Chart Representation -->
+<div class="h-64 flex items-end gap-space-4 pt-space-4 border-b border-surface-variant px-space-2 relative">
+<!-- Y-Axis labels -->
+<div class="absolute left-0 top-0 h-full flex flex-col justify-between pb-6 text-outline font-caption text-caption">
+<span>100%</span><span>75%</span><span>50%</span><span>25%</span>
+</div>
+<div class="ml-8 flex flex-1 justify-around items-end h-full pb-2">
+<!-- Region 1 -->
+<div class="flex flex-col items-center gap-2 group">
+<div class="flex items-end gap-1 h-48">
+<div class="w-4 bg-primary rounded-t-sm h-[92%] relative"><div class="hidden group-hover:block absolute -top-8 -left-2 bg-inverse-surface text-inverse-on-surface font-caption text-caption px-2 py-1 rounded">92%</div></div>
+<div class="w-4 bg-secondary-fixed rounded-t-sm h-[88%] relative"></div>
+</div>
+<span class="font-caption text-caption text-outline">North</span>
+</div>
+<!-- Region 2 -->
+<div class="flex flex-col items-center gap-2 group">
+<div class="flex items-end gap-1 h-48">
+<div class="w-4 bg-primary rounded-t-sm h-[85%]"></div>
+<div class="w-4 bg-secondary-fixed rounded-t-sm h-[90%]"></div>
+</div>
+<span class="font-caption text-caption text-outline">South</span>
+</div>
+<!-- Region 3 -->
+<div class="flex flex-col items-center gap-2 group">
+<div class="flex items-end gap-1 h-48">
+<div class="w-4 bg-primary rounded-t-sm h-[78%]"></div>
+<div class="w-4 bg-secondary-fixed rounded-t-sm h-[82%]"></div>
+</div>
+<span class="font-caption text-caption text-outline">East</span>
+</div>
+<!-- Region 4 -->
+<div class="flex flex-col items-center gap-2 group">
+<div class="flex items-end gap-1 h-48">
+<div class="w-4 bg-primary rounded-t-sm h-[95%]"></div>
+<div class="w-4 bg-secondary-fixed rounded-t-sm h-[94%]"></div>
+</div>
+<span class="font-caption text-caption text-outline">West</span>
+</div>
+</div>
+</div>
+<div class="flex justify-center gap-space-6 mt-space-4 font-caption text-caption text-outline">
+<div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-primary"></span> Q3 2023</div>
+<div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-secondary-fixed"></span> Q4 2023</div>
+</div>
+</div>
+<!-- Donut Chart & Risk Stack -->
+<div class="flex flex-col gap-space-6">
+<!-- Donut Chart Container -->
+<div class="bg-surface rounded-[14px] p-space-6 shadow-sm border border-surface-variant flex-1">
+<h2 class="font-title-md text-title-md text-navy-deep mb-space-4">Audit Status</h2>
+<div class="flex items-center justify-center h-40">
+<!-- CSS Donut Chart representation -->
+<div class="relative w-32 h-32 rounded-full flex items-center justify-center" style="background: conic-gradient(#1E3A8A 0% 70%, #FEF3C7 70% 90%, #EF4444 90% 100%);">
+<div class="w-20 h-20 bg-surface rounded-full flex items-center justify-center flex-col shadow-inner">
+<span class="font-title-lg text-title-lg text-navy-deep leading-none">1.452</span>
+</div>
+</div>
+</div>
+<div class="mt-space-4 flex flex-col gap-2">
+<div class="flex justify-between items-center font-caption text-caption">
+<div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded bg-navy-primary"></span><span class="text-on-surface">Completed</span></div>
+<span class="font-data-mono text-data-mono text-outline">70%</span>
+</div>
+<div class="flex justify-between items-center font-caption text-caption">
+<div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded bg-warning-bg border border-warning-text/20"></span><span class="text-on-surface">Pending</span></div>
+<span class="font-data-mono text-data-mono text-outline">20%</span>
+</div>
+<div class="flex justify-between items-center font-caption text-caption">
+<div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded bg-error-destructive"></span><span class="text-on-surface">Overdue</span></div>
+<span class="font-data-mono text-data-mono text-outline">10%</span>
+</div>
+</div>
+</div>
+<!-- Risk Card -->
+<div class="bg-surface rounded-[14px] p-space-4 shadow-sm border border-error-container bg-error-container/10">
+<div class="flex items-center gap-2 mb-space-3">
+<span class="material-symbols-outlined text-error-destructive">warning</span>
+<h3 class="font-title-md text-title-md text-error-destructive">At Risk Branches</h3>
+</div>
+<ul class="flex flex-col gap-2">
+<li class="flex justify-between items-center bg-surface p-2 rounded border border-surface-variant">
+<span class="font-body-md text-body-md text-navy-deep">BR-Santiago Centro</span>
+<span class="font-data-mono text-data-mono text-error-destructive">64.2%</span>
+</li>
+<li class="flex justify-between items-center bg-surface p-2 rounded border border-surface-variant">
+<span class="font-body-md text-body-md text-navy-deep">BR-Valparaíso Port</span>
+<span class="font-data-mono text-data-mono text-error-destructive">68.9%</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Recent Audits Table -->
+<div class="bg-surface rounded-[14px] shadow-sm border border-surface-variant overflow-hidden mb-space-8">
+<div class="p-space-4 border-b border-surface-variant flex justify-between items-center bg-surface-bright">
+<h2 class="font-title-md text-title-md text-navy-deep">Recent Audits</h2>
+<button class="font-body-md text-body-md text-primary hover:text-primary-container font-medium transition-colors">View All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-neutral-slate text-on-primary font-caption text-caption uppercase tracking-wider h-10">
+<th class="px-space-4 py-2 font-medium">ID</th>
+<th class="px-space-4 py-2 font-medium">Branch</th>
+<th class="px-space-4 py-2 font-medium">Auditor</th>
+<th class="px-space-4 py-2 font-medium">Date</th>
+<th class="px-space-4 py-2 font-medium text-right">Score</th>
+<th class="px-space-4 py-2 font-medium">Status</th>
+<th class="px-space-4 py-2 w-10"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-variant bg-surface">
+<tr class="h-[56px] hover:bg-surface-container-low transition-colors group">
+<td class="px-space-4 py-2 font-data-mono text-data-mono text-outline">#AUD-8842</td>
+<td class="px-space-4 py-2 font-body-md text-body-md text-navy-deep font-medium">Las Condes Plaza</td>
+<td class="px-space-4 py-2 font-body-md text-body-md text-outline flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-variant text-[10px] flex items-center justify-center font-medium">MR</div>
+                                    M. Rojas
+                                </td>
+<td class="px-space-4 py-2 font-body-md text-body-md text-outline">26 oct 2023</td>
+<td class="px-space-4 py-2 font-data-mono text-data-mono text-navy-deep text-right">94,5%</td>
+<td class="px-space-4 py-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full font-caption text-caption bg-success-bg text-success-text">
+                                        Completed
+                                    </span>
+</td>
+<td class="px-space-4 py-2 text-right">
+<button class="text-outline hover:text-navy-deep opacity-0 group-hover:opacity-100 transition-opacity"><span class="material-symbols-outlined">more_vert</span></button>
+</td>
+</tr>
+<tr class="h-[56px] hover:bg-surface-container-low transition-colors group">
+<td class="px-space-4 py-2 font-data-mono text-data-mono text-outline">#AUD-8841</td>
+<td class="px-space-4 py-2 font-body-md text-body-md text-navy-deep font-medium">Providencia Hub</td>
+<td class="px-space-4 py-2 font-body-md text-body-md text-outline flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-variant text-[10px] flex items-center justify-center font-medium">JP</div>
+                                    J. Pérez
+                                </td>
+<td class="px-space-4 py-2 font-body-md text-body-md text-outline">25 oct 2023</td>
+<td class="px-space-4 py-2 font-data-mono text-data-mono text-outline text-right">--</td>
+<td class="px-space-4 py-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full font-caption text-caption bg-warning-bg text-warning-text">
+                                        Pending
+                                    </span>
+</td>
+<td class="px-space-4 py-2 text-right">
+<button class="text-outline hover:text-navy-deep opacity-0 group-hover:opacity-100 transition-opacity"><span class="material-symbols-outlined">more_vert</span></button>
+</td>
+</tr>
+<tr class="h-[56px] hover:bg-surface-container-low transition-colors group">
+<td class="px-space-4 py-2 font-data-mono text-data-mono text-outline">#AUD-8840</td>
+<td class="px-space-4 py-2 font-body-md text-body-md text-navy-deep font-medium">BR-Santiago Centro</td>
+<td class="px-space-4 py-2 font-body-md text-body-md text-outline flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-surface-variant text-[10px] flex items-center justify-center font-medium">AV</div>
+                                    A. Vargas
+                                </td>
+<td class="px-space-4 py-2 font-body-md text-body-md text-error-destructive">20 oct 2023</td>
+<td class="px-space-4 py-2 font-data-mono text-data-mono text-error-destructive text-right">64,2%</td>
+<td class="px-space-4 py-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full font-caption text-caption bg-error-container text-on-error-container">
+                                        Review Required
+                                    </span>
+</td>
+<td class="px-space-4 py-2 text-right">
+<button class="text-outline hover:text-navy-deep opacity-0 group-hover:opacity-100 transition-opacity"><span class="material-symbols-outlined">more_vert</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</div>
+<!-- BottomNavBar (Mobile Only) - Suppressed per rules for Desktop, but keeping structure for md:hidden compliance if needed, though this is a Dashboard context it's a top level destination -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center h-16 px-space-2 pb-safe bg-surface dark:bg-surface-container-lowest shadow-[0_-1px_3px_0_rgba(0,0,0,0.1)] z-50">
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary-fixed-dim text-on-primary-container dark:text-on-primary-fixed rounded-xl px-space-4 py-space-1 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-caption text-caption">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-space-4 py-space-1 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="font-caption text-caption">Search</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-space-4 py-space-1 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+<span class="font-caption text-caption">New</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-space-4 py-space-1 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-caption text-caption">History</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant px-space-4 py-space-1 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-caption text-caption">Profile</span>
+</a>
+</nav>
+</body></html>
