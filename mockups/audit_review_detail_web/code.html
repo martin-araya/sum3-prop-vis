@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Detailed Audit Review</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Work+Sans:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#f39461",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#00164e",
+                        "on-secondary-fixed-variant": "#004e5c",
+                        "secondary-container": "#57dffe",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#6e2c00",
+                        "on-surface-variant": "#444651",
+                        "background": "#faf8ff",
+                        "surface-bright": "#faf8ff",
+                        "tertiary": "#4b1c00",
+                        "on-secondary-container": "#006172",
+                        "on-primary-fixed-variant": "#264191",
+                        "cyan-accent": "#06B6D4",
+                        "surface-variant": "#e3e1e9",
+                        "outline": "#757682",
+                        "surface": "#faf8ff",
+                        "error-destructive": "#EF4444",
+                        "inverse-surface": "#2f3036",
+                        "on-background": "#1a1b21",
+                        "info-bg": "#E0F2FE",
+                        "primary-fixed": "#dce1ff",
+                        "primary-fixed-dim": "#b6c4ff",
+                        "secondary-fixed-dim": "#4cd7f6",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb691",
+                        "surface-dim": "#dad9e1",
+                        "info-text": "#075985",
+                        "on-surface": "#1a1b21",
+                        "success-bg": "#D1FAE5",
+                        "inverse-on-surface": "#f1f0f7",
+                        "tertiary-fixed": "#ffdbcb",
+                        "navy-deep": "#0A2540",
+                        "surface-container-highest": "#e3e1e9",
+                        "primary": "#00236f",
+                        "on-secondary": "#ffffff",
+                        "primary-container": "#1e3a8a",
+                        "navy-primary": "#1E3A8A",
+                        "background-page": "#F8FAFC",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#acedff",
+                        "warning-bg": "#FEF3C7",
+                        "secondary": "#00687a",
+                        "neutral-slate": "#334155",
+                        "surface-container-low": "#f4f3fa",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#90a8ff",
+                        "on-tertiary-fixed-variant": "#773205",
+                        "warning-text": "#92400E",
+                        "surface-tint": "#4059aa",
+                        "on-secondary-fixed": "#001f26",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#e9e7ef",
+                        "success-text": "#065F46",
+                        "cyan-text": "#0E7490",
+                        "surface-container": "#eeedf4",
+                        "inverse-primary": "#b6c4ff",
+                        "on-tertiary-fixed": "#341100",
+                        "error": "#ba1a1a",
+                        "outline-variant": "#c5c5d3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "space-1": "4px",
+                        "space-10": "40px",
+                        "space-8": "32px",
+                        "space-6": "24px",
+                        "space-3": "12px",
+                        "space-4": "16px",
+                        "space-2": "8px",
+                        "space-5": "20px",
+                        "space-12": "48px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "caption": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "data-mono": ["Work Sans"],
+                        "title-md": ["Inter"],
+                        "display-xl": ["Inter"],
+                        "display-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "caption": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "title-lg": ["22px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "display-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "data-mono": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+                        "title-md": ["18px", { "lineHeight": "26px", "fontWeight": "600" }],
+                        "display-xl": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "display-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-background-page text-on-surface h-screen flex overflow-hidden">
+<!-- TopNavBar Web Header -->
+<header class="hidden md:flex justify-between items-center w-full px-space-6 h-16 bg-surface-container-lowest text-primary font-title-md text-title-md border-b border-outline-variant fixed top-0 left-0 right-0 z-50">
+<div class="flex items-center gap-space-4">
+<span class="font-display-md text-display-md font-bold text-primary">AuditChain</span>
+<div class="flex ml-space-8 h-full">
+<a class="text-on-surface-variant hover:bg-surface-container-low transition-all px-space-4 py-space-2 flex items-center h-full" href="#">Home</a>
+<a class="text-primary border-b-2 border-primary hover:bg-surface-container-low transition-all px-space-4 py-space-2 flex items-center h-full" href="#">Audits</a>
+<a class="text-on-surface-variant hover:bg-surface-container-low transition-all px-space-4 py-space-2 flex items-center h-full" href="#">Tasks</a>
+</div>
+</div>
+<div class="flex items-center gap-space-4">
+<button class="p-space-2 text-on-surface-variant hover:bg-surface-container-low rounded-full focus:ring-2 focus:ring-cyan-accent focus:ring-offset-2 transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+<button class="p-space-2 text-on-surface-variant hover:bg-surface-container-low rounded-full focus:ring-2 focus:ring-cyan-accent focus:ring-offset-2 transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant">
+<img alt="Auditor Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZJ97srsSpZw6GtsImoBEYmrz8QGUALoRoAYChHmCnHFVaX6JNjvnxrA3IJPHTy-XIaZq02SunieD7_Dmoi-TdOWBA_HX9stLGCX6FJl24zHu8LdYI3Lvr7f-i1I3g21knFe4FK6K1BnoHF-d9lAR3Ajo5j0ITY8TFioHZWHfr1sbiozB-kZ9Lr8fen_O5fKreY_Wh0eEsu97gDhl6qrqHQLxLPA24NxSWNfsDxYJKlnjrLvH_3rF0a_PigkLdkab6zQg13RgwiIU"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar Web Sidebar -->
+<nav class="hidden md:flex flex-col h-full py-space-6 bg-navy-deep text-on-primary font-body-md text-body-md w-60 fixed left-0 top-16 bottom-0 z-40 shadow-md border-r border-navy-deep">
+<div class="px-space-4 mb-space-8">
+<span class="font-display-md text-display-md font-extrabold text-cyan-accent">AuditChain</span>
+<p class="font-caption text-caption text-on-primary/70 mt-1 uppercase tracking-wider">Enterprise Audit</p>
+<button class="mt-space-4 w-full bg-cyan-accent text-navy-deep font-title-md text-title-md py-space-2 rounded-lg hover:bg-opacity-90 transition-colors focus:ring-2 focus:ring-cyan-accent focus:ring-offset-2 focus:ring-offset-navy-deep shadow-sm">New Audit</button>
+</div>
+<div class="flex-1 overflow-y-auto">
+<ul class="space-y-space-1">
+<li>
+<a class="flex items-center gap-space-3 text-on-primary/70 hover:text-on-primary px-4 py-3 hover:bg-primary transition-colors focus:ring-2 focus:ring-cyan-accent focus:outline-none" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                        Dashboard
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-space-3 bg-primary-container text-on-primary-container rounded-lg mx-2 px-4 py-3 hover:bg-primary transition-colors focus:ring-2 focus:ring-cyan-accent focus:outline-none shadow-sm" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">fact_check</span>
+                        Audits
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-space-3 text-on-primary/70 hover:text-on-primary px-4 py-3 hover:bg-primary transition-colors focus:ring-2 focus:ring-cyan-accent focus:outline-none" href="#">
+<span class="material-symbols-outlined">verified_user</span>
+                        Compliance
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-space-3 text-on-primary/70 hover:text-on-primary px-4 py-3 hover:bg-primary transition-colors focus:ring-2 focus:ring-cyan-accent focus:outline-none" href="#">
+<span class="material-symbols-outlined">assessment</span>
+                        Reports
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-space-3 text-on-primary/70 hover:text-on-primary px-4 py-3 hover:bg-primary transition-colors focus:ring-2 focus:ring-cyan-accent focus:outline-none" href="#">
+<span class="material-symbols-outlined">description</span>
+                        Workpapers
+                    </a>
+</li>
+</ul>
+</div>
+<div class="mt-auto px-space-2 pt-space-4 border-t border-on-primary/10">
+<ul class="space-y-space-1">
+<li>
+<a class="flex items-center gap-space-3 text-on-primary/70 hover:text-on-primary px-4 py-3 hover:bg-primary transition-colors rounded-lg focus:ring-2 focus:ring-cyan-accent focus:outline-none" href="#">
+<span class="material-symbols-outlined">help</span>
+                        Support
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-space-3 text-on-primary/70 hover:text-on-primary px-4 py-3 hover:bg-primary transition-colors rounded-lg focus:ring-2 focus:ring-cyan-accent focus:outline-none" href="#">
+<span class="material-symbols-outlined">settings</span>
+                        Settings
+                    </a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-60 mt-16 p-space-6 overflow-y-auto w-full max-w-[1440px] mx-auto">
+<!-- Breadcrumbs -->
+<nav aria-label="Breadcrumb" class="mb-space-6">
+<ol class="flex items-center space-x-2 font-caption text-caption text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors" href="#">Auditorías</a></li>
+<li class="flex items-center"><span class="material-symbols-outlined text-[16px] mx-1">chevron_right</span></li>
+<li><a class="hover:text-primary transition-colors" href="#">Detalle</a></li>
+<li class="flex items-center"><span class="material-symbols-outlined text-[16px] mx-1">chevron_right</span></li>
+<li aria-current="page" class="text-on-surface font-body-md">#AUD-1043</li>
+</ol>
+</nav>
+<!-- Header -->
+<header class="flex flex-col md:flex-row md:items-start justify-between gap-space-4 mb-space-8 pb-space-6 border-b border-outline-variant">
+<div>
+<h1 class="font-display-lg text-display-lg text-navy-deep mb-space-1">Inspección Trimestral Sucursal Norte</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Sucursal Norte, Ciudad de México</p>
+</div>
+<div class="flex items-center gap-space-3">
+<span class="inline-flex items-center px-3 py-1 rounded-full font-caption text-caption uppercase bg-warning-bg text-warning-text shadow-sm border border-warning-text/20">
+<span class="material-symbols-outlined text-[14px] mr-1">pending</span>
+                    Pendiente de Revisión
+                </span>
+</div>
+</header>
+<!-- Two Column Layout -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-space-6">
+<!-- Left Column: Detailed Category Scores -->
+<div class="xl:col-span-2 space-y-space-6">
+<!-- Category Card: Limpieza -->
+<article class="bg-surface-container-lowest rounded-xl p-space-6 shadow-sm border border-outline-variant/50">
+<div class="flex items-center justify-between mb-space-4 border-b border-outline-variant/30 pb-space-3">
+<h2 class="font-title-lg text-title-lg text-navy-deep flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">cleaning_services</span>
+                            Limpieza y Orden
+                        </h2>
+<span class="font-data-mono text-data-mono text-success-text bg-success-bg px-2 py-1 rounded-md border border-success-text/20 shadow-sm">95/100</span>
+</div>
+<div class="space-y-space-4">
+<div class="flex items-start gap-space-4">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant shrink-0 border border-outline-variant">
+<span class="material-symbols-outlined text-[16px]">chat</span>
+</div>
+<div>
+<h3 class="font-caption text-caption uppercase text-on-surface-variant mb-1">Comentario del Auditor</h3>
+<p class="font-body-md text-body-md text-on-surface">Áreas comunes en excelente estado. Se detectó polvo menor en los estantes superiores del pasillo C, pero dentro de los parámetros aceptables. Se recomienda limpieza profunda trimestral.</p>
+</div>
+</div>
+<div>
+<h3 class="font-caption text-caption uppercase text-on-surface-variant mb-space-2 mt-space-4">Evidencia</h3>
+<div class="flex gap-space-3 overflow-x-auto pb-2">
+<img alt="A detailed close-up shot of a pristine, modern office corridor with polished floors and clean shelving units. Bright, cool white lighting reflects off the surfaces, creating a professional, light-mode aesthetic. A subtle cyan accent light suggests technological integration. The mood is sterile, organized, and highly compliant with corporate standards." class="h-24 w-24 object-cover rounded-lg border border-outline-variant shadow-sm shrink-0 hover:shadow-md transition-shadow cursor-pointer" data-alt="A detailed close-up shot of a pristine, modern office corridor with polished floors and clean shelving units. Bright, cool white lighting reflects off the surfaces, creating a professional, light-mode aesthetic. A subtle cyan accent light suggests technological integration. The mood is sterile, organized, and highly compliant with corporate standards." src="https://lh3.googleusercontent.com/aida/ADBb0uiay9h_8iTY_2QnArGwso1TahQyfjIdtbmQzvyODifhdh3JQgByRDR29pGY2qCEFGFCzzJtq3S6slE-w80whKvuaOMn48RVn30KUIhHZElvHGO8wkzpzyFVKHWwrtq7kIO3HYr8bm5cXKgUZ39SPnGpe-fwfMrarcvKTD5DDi1Vfv7CqVMJolOa4qLUMZuQETKmYbKEswdoT-L3ms4GlGdc48XltYfgHaihoObnMXLU8vucZCr5LuC5Qw"/>
+</div>
+</div>
+</div>
+</article>
+<!-- Category Card: Seguridad -->
+<article class="bg-surface-container-lowest rounded-xl p-space-6 shadow-sm border border-outline-variant/50">
+<div class="flex items-center justify-between mb-space-4 border-b border-outline-variant/30 pb-space-3">
+<h2 class="font-title-lg text-title-lg text-navy-deep flex items-center gap-2">
+<span class="material-symbols-outlined text-error">security</span>
+                            Seguridad
+                        </h2>
+<span class="font-data-mono text-data-mono text-error border border-error/20 bg-error-container px-2 py-1 rounded-md shadow-sm">60/100</span>
+</div>
+<div class="space-y-space-4">
+<div class="flex items-start gap-space-4">
+<div class="w-8 h-8 rounded-full bg-error-container flex items-center justify-center text-error shrink-0 border border-error/20">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+</div>
+<div>
+<h3 class="font-caption text-caption uppercase text-on-surface-variant mb-1">Comentario del Auditor</h3>
+<p class="font-body-md text-body-md text-on-surface">Extintor del área de almacén caducado desde hace 2 meses. Puerta de emergencia trasera parcialmente bloqueada por cajas. Requiere acción correctiva inmediata.</p>
+</div>
+</div>
+</div>
+</article>
+</div>
+<!-- Right Column: Sidebar (Navy-900 focus) -->
+<aside class="space-y-space-6">
+<!-- Metadata Card -->
+<div class="bg-navy-deep rounded-xl p-space-6 shadow-md text-on-primary">
+<h3 class="font-title-md text-title-md mb-space-4 flex items-center gap-2 border-b border-on-primary/20 pb-space-2">
+<span class="material-symbols-outlined">info</span>
+                        Detalles de Auditoría
+                    </h3>
+<dl class="space-y-space-4 font-body-md text-body-md">
+<div>
+<dt class="font-caption text-caption uppercase text-on-primary/70">Fecha y Hora</dt>
+<dd class="font-data-mono text-data-mono mt-1">24 Oct 2023, 08:30 AM</dd>
+</div>
+<div>
+<dt class="font-caption text-caption uppercase text-on-primary/70">Duración</dt>
+<dd class="font-data-mono text-data-mono mt-1">2h 45m</dd>
+</div>
+<div>
+<dt class="font-caption text-caption uppercase text-on-primary/70">Auditor Responsable</dt>
+<dd class="mt-1 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-cyan-accent">person</span>
+                                Carlos Mendoza
+                            </dd>
+</div>
+<div>
+<dt class="font-caption text-caption uppercase text-on-primary/70">Verificación GPS</dt>
+<dd class="mt-1 flex items-center gap-2 text-success-text bg-success-bg/20 px-2 py-1 rounded w-fit border border-success-text/30">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+<span class="font-data-mono">En sitio confirmado</span>
+</dd>
+</div>
+</dl>
+</div>
+<!-- Supervisor Actions -->
+<div class="bg-surface-container-lowest rounded-xl p-space-6 shadow-sm border border-outline-variant/50">
+<h3 class="font-title-md text-title-md text-navy-deep mb-space-4">Revisión de Supervisor</h3>
+<form class="space-y-space-4">
+<div>
+<label class="block font-caption text-caption uppercase text-on-surface-variant mb-space-2" for="supervisor-comments">Comentarios Adicionales</label>
+<textarea class="w-full rounded-md border-outline-variant shadow-sm focus:border-cyan-accent focus:ring focus:ring-cyan-accent/50 focus:ring-opacity-50 font-body-md text-on-surface bg-surface-bright" id="supervisor-comments" placeholder="Escriba sus observaciones..." rows="4"></textarea>
+</div>
+<div class="flex flex-col gap-space-3 pt-space-2 border-t border-outline-variant/30">
+<button class="w-full bg-cyan-accent text-navy-deep font-title-md text-title-md py-space-3 rounded-lg shadow-sm hover:bg-opacity-90 transition-colors focus:ring-2 focus:ring-cyan-accent focus:ring-offset-2 flex justify-center items-center gap-2" type="button">
+<span class="material-symbols-outlined">check_circle</span>
+                                Aprobar Auditoría
+                            </button>
+<button class="w-full bg-surface-container-lowest text-error font-title-md text-title-md py-space-3 rounded-lg shadow-sm border border-error hover:bg-error-container transition-colors focus:ring-2 focus:ring-error focus:ring-offset-2 flex justify-center items-center gap-2" type="button">
+<span class="material-symbols-outlined">cancel</span>
+                                Rechazar
+                            </button>
+</div>
+</form>
+</div>
+</aside>
+</div>
+</main>
+<!-- BottomNavBar Mobile Only -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-space-4 pb-safe pt-space-2 bg-surface border-t border-outline-variant shadow-lg z-50 rounded-t-xl touch-manipulation transition-all duration-200">
+<a class="flex flex-col items-center justify-center text-on-surface-variant py-2 px-3" href="#">
+<span class="material-symbols-outlined text-[24px]">home</span>
+<span class="font-caption text-[10px] mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1" href="#">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">assignment</span>
+<span class="font-caption text-[10px] mt-1">Audits</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant py-2 px-3" href="#">
+<span class="material-symbols-outlined text-[24px]">rule</span>
+<span class="font-caption text-[10px] mt-1">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant py-2 px-3" href="#">
+<span class="material-symbols-outlined text-[24px]">person</span>
+<span class="font-caption text-[10px] mt-1">Profile</span>
+</a>
+</nav>
+</body></html>
