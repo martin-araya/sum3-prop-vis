@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Profile &amp; Sync Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Work+Sans:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#f39461",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#00164e",
+                        "on-secondary-fixed-variant": "#004e5c",
+                        "secondary-container": "#57dffe",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#6e2c00",
+                        "on-surface-variant": "#444651",
+                        "background": "#faf8ff",
+                        "surface-bright": "#faf8ff",
+                        "tertiary": "#4b1c00",
+                        "on-secondary-container": "#006172",
+                        "on-primary-fixed-variant": "#264191",
+                        "cyan-accent": "#06B6D4",
+                        "surface-variant": "#e3e1e9",
+                        "outline": "#757682",
+                        "surface": "#faf8ff",
+                        "error-destructive": "#EF4444",
+                        "inverse-surface": "#2f3036",
+                        "on-background": "#1a1b21",
+                        "info-bg": "#E0F2FE",
+                        "primary-fixed": "#dce1ff",
+                        "primary-fixed-dim": "#b6c4ff",
+                        "secondary-fixed-dim": "#4cd7f6",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb691",
+                        "surface-dim": "#dad9e1",
+                        "info-text": "#075985",
+                        "on-surface": "#1a1b21",
+                        "success-bg": "#D1FAE5",
+                        "inverse-on-surface": "#f1f0f7",
+                        "tertiary-fixed": "#ffdbcb",
+                        "navy-deep": "#0A2540",
+                        "surface-container-highest": "#e3e1e9",
+                        "primary": "#00236f",
+                        "on-secondary": "#ffffff",
+                        "primary-container": "#1e3a8a",
+                        "navy-primary": "#1E3A8A",
+                        "background-page": "#F8FAFC",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#acedff",
+                        "warning-bg": "#FEF3C7",
+                        "secondary": "#00687a",
+                        "neutral-slate": "#334155",
+                        "surface-container-low": "#f4f3fa",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#90a8ff",
+                        "on-tertiary-fixed-variant": "#773205",
+                        "warning-text": "#92400E",
+                        "surface-tint": "#4059aa",
+                        "on-secondary-fixed": "#001f26",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#e9e7ef",
+                        "success-text": "#065F46",
+                        "cyan-text": "#0E7490",
+                        "surface-container": "#eeedf4",
+                        "inverse-primary": "#b6c4ff",
+                        "on-tertiary-fixed": "#341100",
+                        "error": "#ba1a1a",
+                        "outline-variant": "#c5c5d3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "space-1": "4px",
+                        "space-10": "40px",
+                        "space-8": "32px",
+                        "space-6": "24px",
+                        "space-3": "12px",
+                        "space-4": "16px",
+                        "space-2": "8px",
+                        "space-5": "20px",
+                        "space-12": "48px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "caption": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "data-mono": ["Work Sans"],
+                        "title-md": ["Inter"],
+                        "display-xl": ["Inter"],
+                        "display-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "caption": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "title-lg": ["22px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "display-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "data-mono": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+                        "title-md": ["18px", { "lineHeight": "26px", "fontWeight": "600" }],
+                        "display-xl": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "display-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background-page text-on-surface font-body-md min-h-screen flex flex-col md:flex-row">
+<!-- TopNavBar (Web) -->
+<nav class="hidden md:flex justify-between items-center w-full px-space-6 h-16 bg-surface-container-lowest dark:bg-inverse-surface border-b border-outline-variant dark:border-outline fixed top-0 left-0 right-0 z-50">
+<div class="flex items-center gap-4">
+<span class="font-display-md text-display-md font-bold text-primary dark:text-inverse-primary">AuditChain</span>
+</div>
+<div class="flex items-center gap-space-6">
+<button class="text-on-surface-variant dark:text-outline hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-all p-2 rounded-full focus:ring-2 focus:ring-cyan-accent focus:ring-offset-2">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant dark:text-outline hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-all p-2 rounded-full focus:ring-2 focus:ring-cyan-accent focus:ring-offset-2">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<img alt="Auditor Profile" class="w-8 h-8 rounded-full border border-outline-variant" data-alt="A professional headshot of a corporate auditor in a modern, well-lit office environment. The lighting is soft and bright, emphasizing a clean, corporate modern aesthetic with high contrast. The subject conveys authority and clarity. The color palette incorporates subtle deep navy and slate tones to match a professional interface design." src="https://lh3.googleusercontent.com/aida/ADBb0uiay9h_8iTY_2QnArGwso1TahQyfjIdtbmQzvyODifhdh3JQgByRDR29pGY2qCEFGFCzzJtq3S6slE-w80whKvuaOMn48RVn30KUIhHZElvHGO8wkzpzyFVKHWwrtq7kIO3HYr8bm5cXKgUZ39SPnGpe-fwfMrarcvKTD5DDi1Vfv7CqVMJolOa4qLUMZuQETKmYbKEswdoT-L3ms4GlGdc48XltYfgHaihoObnMXLU8vucZCr5LuC5Qw"/>
+</div>
+</nav>
+<!-- SideNavBar (Web) -->
+<aside class="hidden md:flex flex-col h-screen w-60 py-space-6 bg-navy-deep dark:bg-on-primary-fixed shadow-md fixed left-0 top-16 z-40 pt-space-8">
+<div class="px-space-6 mb-space-8">
+<span class="font-display-md text-display-md font-extrabold text-cyan-accent block">AuditChain</span>
+<span class="font-caption text-caption text-on-primary/70 block mt-1">Enterprise Audit</span>
+</div>
+<button class="mx-space-6 mb-space-8 bg-primary-container text-on-primary rounded-lg px-4 py-3 font-title-md text-title-md hover:bg-primary transition-colors flex items-center justify-center gap-2 focus:ring-2 focus:ring-cyan-accent focus:ring-offset-2 focus:ring-offset-navy-deep">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+            New Audit
+        </button>
+<nav class="flex-1 flex flex-col gap-2 px-space-2">
+<a class="flex items-center gap-3 text-on-primary/70 hover:text-on-primary px-4 py-3 hover:bg-primary dark:hover:bg-primary-fixed-variant transition-colors rounded-lg font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span> Dashboard
+            </a>
+<a class="flex items-center gap-3 text-on-primary/70 hover:text-on-primary px-4 py-3 hover:bg-primary dark:hover:bg-primary-fixed-variant transition-colors rounded-lg font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="fact_check">fact_check</span> Audits
+            </a>
+<a class="flex items-center gap-3 text-on-primary/70 hover:text-on-primary px-4 py-3 hover:bg-primary dark:hover:bg-primary-fixed-variant transition-colors rounded-lg font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span> Compliance
+            </a>
+<a class="flex items-center gap-3 text-on-primary/70 hover:text-on-primary px-4 py-3 hover:bg-primary dark:hover:bg-primary-fixed-variant transition-colors rounded-lg font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="assessment">assessment</span> Reports
+            </a>
+<a class="flex items-center gap-3 text-on-primary/70 hover:text-on-primary px-4 py-3 hover:bg-primary dark:hover:bg-primary-fixed-variant transition-colors rounded-lg font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span> Workpapers
+            </a>
+</nav>
+<div class="mt-auto px-space-2 flex flex-col gap-2">
+<a class="flex items-center gap-3 text-on-primary/70 hover:text-on-primary px-4 py-3 hover:bg-primary dark:hover:bg-primary-fixed-variant transition-colors rounded-lg font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span> Support
+            </a>
+<a class="flex items-center gap-3 bg-primary-container text-on-primary-container rounded-lg mx-2 px-4 py-3 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span> Settings
+            </a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-60 pt-safe md:pt-16 pb-24 md:pb-8 p-space-4 md:p-space-6 max-w-[1440px] mx-auto w-full flex flex-col gap-space-6">
+<!-- Profile Header Component -->
+<header class="bg-surface-container-lowest rounded-xl p-space-6 shadow-sm border border-outline-variant/30 flex items-center gap-space-6">
+<div class="relative">
+<img alt="María González" class="w-24 h-24 rounded-full border-2 border-surface-variant object-cover shadow-sm" data-alt="A highly detailed close-up portrait of a professional female auditor, María González, in a crisp corporate setting. The lighting is studio-quality, casting subtle ambient shadows that enhance depth without being harsh. The background is a clean, neutral slate tone typical of high-end corporate modern design. The overall mood is authoritative, precise, and solvent, aligning perfectly with a data-first enterprise UI aesthetic." src="https://lh3.googleusercontent.com/aida/ADBb0uiay9h_8iTY_2QnArGwso1TahQyfjIdtbmQzvyODifhdh3JQgByRDR29pGY2qCEFGFCzzJtq3S6slE-w80whKvuaOMn48RVn30KUIhHZElvHGO8wkzpzyFVKHWwrtq7kIO3HYr8bm5cXKgUZ39SPnGpe-fwfMrarcvKTD5DDi1Vfv7CqVMJolOa4qLUMZuQETKmYbKEswdoT-L3ms4GlGdc48XltYfgHaihoObnMXLU8vucZCr5LuC5Qw"/>
+<div aria-label="Online Status" class="absolute bottom-0 right-0 bg-success-bg text-success-text rounded-full p-1 border-2 border-surface-container-lowest flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]" data-icon="check_circle">check_circle</span>
+</div>
+</div>
+<div>
+<h1 class="font-display-lg text-display-lg text-navy-deep">María González</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-1">maria.gonzalez@auditchain.com</p>
+<div class="flex gap-2 mt-3">
+<span class="inline-flex items-center gap-1 bg-info-bg text-info-text px-2 py-1 rounded-full font-caption text-caption">
+<span class="material-symbols-outlined text-[14px]" data-icon="badge">badge</span>
+                        Senior Auditor
+                    </span>
+<span class="inline-flex items-center gap-1 bg-surface-container-high text-on-surface px-2 py-1 rounded-full font-caption text-caption">
+<span class="material-symbols-outlined text-[14px]" data-icon="location_on">location_on</span>
+                        Madrid Office
+                    </span>
+</div>
+</div>
+</header>
+<!-- Main Bento Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-space-6">
+<!-- Sync Status Card (Span 2) -->
+<section class="xl:col-span-2 bg-surface-container-lowest rounded-xl p-space-6 shadow-sm border border-outline-variant/30 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-space-4">
+<div>
+<h2 class="font-title-lg text-title-lg text-navy-deep flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="sync">sync</span>
+                                Cola de sincronización
+                            </h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Estado de los datos locales vs servidor.</p>
+</div>
+<span class="bg-warning-bg text-warning-text px-3 py-1 rounded-full font-caption text-caption font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="pending">pending</span>
+                            3 elementos pendientes
+                        </span>
+</div>
+<!-- Progress Bar Component -->
+<div class="mt-space-6 mb-space-8">
+<div class="flex justify-between font-caption text-caption text-on-surface-variant mb-2">
+<span>Sincronizando auditoría "Retail_Q3_Madrid"...</span>
+<span class="font-data-mono text-data-mono">68%</span>
+</div>
+<div class="w-full bg-surface-container-high rounded-full h-2.5 overflow-hidden">
+<div class="bg-primary-container h-2.5 rounded-full" style="width: 68%"></div>
+</div>
+</div>
+</div>
+<div class="flex justify-end pt-space-4 border-t border-outline-variant/30">
+<button class="bg-navy-primary text-on-primary font-title-md text-title-md px-space-6 py-space-3 rounded-lg flex items-center gap-2 hover:bg-primary-container transition-colors focus:ring-2 focus:ring-cyan-accent focus:ring-offset-2">
+<span class="material-symbols-outlined" data-icon="cloud_sync">cloud_sync</span>
+                        Sincronizar ahora
+                    </button>
+</div>
+</section>
+<!-- Preferences Settings Card -->
+<section class="bg-surface-container-lowest rounded-xl p-space-6 shadow-sm border border-outline-variant/30">
+<h2 class="font-title-lg text-title-lg text-navy-deep mb-space-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="tune">tune</span>
+                    Preferencias de App
+                </h2>
+<div class="flex flex-col gap-space-4">
+<!-- Toggle 1 -->
+<div class="flex justify-between items-center py-2 border-b border-outline-variant/20">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-surface-container-low rounded-lg text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="notifications_active">notifications_active</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface">Notificaciones</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-container-high peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-cyan-accent peer-focus:ring-offset-2 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-outline-variant after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+<!-- Toggle 2 -->
+<div class="flex justify-between items-center py-2 border-b border-outline-variant/20">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-surface-container-low rounded-lg text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="wifi_off">wifi_off</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface">Modo Offline</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-container-high peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-cyan-accent peer-focus:ring-offset-2 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-outline-variant after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+<!-- Toggle 3 -->
+<div class="flex justify-between items-center py-2">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-surface-container-low rounded-lg text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="wifi">wifi</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface">Carga solo en Wi-Fi</span>
+<span class="font-caption text-caption text-on-surface-variant">Recomendado para datos grandes</span>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-container-high peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-cyan-accent peer-focus:ring-offset-2 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-outline-variant after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+</div>
+</section>
+</div>
+<!-- Danger Zone / Logout -->
+<section class="mt-space-4 border border-error-container rounded-xl p-space-6 bg-surface-bright flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div>
+<h3 class="font-title-md text-title-md text-error">Gestión de Sesión</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Cerrar sesión eliminará los datos no sincronizados del dispositivo local.</p>
+</div>
+<button class="bg-surface-bright border-2 border-error text-error font-title-md text-title-md px-space-6 py-space-2 rounded-lg flex items-center gap-2 hover:bg-error-container transition-colors focus:ring-2 focus:ring-error focus:ring-offset-2 whitespace-nowrap">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+                Cerrar Sesión
+            </button>
+</section>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-space-4 pb-safe pt-space-2 bg-surface dark:bg-inverse-surface border-t border-outline-variant dark:border-outline shadow-lg z-50 rounded-t-xl touch-manipulation transition-all duration-200">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant py-2" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="home">home</span>
+<span class="font-caption text-caption">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant py-2" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="assignment">assignment</span>
+<span class="font-caption text-caption">Audits</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant py-2" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="rule">rule</span>
+<span class="font-caption text-caption">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 my-1" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="person">person</span>
+<span class="font-caption text-caption">Profile</span>
+</a>
+</nav>
+</body></html>
