@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Analytics &amp; Compliance Reports - AuditChain</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Work+Sans:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#f39461",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#00164e",
+                        "on-secondary-fixed-variant": "#004e5c",
+                        "secondary-container": "#57dffe",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#6e2c00",
+                        "on-surface-variant": "#444651",
+                        "background": "#faf8ff",
+                        "surface-bright": "#faf8ff",
+                        "tertiary": "#4b1c00",
+                        "on-secondary-container": "#006172",
+                        "on-primary-fixed-variant": "#264191",
+                        "cyan-accent": "#06B6D4",
+                        "surface-variant": "#e3e1e9",
+                        "outline": "#757682",
+                        "surface": "#faf8ff",
+                        "error-destructive": "#EF4444",
+                        "inverse-surface": "#2f3036",
+                        "on-background": "#1a1b21",
+                        "info-bg": "#E0F2FE",
+                        "primary-fixed": "#dce1ff",
+                        "primary-fixed-dim": "#b6c4ff",
+                        "secondary-fixed-dim": "#4cd7f6",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb691",
+                        "surface-dim": "#dad9e1",
+                        "info-text": "#075985",
+                        "on-surface": "#1a1b21",
+                        "success-bg": "#D1FAE5",
+                        "inverse-on-surface": "#f1f0f7",
+                        "tertiary-fixed": "#ffdbcb",
+                        "navy-deep": "#0A2540",
+                        "surface-container-highest": "#e3e1e9",
+                        "primary": "#00236f",
+                        "on-secondary": "#ffffff",
+                        "primary-container": "#1e3a8a",
+                        "navy-primary": "#1E3A8A",
+                        "background-page": "#F8FAFC",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#acedff",
+                        "warning-bg": "#FEF3C7",
+                        "secondary": "#00687a",
+                        "neutral-slate": "#334155",
+                        "surface-container-low": "#f4f3fa",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#90a8ff",
+                        "on-tertiary-fixed-variant": "#773205",
+                        "warning-text": "#92400E",
+                        "surface-tint": "#4059aa",
+                        "on-secondary-fixed": "#001f26",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#e9e7ef",
+                        "success-text": "#065F46",
+                        "cyan-text": "#0E7490",
+                        "surface-container": "#eeedf4",
+                        "inverse-primary": "#b6c4ff",
+                        "on-tertiary-fixed": "#341100",
+                        "error": "#ba1a1a",
+                        "outline-variant": "#c5c5d3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "space-1": "4px",
+                        "space-10": "40px",
+                        "space-8": "32px",
+                        "space-6": "24px",
+                        "space-3": "12px",
+                        "space-4": "16px",
+                        "space-2": "8px",
+                        "space-5": "20px",
+                        "space-12": "48px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "caption": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "data-mono": ["Work Sans"],
+                        "title-md": ["Inter"],
+                        "display-xl": ["Inter"],
+                        "display-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "caption": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "title-lg": ["22px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "display-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "data-mono": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+                        "title-md": ["18px", { "lineHeight": "26px", "fontWeight": "600" }],
+                        "display-xl": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "display-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+        @media (max-width: 1280px) {
+            .data-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .data-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background-page text-on-background min-h-screen flex font-body-md">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col h-screen w-60 py-space-6 bg-navy-deep text-on-primary font-body-md text-body-md shadow-md fixed left-0 top-0 z-40">
+<div class="px-space-6 mb-space-8 flex flex-col items-center">
+<div class="w-16 h-16 rounded-full bg-primary-container flex items-center justify-center mb-space-4">
+<img alt="AuditChain Logo" class="w-10 h-10 rounded-full object-cover" data-alt="A sophisticated abstract 3D render representing financial security and auditing. The image features interlocking metallic navy blue and pristine white geometric gears or chain links, set against a smooth, dark corporate background. Soft, cyan-accented light reflects off the edges, highlighting precision and enterprise-level trust. The composition is highly symmetrical, evoking reliability and modern technological compliance without any generic tech tropes." src="https://lh3.googleusercontent.com/aida/ADBb0uiay9h_8iTY_2QnArGwso1TahQyfjIdtbmQzvyODifhdh3JQgByRDR29pGY2qCEFGFCzzJtq3S6slE-w80whKvuaOMn48RVn30KUIhHZElvHGO8wkzpzyFVKHWwrtq7kIO3HYr8bm5cXKgUZ39SPnGpe-fwfMrarcvKTD5DDi1Vfv7CqVMJolOa4qLUMZuQETKmYbKEswdoT-L3ms4GlGdc48XltYfgHaihoObnMXLU8vucZCr5LuC5Qw"/>
+</div>
+<h1 class="font-display-md text-display-md font-extrabold text-cyan-accent text-center w-full truncate">AuditChain</h1>
+<p class="font-caption text-caption text-on-primary/70 mt-1 uppercase tracking-wider text-center w-full truncate">Enterprise Audit</p>
+</div>
+<div class="px-4 mb-space-6">
+<button class="w-full bg-primary-container text-on-primary font-title-md text-title-md py-space-3 rounded-lg flex items-center justify-center gap-2 hover:bg-primary transition-colors focus:ring-2 focus:ring-cyan-accent focus:ring-offset-2 focus:ring-offset-navy-deep shadow-sm">
+<span class="material-symbols-outlined">add</span>
+                New Audit
+            </button>
+</div>
+<nav class="flex-1 overflow-y-auto px-2 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-primary/70 hover:text-on-primary hover:bg-primary transition-colors rounded-lg group scale-98 active:scale-95" href="#">
+<span class="material-symbols-outlined group-hover:text-cyan-accent transition-colors" data-icon="dashboard">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-primary/70 hover:text-on-primary hover:bg-primary transition-colors rounded-lg group scale-98 active:scale-95" href="#">
+<span class="material-symbols-outlined group-hover:text-cyan-accent transition-colors" data-icon="fact_check">fact_check</span>
+                Audits
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-primary/70 hover:text-on-primary hover:bg-primary transition-colors rounded-lg group scale-98 active:scale-95" href="#">
+<span class="material-symbols-outlined group-hover:text-cyan-accent transition-colors" data-icon="verified_user">verified_user</span>
+                Compliance
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg mx-2 font-medium scale-98 active:scale-95 transition-transform shadow-sm" href="#">
+<span class="material-symbols-outlined text-cyan-accent" data-icon="assessment" data-weight="fill">assessment</span>
+                Reports
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-primary/70 hover:text-on-primary hover:bg-primary transition-colors rounded-lg group scale-98 active:scale-95" href="#">
+<span class="material-symbols-outlined group-hover:text-cyan-accent transition-colors" data-icon="description">description</span>
+                Workpapers
+            </a>
+</nav>
+<div class="px-2 mt-auto space-y-1 pt-space-6 border-t border-on-primary/10 mx-4">
+<a class="flex items-center gap-3 px-4 py-3 text-on-primary/70 hover:text-on-primary hover:bg-primary transition-colors rounded-lg group scale-98 active:scale-95" href="#">
+<span class="material-symbols-outlined group-hover:text-cyan-accent transition-colors" data-icon="help">help</span>
+                Support
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-primary/70 hover:text-on-primary hover:bg-primary transition-colors rounded-lg group scale-98 active:scale-95" href="#">
+<span class="material-symbols-outlined group-hover:text-cyan-accent transition-colors" data-icon="settings">settings</span>
+                Settings
+            </a>
+</div>
+</aside>
+<!-- TopNavBar (Mobile Only) -->
+<header class="md:hidden flex justify-between items-center w-full px-space-6 h-16 bg-surface-container-lowest text-primary font-title-md text-title-md border-b border-outline-variant fixed top-0 left-0 right-0 z-30">
+<div class="font-display-md text-display-md font-bold text-primary truncate">AuditChain</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-all focus:ring-2 focus:ring-cyan-accent focus:ring-offset-2">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-all focus:ring-2 focus:ring-cyan-accent focus:ring-offset-2">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-60 pt-16 md:pt-0 p-space-4 md:p-space-8 overflow-y-auto">
+<!-- Header & Controls -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-4 mb-space-8">
+<div>
+<h2 class="font-display-lg text-display-lg text-navy-deep">Analytics &amp; Compliance</h2>
+<p class="font-body-md text-body-md text-outline mt-1">Detailed performance metrics and regional risk assessment.</p>
+</div>
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-space-3">
+<div class="flex gap-space-2">
+<div class="relative group">
+<label class="absolute -top-2 left-2 bg-surface px-1 font-caption text-caption text-neutral-slate z-10">Date Range</label>
+<button class="h-10 px-4 border border-outline-variant rounded-DEFAULT bg-surface text-on-surface flex items-center justify-between gap-2 min-w-[200px] hover:border-navy-deep transition-colors focus:ring-2 focus:ring-cyan-accent">
+<span class="font-body-md text-body-md">Q3 2023 - Present</span>
+<span class="material-symbols-outlined text-outline" data-icon="calendar_today">calendar_today</span>
+</button>
+</div>
+<div class="relative group">
+<label class="absolute -top-2 left-2 bg-surface px-1 font-caption text-caption text-neutral-slate z-10">Region</label>
+<select class="h-10 px-4 border border-outline-variant rounded-DEFAULT bg-surface text-on-surface min-w-[160px] hover:border-navy-deep transition-colors focus:ring-2 focus:ring-cyan-accent appearance-none pr-10 font-body-md text-body-md">
+<option>All Regions</option>
+<option>North America</option>
+<option>EMEA</option>
+<option>APAC</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-outline pointer-events-none">expand_more</span>
+</div>
+</div>
+<div class="relative group inline-block">
+<button class="h-10 px-space-6 bg-navy-primary text-on-primary rounded-DEFAULT flex items-center justify-center gap-2 hover:bg-primary-container transition-colors focus:ring-2 focus:ring-cyan-accent focus:ring-offset-2 w-full sm:w-auto font-title-md text-title-md shadow-sm">
+<span class="material-symbols-outlined">download</span>
+                        Exportar Reporte
+                        <span class="material-symbols-outlined text-[18px]">arrow_drop_down</span>
+</button>
+<!-- Dropdown structure (hidden visually, relying on standard UI pattern) -->
+</div>
+</div>
+</div>
+<!-- KPI Bento Grid -->
+<div class="data-grid mb-space-8">
+<div class="bg-surface rounded-xl p-space-6 shadow-sm border border-outline-variant/30 flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-caption text-caption uppercase text-neutral-slate tracking-wider">Overall Compliance</span>
+<span class="material-symbols-outlined text-success-text bg-success-bg p-1 rounded-full text-[16px]">trending_up</span>
+</div>
+<div class="mt-space-4">
+<span class="font-display-xl text-display-xl text-navy-deep">94.2%</span>
+<p class="font-caption text-caption text-outline mt-1"><span class="text-success-text">+1.2%</span> vs last period</p>
+</div>
+</div>
+<div class="bg-surface rounded-xl p-space-6 shadow-sm border border-outline-variant/30 flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-caption text-caption uppercase text-neutral-slate tracking-wider">Critical Findings</span>
+<span class="material-symbols-outlined text-error-destructive bg-error-container p-1 rounded-full text-[16px]">warning</span>
+</div>
+<div class="mt-space-4">
+<span class="font-display-xl text-display-xl text-navy-deep">12</span>
+<p class="font-caption text-caption text-outline mt-1"><span class="text-error-destructive">+3</span> vs last period</p>
+</div>
+</div>
+<div class="bg-surface rounded-xl p-space-6 shadow-sm border border-outline-variant/30 flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-caption text-caption uppercase text-neutral-slate tracking-wider">Audits Completed</span>
+<span class="material-symbols-outlined text-cyan-text bg-info-bg p-1 rounded-full text-[16px]">assignment_turned_in</span>
+</div>
+<div class="mt-space-4">
+<span class="font-display-xl text-display-xl text-navy-deep">148</span>
+<p class="font-caption text-caption text-outline mt-1"><span class="text-neutral-slate">On track</span> for Q4</p>
+</div>
+</div>
+<div class="bg-surface rounded-xl p-space-6 shadow-sm border border-outline-variant/30 flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-caption text-caption uppercase text-neutral-slate tracking-wider">Avg Remediation Time</span>
+<span class="material-symbols-outlined text-warning-text bg-warning-bg p-1 rounded-full text-[16px]">schedule</span>
+</div>
+<div class="mt-space-4">
+<span class="font-display-xl text-display-xl text-navy-deep">18<span class="font-title-lg text-title-lg text-neutral-slate ml-1">days</span></span>
+<p class="font-caption text-caption text-outline mt-1"><span class="text-success-text">-2 days</span> vs baseline</p>
+</div>
+</div>
+</div>
+</main>
+</body></html>
