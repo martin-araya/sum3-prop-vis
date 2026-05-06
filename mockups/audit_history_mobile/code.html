@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Audit History</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Work+Sans:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#f39461",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#00164e",
+                        "on-secondary-fixed-variant": "#004e5c",
+                        "secondary-container": "#57dffe",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#6e2c00",
+                        "on-surface-variant": "#444651",
+                        "background": "#faf8ff",
+                        "surface-bright": "#faf8ff",
+                        "tertiary": "#4b1c00",
+                        "on-secondary-container": "#006172",
+                        "on-primary-fixed-variant": "#264191",
+                        "cyan-accent": "#06B6D4",
+                        "surface-variant": "#e3e1e9",
+                        "outline": "#757682",
+                        "surface": "#faf8ff",
+                        "error-destructive": "#EF4444",
+                        "inverse-surface": "#2f3036",
+                        "on-background": "#1a1b21",
+                        "info-bg": "#E0F2FE",
+                        "primary-fixed": "#dce1ff",
+                        "primary-fixed-dim": "#b6c4ff",
+                        "secondary-fixed-dim": "#4cd7f6",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb691",
+                        "surface-dim": "#dad9e1",
+                        "info-text": "#075985",
+                        "on-surface": "#1a1b21",
+                        "success-bg": "#D1FAE5",
+                        "inverse-on-surface": "#f1f0f7",
+                        "tertiary-fixed": "#ffdbcb",
+                        "navy-deep": "#0A2540",
+                        "surface-container-highest": "#e3e1e9",
+                        "primary": "#00236f",
+                        "on-secondary": "#ffffff",
+                        "primary-container": "#1e3a8a",
+                        "navy-primary": "#1E3A8A",
+                        "background-page": "#F8FAFC",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#acedff",
+                        "warning-bg": "#FEF3C7",
+                        "secondary": "#00687a",
+                        "neutral-slate": "#334155",
+                        "surface-container-low": "#f4f3fa",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#90a8ff",
+                        "on-tertiary-fixed-variant": "#773205",
+                        "warning-text": "#92400E",
+                        "surface-tint": "#4059aa",
+                        "on-secondary-fixed": "#001f26",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#e9e7ef",
+                        "success-text": "#065F46",
+                        "cyan-text": "#0E7490",
+                        "surface-container": "#eeedf4",
+                        "inverse-primary": "#b6c4ff",
+                        "on-tertiary-fixed": "#341100",
+                        "error": "#ba1a1a",
+                        "outline-variant": "#c5c5d3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "space-1": "4px",
+                        "space-10": "40px",
+                        "space-8": "32px",
+                        "space-6": "24px",
+                        "space-3": "12px",
+                        "space-4": "16px",
+                        "space-2": "8px",
+                        "space-5": "20px",
+                        "space-12": "48px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter", "sans-serif"],
+                        "caption": ["Inter", "sans-serif"],
+                        "body-lg": ["Inter", "sans-serif"],
+                        "title-lg": ["Inter", "sans-serif"],
+                        "display-lg": ["Inter", "sans-serif"],
+                        "data-mono": ["Work Sans", "monospace"],
+                        "title-md": ["Inter", "sans-serif"],
+                        "display-xl": ["Inter", "sans-serif"],
+                        "display-md": ["Inter", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "caption": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "title-lg": ["22px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "display-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "data-mono": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+                        "title-md": ["18px", { "lineHeight": "26px", "fontWeight": "600" }],
+                        "display-xl": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "display-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background-page text-on-surface font-body-md min-h-screen flex flex-col md:flex-row pb-safe">
+<!-- TopNavBar (Web Only) -->
+<header class="hidden md:flex justify-between items-center w-full px-space-6 h-16 bg-surface-container-lowest border-b border-outline-variant fixed top-0 left-0 z-40 ml-60" style="width: calc(100% - 240px);">
+<div class="flex items-center gap-space-4">
+<!-- Search is on left per JSON, but leaving space for layout logic -->
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-space-3 top-1/2 -translate-y-1/2 text-outline-variant" style="font-variation-settings: 'FILL' 0;">search</span>
+<input class="w-full pl-space-10 pr-space-4 py-space-2 rounded-lg border border-outline-variant bg-surface focus:ring-2 focus:ring-cyan-accent focus:ring-offset-2 outline-none font-body-md text-body-md text-on-surface placeholder:text-outline h-[40px]" placeholder="Buscar auditoría..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-space-4">
+<button class="p-space-2 rounded-full hover:bg-surface-container-low transition-all text-on-surface-variant focus:ring-2 focus:ring-cyan-accent focus:ring-offset-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+<button class="p-space-2 rounded-full hover:bg-surface-container-low transition-all text-on-surface-variant focus:ring-2 focus:ring-cyan-accent focus:ring-offset-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant ml-space-2">
+<img alt="Auditor Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a corporate auditor wearing a crisp white shirt and a dark navy blazer, set against a clean, light studio background. The lighting is soft and flattering, creating a modern, solvent corporate aesthetic that perfectly aligns with a high-stakes financial auditing application. The image conveys trust, authority, and meticulous attention to detail." src="https://lh3.googleusercontent.com/aida/ADBb0uiay9h_8iTY_2QnArGwso1TahQyfjIdtbmQzvyODifhdh3JQgByRDR29pGY2qCEFGFCzzJtq3S6slE-w80whKvuaOMn48RVn30KUIhHZElvHGO8wkzpzyFVKHWwrtq7kIO3HYr8bm5cXKgUZ39SPnGpe-fwfMrarcvKTD5DDi1Vfv7CqVMJolOa4qLUMZuQETKmYbKEswdoT-L3ms4GlGdc48XltYfgHaihoObnMXLU8vucZCr5LuC5Qw"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar (Web Only) -->
+<nav class="hidden md:flex flex-col h-screen py-space-6 bg-navy-deep fixed left-0 top-0 w-60 shadow-md z-50">
+<div class="px-space-4 mb-space-8 flex items-center gap-space-3">
+<span class="material-symbols-outlined text-cyan-accent text-3xl" style="font-variation-settings: 'FILL' 1;">security</span>
+<div>
+<h1 class="font-display-md text-display-md font-extrabold text-cyan-accent tracking-tight">AuditChain</h1>
+<p class="font-caption text-caption text-on-primary/70">Enterprise Audit</p>
+</div>
+</div>
+<div class="px-space-4 mb-space-6">
+<button class="w-full bg-primary-container text-on-primary py-space-3 rounded-lg font-title-md text-title-md hover:bg-primary transition-colors focus:ring-2 focus:ring-cyan-accent focus:ring-offset-2 focus:ring-offset-navy-deep flex justify-center items-center gap-space-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">add</span>
+                New Audit
+            </button>
+</div>
+<ul class="flex flex-col gap-space-1 flex-grow">
+<li>
+<a class="flex items-center gap-space-3 text-on-primary/70 hover:text-on-primary px-4 py-3 hover:bg-primary transition-colors scale-98 active:scale-95 transition-transform font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+                    Dashboard
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-space-3 bg-primary-container text-on-primary-container rounded-lg mx-2 px-4 py-3 hover:bg-primary transition-colors scale-98 active:scale-95 transition-transform font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">fact_check</span>
+                    Audits
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-space-3 text-on-primary/70 hover:text-on-primary px-4 py-3 hover:bg-primary transition-colors scale-98 active:scale-95 transition-transform font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">verified_user</span>
+                    Compliance
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-space-3 text-on-primary/70 hover:text-on-primary px-4 py-3 hover:bg-primary transition-colors scale-98 active:scale-95 transition-transform font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">assessment</span>
+                    Reports
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-space-3 text-on-primary/70 hover:text-on-primary px-4 py-3 hover:bg-primary transition-colors scale-98 active:scale-95 transition-transform font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">description</span>
+                    Workpapers
+                </a>
+</li>
+</ul>
+<div class="mt-auto flex flex-col gap-space-1 px-space-4">
+<div class="h-[1px] bg-outline/20 w-full mb-space-2"></div>
+<a class="flex items-center gap-space-3 text-on-primary/70 hover:text-on-primary px-4 py-3 hover:bg-primary transition-colors scale-98 active:scale-95 transition-transform font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">help</span>
+                Support
+            </a>
+<a class="flex items-center gap-space-3 text-on-primary/70 hover:text-on-primary px-4 py-3 hover:bg-primary transition-colors scale-98 active:scale-95 transition-transform font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+                Settings
+            </a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-grow w-full md:ml-60 pt-space-4 md:pt-[80px] px-space-4 md:px-space-8 pb-32 md:pb-space-8">
+<!-- Mobile Header (Visible only on mobile) -->
+<div class="md:hidden flex justify-between items-center mb-space-6">
+<h1 class="font-display-lg text-display-lg text-on-surface">Auditorías</h1>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Auditor Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a corporate auditor wearing a crisp white shirt and a dark navy blazer, set against a clean, light studio background. The lighting is soft and flattering, creating a modern, solvent corporate aesthetic that perfectly aligns with a high-stakes financial auditing application. The image conveys trust, authority, and meticulous attention to detail." src="https://lh3.googleusercontent.com/aida/ADBb0uiay9h_8iTY_2QnArGwso1TahQyfjIdtbmQzvyODifhdh3JQgByRDR29pGY2qCEFGFCzzJtq3S6slE-w80whKvuaOMn48RVn30KUIhHZElvHGO8wkzpzyFVKHWwrtq7kIO3HYr8bm5cXKgUZ39SPnGpe-fwfMrarcvKTD5DDi1Vfv7CqVMJolOa4qLUMZuQETKmYbKEswdoT-L3ms4GlGdc48XltYfgHaihoObnMXLU8vucZCr5LuC5Qw"/>
+</div>
+</div>
+<!-- Mobile Search (Visible only on mobile) -->
+<div class="md:hidden relative w-full mb-space-4">
+<span class="material-symbols-outlined absolute left-space-3 top-1/2 -translate-y-1/2 text-outline-variant" style="font-variation-settings: 'FILL' 0;">search</span>
+<input class="w-full pl-space-10 pr-space-4 py-space-2 rounded-lg border border-outline-variant bg-surface focus:ring-2 focus:ring-cyan-accent focus:ring-offset-2 outline-none font-body-md text-body-md text-on-surface placeholder:text-outline h-[40px]" placeholder="Buscar auditoría..." type="text"/>
+</div>
+<div class="hidden md:block mb-space-6">
+<h1 class="font-display-xl text-display-xl text-on-surface">Audit History</h1>
+</div>
+<!-- Filter Chips -->
+<div class="flex overflow-x-auto gap-space-2 pb-space-2 mb-space-6 no-scrollbar">
+<button class="whitespace-nowrap px-space-4 py-space-2 rounded-full font-caption text-caption border border-primary-container bg-primary-container text-on-primary transition-colors">
+                Todas
+            </button>
+<button class="whitespace-nowrap px-space-4 py-space-2 rounded-full font-caption text-caption border border-outline-variant bg-surface text-on-surface-variant hover:bg-surface-container-low transition-colors">
+                Completadas
+            </button>
+<button class="whitespace-nowrap px-space-4 py-space-2 rounded-full font-caption text-caption border border-outline-variant bg-surface text-on-surface-variant hover:bg-surface-container-low transition-colors">
+                Pendientes
+            </button>
+<button class="whitespace-nowrap px-space-4 py-space-2 rounded-full font-caption text-caption border border-outline-variant bg-surface text-on-surface-variant hover:bg-surface-container-low transition-colors">
+                Vencidas
+            </button>
+</div>
+<!-- Audit Cards List -->
+<div class="flex flex-col gap-space-4">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant p-space-4 hover:shadow-md transition-shadow cursor-pointer">
+<div class="flex justify-between items-start mb-space-3">
+<div>
+<div class="flex items-center gap-space-2 mb-space-1">
+<span class="font-data-mono text-data-mono text-outline">#AUD-5021</span>
+<span class="px-2 py-0.5 rounded-full bg-success-bg text-success-text font-caption text-caption">Completada</span>
+</div>
+<h2 class="font-title-md text-title-md text-on-surface">Sucursal Providencia</h2>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-display-md text-display-md text-primary">92/100</span>
+<span class="font-caption text-caption text-outline-variant">Score</span>
+</div>
+</div>
+<div class="flex items-center gap-space-4 border-t border-surface-variant pt-space-3">
+<div class="flex items-center gap-space-1 text-on-surface-variant font-caption text-caption">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 0;">calendar_today</span>
+                        26 oct 2023
+                    </div>
+<div class="flex items-center gap-space-1 text-on-surface-variant font-caption text-caption">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 0;">person</span>
+                        J. Doe
+                    </div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant p-space-4 hover:shadow-md transition-shadow cursor-pointer">
+<div class="flex justify-between items-start mb-space-3">
+<div>
+<div class="flex items-center gap-space-2 mb-space-1">
+<span class="font-data-mono text-data-mono text-outline">#AUD-5022</span>
+<span class="px-2 py-0.5 rounded-full bg-warning-bg text-warning-text font-caption text-caption">Pendiente</span>
+</div>
+<h2 class="font-title-md text-title-md text-on-surface">Centro Logístico Norte</h2>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-display-md text-display-md text-outline-variant">--/100</span>
+<span class="font-caption text-caption text-outline-variant">Score</span>
+</div>
+</div>
+<div class="flex items-center gap-space-4 border-t border-surface-variant pt-space-3">
+<div class="flex items-center gap-space-1 text-on-surface-variant font-caption text-caption">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 0;">calendar_today</span>
+                        28 oct 2023
+                    </div>
+<div class="flex items-center gap-space-1 text-on-surface-variant font-caption text-caption">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 0;">person</span>
+                        M. Silva
+                    </div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-error-container p-space-4 hover:shadow-md transition-shadow cursor-pointer">
+<div class="flex justify-between items-start mb-space-3">
+<div>
+<div class="flex items-center gap-space-2 mb-space-1">
+<span class="font-data-mono text-data-mono text-outline">#AUD-5019</span>
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-caption text-caption flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+                                Vencida
+                            </span>
+</div>
+<h2 class="font-title-md text-title-md text-on-surface">Oficina Central</h2>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-display-md text-display-md text-outline-variant">--/100</span>
+<span class="font-caption text-caption text-outline-variant">Score</span>
+</div>
+</div>
+<div class="flex items-center gap-space-4 border-t border-surface-variant pt-space-3">
+<div class="flex items-center gap-space-1 text-error font-caption text-caption">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 0;">calendar_today</span>
+                        20 oct 2023
+                    </div>
+<div class="flex items-center gap-space-1 text-on-surface-variant font-caption text-caption">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 0;">person</span>
+                        A. Rojas
+                    </div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant p-space-4 hover:shadow-md transition-shadow cursor-pointer">
+<div class="flex justify-between items-start mb-space-3">
+<div>
+<div class="flex items-center gap-space-2 mb-space-1">
+<span class="font-data-mono text-data-mono text-outline">#AUD-5015</span>
+<span class="px-2 py-0.5 rounded-full bg-success-bg text-success-text font-caption text-caption">Completada</span>
+</div>
+<h2 class="font-title-md text-title-md text-on-surface">Sucursal Las Condes</h2>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-display-md text-display-md text-primary">85/100</span>
+<span class="font-caption text-caption text-outline-variant">Score</span>
+</div>
+</div>
+<div class="flex items-center gap-space-4 border-t border-surface-variant pt-space-3">
+<div class="flex items-center gap-space-1 text-on-surface-variant font-caption text-caption">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 0;">calendar_today</span>
+                        15 oct 2023
+                    </div>
+<div class="flex items-center gap-space-1 text-on-surface-variant font-caption text-caption">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 0;">person</span>
+                        J. Doe
+                    </div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-space-4 pb-safe pt-space-2 bg-surface border-t border-outline-variant shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] z-50 rounded-t-xl touch-manipulation transition-all duration-200">
+<button class="flex flex-col items-center justify-center text-on-surface-variant py-2 w-16 active:bg-surface-container-high rounded-xl">
+<span class="material-symbols-outlined mb-1 text-[24px]" style="font-variation-settings: 'FILL' 0;">home</span>
+<span class="font-caption text-caption">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 active:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined mb-1 text-[24px]" style="font-variation-settings: 'FILL' 1;">assignment</span>
+<span class="font-caption text-caption font-semibold">Audits</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant py-2 w-16 active:bg-surface-container-high rounded-xl">
+<span class="material-symbols-outlined mb-1 text-[24px]" style="font-variation-settings: 'FILL' 0;">rule</span>
+<span class="font-caption text-caption">Tasks</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant py-2 w-16 active:bg-surface-container-high rounded-xl">
+<span class="material-symbols-outlined mb-1 text-[24px]" style="font-variation-settings: 'FILL' 0;">person</span>
+<span class="font-caption text-caption">Profile</span>
+</button>
+</nav>
+</body></html>
