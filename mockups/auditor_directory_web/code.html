@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Directorio de Auditores - AuditChain</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Work+Sans:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#f39461",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#00164e",
+                        "on-secondary-fixed-variant": "#004e5c",
+                        "secondary-container": "#57dffe",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#6e2c00",
+                        "on-surface-variant": "#444651",
+                        "background": "#faf8ff",
+                        "surface-bright": "#faf8ff",
+                        "tertiary": "#4b1c00",
+                        "on-secondary-container": "#006172",
+                        "on-primary-fixed-variant": "#264191",
+                        "cyan-accent": "#06B6D4",
+                        "surface-variant": "#e3e1e9",
+                        "outline": "#757682",
+                        "surface": "#faf8ff",
+                        "error-destructive": "#EF4444",
+                        "inverse-surface": "#2f3036",
+                        "on-background": "#1a1b21",
+                        "info-bg": "#E0F2FE",
+                        "primary-fixed": "#dce1ff",
+                        "primary-fixed-dim": "#b6c4ff",
+                        "secondary-fixed-dim": "#4cd7f6",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb691",
+                        "surface-dim": "#dad9e1",
+                        "info-text": "#075985",
+                        "on-surface": "#1a1b21",
+                        "success-bg": "#D1FAE5",
+                        "inverse-on-surface": "#f1f0f7",
+                        "tertiary-fixed": "#ffdbcb",
+                        "navy-deep": "#0A2540",
+                        "surface-container-highest": "#e3e1e9",
+                        "primary": "#00236f",
+                        "on-secondary": "#ffffff",
+                        "primary-container": "#1e3a8a",
+                        "navy-primary": "#1E3A8A",
+                        "background-page": "#F8FAFC",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#acedff",
+                        "warning-bg": "#FEF3C7",
+                        "secondary": "#00687a",
+                        "neutral-slate": "#334155",
+                        "surface-container-low": "#f4f3fa",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#90a8ff",
+                        "on-tertiary-fixed-variant": "#773205",
+                        "warning-text": "#92400E",
+                        "surface-tint": "#4059aa",
+                        "on-secondary-fixed": "#001f26",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#e9e7ef",
+                        "success-text": "#065F46",
+                        "cyan-text": "#0E7490",
+                        "surface-container": "#eeedf4",
+                        "inverse-primary": "#b6c4ff",
+                        "on-tertiary-fixed": "#341100",
+                        "error": "#ba1a1a",
+                        "outline-variant": "#c5c5d3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "space-1": "4px",
+                        "space-10": "40px",
+                        "space-8": "32px",
+                        "space-6": "24px",
+                        "space-3": "12px",
+                        "space-4": "16px",
+                        "space-2": "8px",
+                        "space-5": "20px",
+                        "space-12": "48px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter", "sans-serif"],
+                        "caption": ["Inter", "sans-serif"],
+                        "body-lg": ["Inter", "sans-serif"],
+                        "title-lg": ["Inter", "sans-serif"],
+                        "display-lg": ["Inter", "sans-serif"],
+                        "data-mono": ["Work Sans", "monospace"],
+                        "title-md": ["Inter", "sans-serif"],
+                        "display-xl": ["Inter", "sans-serif"],
+                        "display-md": ["Inter", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "caption": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "title-lg": ["22px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "display-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "data-mono": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+                        "title-md": ["18px", { "lineHeight": "26px", "fontWeight": "600" }],
+                        "display-xl": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "display-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background-page text-on-surface flex font-body-md h-screen overflow-hidden">
+<!-- SideNavBar -->
+<nav class="docked left-0 h-screen w-60 bg-navy-deep shadow-md flex flex-col h-full py-space-6 flex-shrink-0 z-10 hidden md:flex">
+<div class="px-space-6 mb-space-8">
+<div class="flex items-center gap-space-3">
+<span class="material-symbols-outlined text-cyan-accent text-3xl" style="font-variation-settings: 'FILL' 1;">security</span>
+<div>
+<h1 class="font-display-md text-display-md font-extrabold text-cyan-accent leading-tight">AuditChain</h1>
+<p class="font-caption text-caption text-on-primary/70">Enterprise Audit</p>
+</div>
+</div>
+</div>
+<div class="px-space-4 mb-space-6">
+<button class="w-full bg-primary-container text-on-primary font-body-md text-body-md py-space-3 px-space-4 rounded-lg flex items-center justify-center gap-space-2 hover:bg-navy-primary transition-colors focus:ring-2 focus:ring-cyan-accent focus:ring-offset-2 focus:ring-offset-navy-deep outline-none shadow-sm">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                New Audit
+            </button>
+</div>
+<div class="flex-1 overflow-y-auto px-space-2">
+<ul class="space-y-space-1">
+<li>
+<a class="flex items-center gap-space-3 font-body-md text-body-md text-on-primary/70 hover:text-on-primary px-4 py-3 hover:bg-primary transition-colors rounded-lg scale-98 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+                        Dashboard
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-space-3 font-body-md text-body-md bg-primary-container text-on-primary-container rounded-lg mx-2 px-4 py-3 scale-98 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">group</span>
+                        Auditors
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-space-3 font-body-md text-body-md text-on-primary/70 hover:text-on-primary px-4 py-3 hover:bg-primary transition-colors rounded-lg scale-98 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined text-[20px]">fact_check</span>
+                        Audits
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-space-3 font-body-md text-body-md text-on-primary/70 hover:text-on-primary px-4 py-3 hover:bg-primary transition-colors rounded-lg scale-98 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined text-[20px]">verified_user</span>
+                        Compliance
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-space-3 font-body-md text-body-md text-on-primary/70 hover:text-on-primary px-4 py-3 hover:bg-primary transition-colors rounded-lg scale-98 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined text-[20px]">assessment</span>
+                        Reports
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-space-3 font-body-md text-body-md text-on-primary/70 hover:text-on-primary px-4 py-3 hover:bg-primary transition-colors rounded-lg scale-98 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined text-[20px]">description</span>
+                        Workpapers
+                    </a>
+</li>
+</ul>
+</div>
+<div class="px-space-2 mt-auto pt-space-4 border-t border-on-primary/10">
+<ul class="space-y-space-1">
+<li>
+<a class="flex items-center gap-space-3 font-body-md text-body-md text-on-primary/70 hover:text-on-primary px-4 py-3 hover:bg-primary transition-colors rounded-lg scale-98 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined text-[20px]">help</span>
+                        Support
+                    </a>
+</li>
+<li>
+<a class="flex items-center gap-space-3 font-body-md text-body-md text-on-primary/70 hover:text-on-primary px-4 py-3 hover:bg-primary transition-colors rounded-lg scale-98 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+                        Settings
+                    </a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- TopNavBar (Mobile Only) -->
+<header class="docked full-width top-0 bg-surface-container-lowest border-b border-outline-variant flat no shadows flex justify-between items-center w-full px-space-6 h-16 md:hidden fixed z-20">
+<div class="flex items-center gap-space-3">
+<span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings: 'FILL' 1;">menu</span>
+<span class="font-display-md text-display-md font-bold text-primary">AuditChain</span>
+</div>
+<div class="flex items-center gap-space-4">
+<button class="text-on-surface-variant hover:bg-surface-container-low transition-all p-2 rounded-full focus:ring-2 focus:ring-cyan-accent focus:ring-offset-2 outline-none">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-container-low transition-all p-2 rounded-full focus:ring-2 focus:ring-cyan-accent focus:ring-offset-2 outline-none">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<img alt="Auditor Profile" class="w-8 h-8 rounded-full border border-outline-variant object-cover" data-alt="A small circular profile picture of a professional auditor in a dark navy suit against a clean white background, brightly lit." src="https://lh3.googleusercontent.com/aida/ADBb0uiay9h_8iTY_2QnArGwso1TahQyfjIdtbmQzvyODifhdh3JQgByRDR29pGY2qCEFGFCzzJtq3S6slE-w80whKvuaOMn48RVn30KUIhHZElvHGO8wkzpzyFVKHWwrtq7kIO3HYr8bm5cXKgUZ39SPnGpe-fwfMrarcvKTD5DDi1Vfv7CqVMJolOa4qLUMZuQETKmYbKEswdoT-L3ms4GlGdc48XltYfgHaihoObnMXLU8vucZCr5LuC5Qw"/>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto w-full pt-16 md:pt-0 pb-20 md:pb-0">
+<div class="max-w-[1440px] mx-auto p-space-4 md:p-space-8">
+<!-- Page Header -->
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-space-8 gap-space-4">
+<div>
+<h2 class="font-display-lg text-display-lg text-navy-deep">Directorio de Auditores</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Gestión y rendimiento del equipo de auditoría.</p>
+</div>
+<button class="bg-surface-container-lowest text-navy-deep border-2 border-navy-deep font-title-md text-title-md py-2 px-space-5 rounded-lg flex items-center gap-space-2 hover:bg-surface-container-low transition-colors focus:ring-2 focus:ring-cyan-accent focus:ring-offset-2 outline-none shadow-sm h-10">
+<span class="material-symbols-outlined text-[20px]">person_add</span>
+                    Invitar auditor
+                </button>
+</div>
+<!-- KPI Grids -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-4 md:gap-space-6 mb-space-8">
+<!-- KPI Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-5 shadow-sm border border-outline-variant/30 flex flex-col justify-between h-full">
+<div class="flex justify-between items-start mb-space-2">
+<span class="font-caption text-caption uppercase text-on-surface-variant tracking-wider">Total Auditores</span>
+<div class="bg-info-bg text-info-text p-1.5 rounded-lg">
+<span class="material-symbols-outlined text-[20px]">groups</span>
+</div>
+</div>
+<div class="flex items-baseline gap-space-2 mt-auto">
+<span class="font-display-xl text-display-xl text-navy-deep">142</span>
+<span class="font-caption text-caption text-success-text bg-success-bg px-2 py-0.5 rounded-full flex items-center">
+<span class="material-symbols-outlined text-[14px] mr-1">trending_up</span> +3%
+                        </span>
+</div>
+</div>
+<!-- KPI Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-5 shadow-sm border border-outline-variant/30 flex flex-col justify-between h-full">
+<div class="flex justify-between items-start mb-space-2">
+<span class="font-caption text-caption uppercase text-on-surface-variant tracking-wider">Activos Hoy</span>
+<div class="bg-success-bg text-success-text p-1.5 rounded-lg">
+<span class="material-symbols-outlined text-[20px]">how_to_reg</span>
+</div>
+</div>
+<div class="flex items-baseline gap-space-2 mt-auto">
+<span class="font-display-xl text-display-xl text-navy-deep">118</span>
+<span class="font-body-md text-body-md text-on-surface-variant ml-1">/ 142</span>
+</div>
+</div>
+<!-- KPI Card 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-5 shadow-sm border border-outline-variant/30 flex flex-col justify-between h-full">
+<div class="flex justify-between items-start mb-space-2">
+<span class="font-caption text-caption uppercase text-on-surface-variant tracking-wider">Prod. Promedio</span>
+<div class="bg-warning-bg text-warning-text p-1.5 rounded-lg">
+<span class="material-symbols-outlined text-[20px]">bolt</span>
+</div>
+</div>
+<div class="flex items-baseline gap-space-2 mt-auto">
+<span class="font-display-xl text-display-xl text-navy-deep">94%</span>
+<span class="font-caption text-caption text-success-text bg-success-bg px-2 py-0.5 rounded-full flex items-center">
+<span class="material-symbols-outlined text-[14px] mr-1">trending_up</span> +1.2%
+                        </span>
+</div>
+</div>
+</div>
+<!-- Toolbar -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-space-4 gap-space-4">
+<div class="relative w-full md:w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full h-10 pl-10 pr-4 rounded-lg border border-outline-variant bg-surface-container-lowest font-body-md text-body-md focus:ring-2 focus:ring-cyan-accent focus:border-cyan-accent outline-none placeholder:text-outline-variant text-navy-deep" placeholder="Buscar por nombre, región o ID..." type="text"/>
+</div>
+<div class="flex gap-space-2 w-full md:w-auto">
+<button class="flex-1 md:flex-none bg-surface-container-lowest text-navy-deep border border-outline-variant font-body-md text-body-md py-2 px-space-4 rounded-lg flex items-center justify-center gap-space-2 hover:bg-surface-container-low transition-colors focus:ring-2 focus:ring-cyan-accent focus:ring-offset-2 outline-none h-10 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                        Filtros
+                    </button>
+<button class="flex-1 md:flex-none bg-surface-container-lowest text-navy-deep border border-outline-variant font-body-md text-body-md py-2 px-space-4 rounded-lg flex items-center justify-center gap-space-2 hover:bg-surface-container-low transition-colors focus:ring-2 focus:ring-cyan-accent focus:ring-offset-2 outline-none h-10 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                        Exportar
+                    </button>
+</div>
+</div>
+<!-- Data Table -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/30 overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-neutral-slate text-on-primary border-b border-outline-variant/50">
+<th class="font-caption text-caption uppercase py-3 px-space-4 font-semibold tracking-wider">Auditor</th>
+<th class="font-caption text-caption uppercase py-3 px-space-4 font-semibold tracking-wider hidden sm:table-cell">Seniority</th>
+<th class="font-caption text-caption uppercase py-3 px-space-4 font-semibold tracking-wider hidden md:table-cell">Región Asignada</th>
+<th class="font-caption text-caption uppercase py-3 px-space-4 font-semibold tracking-wider text-right">Auditorías Activas</th>
+<th class="font-caption text-caption uppercase py-3 px-space-4 font-semibold tracking-wider text-right">Score Rendimiento</th>
+<th class="py-3 px-space-4 w-10"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors h-[56px] group">
+<td class="py-2 px-space-4">
+<div class="flex items-center gap-space-3">
+<img alt="Elena Rodríguez" class="w-10 h-10 rounded-lg object-cover border border-outline-variant/50" data-alt="A small square professional headshot of Elena Rodriguez, a senior auditor in a sharp grey blazer, clean white background, high contrast lighting." src="https://lh3.googleusercontent.com/aida/ADBb0uiay9h_8iTY_2QnArGwso1TahQyfjIdtbmQzvyODifhdh3JQgByRDR29pGY2qCEFGFCzzJtq3S6slE-w80whKvuaOMn48RVn30KUIhHZElvHGO8wkzpzyFVKHWwrtq7kIO3HYr8bm5cXKgUZ39SPnGpe-fwfMrarcvKTD5DDi1Vfv7CqVMJolOa4qLUMZuQETKmYbKEswdoT-L3ms4GlGdc48XltYfgHaihoObnMXLU8vucZCr5LuC5Qw"/>
+<div>
+<div class="font-title-md text-title-md text-navy-deep leading-tight">Elena Rodríguez</div>
+<div class="font-data-mono text-data-mono text-on-surface-variant">ID: AUD-8472</div>
+</div>
+</div>
+</td>
+<td class="py-2 px-space-4 hidden sm:table-cell">
+<span class="inline-flex items-center px-2 py-1 rounded-full bg-surface-tint/10 text-surface-tint font-caption text-caption border border-surface-tint/20">
+                                        Lead Auditor
+                                    </span>
+</td>
+<td class="py-2 px-space-4 hidden md:table-cell">
+<div class="flex items-center gap-space-1 text-on-surface-variant font-body-md text-body-md">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+                                        América Latina
+                                    </div>
+</td>
+<td class="py-2 px-space-4 text-right font-data-mono text-data-mono text-navy-deep">
+                                    4
+                                </td>
+<td class="py-2 px-space-4 text-right">
+<div class="flex items-center justify-end gap-space-2">
+<div class="w-16 h-2 bg-surface-container-high rounded-full overflow-hidden">
+<div class="bg-success-text h-full" style="width: 98%"></div>
+</div>
+<span class="font-data-mono text-data-mono text-navy-deep font-semibold">98</span>
+</div>
+</td>
+<td class="py-2 px-space-4 text-right">
+<button class="text-outline hover:text-navy-deep p-1 rounded focus:ring-2 focus:ring-cyan-accent outline-none opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors h-[56px] group">
+<td class="py-2 px-space-4">
+<div class="flex items-center gap-space-3">
+<div class="w-10 h-10 rounded-lg bg-surface-tint text-on-primary flex items-center justify-center font-title-md text-title-md border border-outline-variant/50">
+                                            MK
+                                        </div>
+<div>
+<div class="font-title-md text-title-md text-navy-deep leading-tight">Michael Kumar</div>
+<div class="font-data-mono text-data-mono text-on-surface-variant">ID: AUD-9123</div>
+</div>
+</div>
+</td>
+<td class="py-2 px-space-4 hidden sm:table-cell">
+<span class="inline-flex items-center px-2 py-1 rounded-full bg-surface-tint/10 text-surface-tint font-caption text-caption border border-surface-tint/20">
+                                        Senior Auditor
+                                    </span>
+</td>
+<td class="py-2 px-space-4 hidden md:table-cell">
+<div class="flex items-center gap-space-1 text-on-surface-variant font-body-md text-body-md">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+                                        EMEA
+                                    </div>
+</td>
+<td class="py-2 px-space-4 text-right font-data-mono text-data-mono text-navy-deep">
+                                    6
+                                </td>
+<td class="py-2 px-space-4 text-right">
+<div class="flex items-center justify-end gap-space-2">
+<div class="w-16 h-2 bg-surface-container-high rounded-full overflow-hidden">
+<div class="bg-cyan-text h-full" style="width: 85%"></div>
+</div>
+<span class="font-data-mono text-data-mono text-navy-deep font-semibold">85</span>
+</div>
+</td>
+<td class="py-2 px-space-4 text-right">
+<button class="text-outline hover:text-navy-deep p-1 rounded focus:ring-2 focus:ring-cyan-accent outline-none opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors h-[56px] group">
+<td class="py-2 px-space-4">
+<div class="flex items-center gap-space-3">
+<div class="w-10 h-10 rounded-lg bg-surface-tint text-on-primary flex items-center justify-center font-title-md text-title-md border border-outline-variant/50">
+                                            SO
+                                        </div>
+<div>
+<div class="font-title-md text-title-md text-navy-deep leading-tight">Sarah O'Connor</div>
+<div class="font-data-mono text-data-mono text-on-surface-variant">ID: AUD-7731</div>
+</div>
+</div>
+</td>
+<td class="py-2 px-space-4 hidden sm:table-cell">
+<span class="inline-flex items-center px-2 py-1 rounded-full bg-outline-variant/30 text-on-surface-variant font-caption text-caption border border-outline-variant/50">
+                                        Auditor I
+                                    </span>
+</td>
+<td class="py-2 px-space-4 hidden md:table-cell">
+<div class="flex items-center gap-space-1 text-on-surface-variant font-body-md text-body-md">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+                                        Norteamérica
+                                    </div>
+</td>
+<td class="py-2 px-space-4 text-right font-data-mono text-data-mono text-navy-deep">
+                                    2
+                                </td>
+<td class="py-2 px-space-4 text-right">
+<div class="flex items-center justify-end gap-space-2">
+<div class="w-16 h-2 bg-surface-container-high rounded-full overflow-hidden">
+<div class="bg-warning-text h-full" style="width: 72%"></div>
+</div>
+<span class="font-data-mono text-data-mono text-navy-deep font-semibold">72</span>
+</div>
+</td>
+<td class="py-2 px-space-4 text-right">
+<button class="text-outline hover:text-navy-deep p-1 rounded focus:ring-2 focus:ring-cyan-accent outline-none opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="border-t border-outline-variant/30 bg-surface-container-lowest px-space-4 py-3 flex items-center justify-between">
+<div class="font-caption text-caption text-on-surface-variant">
+                        Mostrando 1 a 10 de 142 auditores
+                    </div>
+<div class="flex items-center gap-2">
+<button class="p-1 rounded text-outline-variant hover:text-navy-deep hover:bg-surface-container-low transition-colors disabled:opacity-50">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded bg-primary-container text-on-primary font-caption text-caption flex items-center justify-center">1</button>
+<button class="w-8 h-8 rounded text-navy-deep font-caption text-caption hover:bg-surface-container-low transition-colors flex items-center justify-center">2</button>
+<button class="w-8 h-8 rounded text-navy-deep font-caption text-caption hover:bg-surface-container-low transition-colors flex items-center justify-center">3</button>
+<span class="text-outline-variant">...</span>
+<button class="p-1 rounded text-outline-variant hover:text-navy-deep hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-space-4 pb-safe pt-space-2 bg-surface bg-surface dark:bg-inverse-surface border-t border-outline-variant dark:border-outline shadow-lg z-50 rounded-t-xl touch-manipulation transition-all duration-200 md:hidden pb-4">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant active:bg-surface-container-high py-2 px-4 rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1">home</span>
+<span class="font-caption text-caption">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant active:bg-surface-container-high py-2 px-4 rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1">assignment</span>
+<span class="font-caption text-caption">Audits</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant active:bg-surface-container-high py-2 px-4 rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1">rule</span>
+<span class="font-caption text-caption">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 active:bg-surface-container-high mt-1" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="font-caption text-caption text-primary dark:text-inverse-primary">Auditors</span>
+</a>
+</nav>
+</body></html>
