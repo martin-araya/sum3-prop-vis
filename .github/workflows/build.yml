@@ -29,8 +29,7 @@ jobs:
         working-directory: auditchain/frontend
         run: |
           flutter build web --release \
-            --dart-define=API_URL=/api \
-            --web-renderer canvaskit
+            --dart-define=API_URL=/api
 
       - name: Subir artefacto web
         uses: actions/upload-artifact@v4
