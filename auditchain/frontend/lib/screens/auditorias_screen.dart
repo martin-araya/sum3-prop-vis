@@ -59,14 +59,27 @@ class _AuditoriasScreenState extends State<AuditoriasScreen> {
     }
   }
 
-  String _nombreSucursal(String id) => _sucursales.firstWhere((s) => s.id == id, orElse: () => Sucursal(id: '', nombre: id.substring(0, 8), region: '', estado: '', puntajePromedio: 0)).nombre;
-  String _nombreAuditor(String id) => _auditores.firstWhere((a) => a.id == id, orElse: () => Auditor(id: '', nombre: id.substring(0, 8), email: '', estado: '')).nombre;
+  String _nombreSucursal(String id) => _sucursales.firstWhere(
+      (s) => s.id == id,
+      orElse: () => Sucursal(id: '', nombre: id.length >= 8 ? id.substring(0, 8) : id, region: '', estado: '', puntajePromedio: 0)).nombre;
+
+  String _nombreAuditor(String id) => _auditores.firstWhere(
+      (a) => a.id == id,
+      orElse: () => Auditor(id: '', nombre: id.length >= 8 ? id.substring(0, 8) : id, email: '', estado: '')).nombre;
+
+  String _truncarNotas(String? notas) {
+    if (notas == null || notas.isEmpty) return '—';
+    return notas.length > 40 ? '${notas.substring(0, 40)}…' : notas;
+  }
 
   @override
   Widget build(BuildContext context) {
     final completadas = _auditorias.where((a) => a.estado == 'completada').length;
     final conObs = _auditorias.where((a) => a.estado == 'con_observaciones').length;
-    final prom = _auditorias.isEmpty ? 0.0 : _auditorias.map((a) => a.puntaje.toDouble()).reduce((a, b) => a + b) / _auditorias.length;
+    final conPuntaje = _auditorias.where((a) => a.puntaje > 0).toList();
+    final prom = conPuntaje.isEmpty
+        ? 0.0
+        : conPuntaje.map((a) => a.puntaje.toDouble()).reduce((a, b) => a + b) / conPuntaje.length;
 
     return PageLayout(
       title: 'Auditorías',
@@ -77,9 +90,9 @@ class _AuditoriasScreenState extends State<AuditoriasScreen> {
         children: [
           StatsRow(stats: [
             StatCard(label: 'Total', value: '${_auditorias.length}', sub: 'auditorías registradas'),
-            StatCard(label: 'Completadas', value: '$completadas', sub: 'sin observaciones', valueColor: Colors.green),
+            StatCard(label: 'Completadas', value: '$completadas', sub: 'sin observaciones', valueColor: const Color(0xFF10B981)),
             StatCard(label: 'Con Observ.', value: '$conObs', sub: 'requieren seguimiento'),
-            StatCard(label: 'Puntaje Prom.', value: '${prom.toStringAsFixed(0)}%', sub: 'todas las visitas', valueColor: const Color(0xFF00B4D8)),
+            StatCard(label: 'Puntaje Prom.', value: '${prom.toStringAsFixed(0)}%', sub: 'auditorías con puntaje', valueColor: const Color(0xFF06B6D4)),
           ]),
           const SizedBox(height: 20),
           TableCard(
@@ -89,10 +102,10 @@ class _AuditoriasScreenState extends State<AuditoriasScreen> {
             rows: _auditorias.map((a) => [
               _nombreSucursal(a.sucursalId),
               _nombreAuditor(a.auditorId),
-              a.fecha,
+              formatFecha(a.fecha),
               '${a.puntaje}%',
               a.estado,
-              a.notas ?? '—',
+              _truncarNotas(a.notas),
               a.id,
             ]).toList(),
             onEdit: (i) => _abrirFormulario(_auditorias[i]),
@@ -143,13 +156,22 @@ class _AuditoriaFormState extends State<AuditoriaForm> {
   }
 
   Future<void> _guardar() async {
+    if (_sucursalId == null || _auditorId == null) {
+      showSnack(context, 'Selecciona sucursal y auditor', error: true);
+      return;
+    }
+    final p = int.tryParse(_puntaje.text);
+    if (p == null || p < 0 || p > 100) {
+      showSnack(context, 'El puntaje debe ser un número entre 0 y 100', error: true);
+      return;
+    }
     setState(() => _saving = true);
     try {
       final data = {
         'sucursal_id': _sucursalId,
         'auditor_id': _auditorId,
         'fecha': _fecha,
-        'puntaje': int.tryParse(_puntaje.text) ?? 75,
+        'puntaje': p,
         'estado': _estado,
         'notas': _notas.text.isEmpty ? null : _notas.text,
       };
@@ -187,8 +209,12 @@ class _AuditoriaFormState extends State<AuditoriaForm> {
         labels: widget.auditores.map((a) => a.nombre).toList(),
         onChanged: (v) => setState(() => _auditorId = v),
       ),
-      FormField2(label: 'Fecha *', controller: TextEditingController(text: _fecha), onChanged: (v) => _fecha = v),
-      FormField2(label: 'Puntaje (0-100) *', controller: _puntaje),
+      DateField(
+        label: 'Fecha *',
+        value: _fecha,
+        onChanged: (v) => setState(() => _fecha = v),
+      ),
+      FormField2(label: 'Puntaje (0–100) *', controller: _puntaje),
       DropdownField(
         label: 'Estado',
         value: _estado,

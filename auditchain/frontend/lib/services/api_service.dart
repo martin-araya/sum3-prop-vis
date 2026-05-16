@@ -134,6 +134,16 @@ class ApiService {
     throw Exception(jsonDecode(res.body)['detail'] ?? 'Error al crear');
   }
 
+  static Future<Usuario> updateUsuario(String id, Map<String, dynamic> data) async {
+    final res = await http.put(
+      Uri.parse('$baseUrl/usuarios/$id'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(data),
+    );
+    if (res.statusCode == 200) return Usuario.fromJson(jsonDecode(res.body));
+    throw Exception(jsonDecode(res.body)['detail'] ?? 'Error al actualizar');
+  }
+
   static Future<void> deleteUsuario(String id) async {
     final res = await http.delete(Uri.parse('$baseUrl/usuarios/$id'));
     if (res.statusCode != 204) throw Exception('Error al eliminar');

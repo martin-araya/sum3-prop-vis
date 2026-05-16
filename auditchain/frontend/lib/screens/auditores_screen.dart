@@ -57,8 +57,8 @@ class _AuditoresScreenState extends State<AuditoresScreen> {
         children: [
           StatsRow(stats: [
             StatCard(label: 'Total', value: '${_auditores.length}', sub: 'auditores en sistema'),
-            StatCard(label: 'Activos', value: '$activos', sub: 'con acceso habilitado', valueColor: Colors.green),
-            StatCard(label: 'Regiones', value: '$regiones', sub: 'zonas cubiertas', valueColor: const Color(0xFF00B4D8)),
+            StatCard(label: 'Activos', value: '$activos', sub: 'con acceso habilitado', valueColor: const Color(0xFF10B981)),
+            StatCard(label: 'Regiones', value: '$regiones', sub: 'zonas cubiertas', valueColor: const Color(0xFF06B6D4)),
           ]),
           const SizedBox(height: 20),
           TableCard(
