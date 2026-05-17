@@ -44,11 +44,6 @@ class _AuditorDashboardScreenState extends State<AuditorDashboardScreen> {
     }
   }
 
-  Future<void> _logout() async {
-    await AuthClient.logout();
-    if (mounted) Navigator.pushReplacementNamed(context, '/login');
-  }
-
   List<Auditoria> get _hoy {
     final now = DateTime.now();
     final s = '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
@@ -154,8 +149,6 @@ class _AuditorDashboardScreenState extends State<AuditorDashboardScreen> {
               ),
               IconButton(icon: const Icon(Icons.refresh_rounded, color: Color(0xFF9FB3C8)),
                   onPressed: _cargar),
-              IconButton(icon: const Icon(Icons.logout_rounded, color: Color(0xFF9FB3C8)),
-                  onPressed: _logout, tooltip: 'Cerrar sesión'),
             ],
           ),
         ),
