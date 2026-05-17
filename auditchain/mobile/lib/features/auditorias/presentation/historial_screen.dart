@@ -71,6 +71,15 @@ class _AuditorHistoryScreenState extends State<AuditorHistoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final ok = await Navigator.pushNamed(context, '/nueva-auditoria');
+          if (ok == true) _cargar();
+        },
+        backgroundColor: const Color(0xFF1E3A8A),
+        foregroundColor: Colors.white,
+        child: const Icon(Icons.add_rounded),
+      ),
       body: _loading
           ? const Center(child: CircularProgressIndicator(color: Color(0xFF1E3A8A)))
           : NestedScrollView(
@@ -157,7 +166,13 @@ class _AuditorHistoryScreenState extends State<AuditorHistoryScreen> {
         dateBg = const Color(0xFFEF4444).withAlpha(20); dateColor = const Color(0xFFEF4444); break;
       default: sc = const Color(0xFFF59E0B); sl = 'Pendiente';
     }
-    return Container(
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed(context, '/reporte', arguments: {
+        'auditoria': a,
+        'sucursalNombre': _suc(a.sucursalId),
+        'auditorNombre': _aud(a.auditorId),
+      }),
+      child: Container(
       margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12),
           border: Border.all(color: const Color(0xFFE2E8F0)),
@@ -202,6 +217,6 @@ class _AuditorHistoryScreenState extends State<AuditorHistoryScreen> {
           ]),
         ]),
       ),
-    );
+    ));
   }
 }

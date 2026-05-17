@@ -108,10 +108,12 @@ class _AuditorDashboardScreenState extends State<AuditorDashboardScreen> {
                 ],
               ),
             ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => showSnack(context, 'Nueva auditoría — próximamente'),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => Navigator.pushNamed(context, '/nueva-auditoria'),
         backgroundColor: const Color(0xFF06B6D4),
-        child: const Icon(Icons.add_rounded, color: Colors.white),
+        foregroundColor: Colors.white,
+        icon: const Icon(Icons.add_rounded),
+        label: const Text('Nueva auditoría'),
       ),
     );
   }
