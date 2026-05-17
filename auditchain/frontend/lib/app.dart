@@ -1,7 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'mobile/auditor_app.dart';
 import 'screens/home_screen.dart';
 
 class AuditChainApp extends StatelessWidget {
@@ -13,7 +11,7 @@ class AuditChainApp extends StatelessWidget {
       title: 'AuditChain',
       debugShowCheckedModeBanner: false,
       theme: _buildTheme(),
-      home: kIsWeb ? const HomeScreen() : const AuditorApp(),
+      home: const HomeScreen(),
     );
   }
 
