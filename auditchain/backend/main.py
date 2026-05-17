@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import usuarios, sucursales, auditores, auditorias
+from routers import usuarios, sucursales, auditores, auditorias, auth
 
 app = FastAPI(
     title="AuditChain API",
@@ -16,6 +16,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(auth.router, prefix="/api/auth", tags=["Auth"])
 app.include_router(usuarios.router, prefix="/api/usuarios", tags=["Usuarios"])
 app.include_router(sucursales.router, prefix="/api/sucursales", tags=["Sucursales"])
 app.include_router(auditores.router, prefix="/api/auditores", tags=["Auditores"])
