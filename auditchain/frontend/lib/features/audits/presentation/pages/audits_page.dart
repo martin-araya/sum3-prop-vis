@@ -4,8 +4,9 @@ import 'package:intl/intl.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_spacing.dart';
 import '../../../../app/theme/app_typography.dart';
-import '../../../../mock/mock_data.dart';
-import '../../../../shared/widgets/audit_status_badge.dart';
+import '../../../../features/shared/widgets/audit_status_badge.dart';
+import '../../data/datasources/auditorias_remote_datasource.dart';
+import '../../data/models/auditoria_dto.dart';
 
 /// Listado de auditorías con filtros por estado.
 ///
@@ -23,43 +24,114 @@ class AuditsPage extends StatefulWidget {
 }
 
 class _AuditsPageState extends State<AuditsPage> {
+  final AuditoriasRemoteDatasource _datasource = AuditoriasRemoteDatasource();
+
+  List<AuditoriaDto> _todasAuditorias = <AuditoriaDto>[];
+  bool _isLoading = true;
+  String? _error;
+
   // 'todas' | 'pendiente' | 'completada' | 'con_observaciones' | 'vencida'
   String _filtroEstado = 'todas';
 
-  List<Auditoria> get _auditoriasFiltered => _filtroEstado == 'todas'
-      ? MockData.auditorias
-      : MockData.auditorias
-          .where((a) => a.estado == _filtroEstado)
+  List<AuditoriaDto> get _filtered => _filtroEstado == 'todas'
+      ? _todasAuditorias
+      : _todasAuditorias
+          .where((AuditoriaDto a) => a.estado == _filtroEstado)
           .toList();
 
-  void _setFiltro(String value) {
-    setState(() => _filtroEstado = value);
+  @override
+  void initState() {
+    super.initState();
+    _loadAuditorias();
   }
+
+  Future<void> _loadAuditorias() async {
+    setState(() {
+      _isLoading = true;
+      _error = null;
+    });
+
+    try {
+      final page = await _datasource.getAll();
+      if (mounted) {
+        setState(() {
+          _todasAuditorias = page.items;
+          _isLoading = false;
+        });
+      }
+    } on Exception catch (e) {
+      if (mounted) {
+        setState(() {
+          _error = e.toString().replaceFirst('Exception: ', '');
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  void _setFiltro(String value) => setState(() => _filtroEstado = value);
 
   @override
   Widget build(BuildContext context) {
-    final auditorias = _auditoriasFiltered;
-
     return Scaffold(
       backgroundColor: AppColors.slate50,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(AppSpacing.xl),
+      body: _buildBody(),
+    );
+  }
+
+  Widget _buildBody() {
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (_error != null) {
+      return Center(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _AuditsHeader(count: auditorias.length),
-            const SizedBox(height: AppSpacing.lg),
-            _FilterBar(
-              selected: _filtroEstado,
-              onChanged: _setFiltro,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            const Icon(
+              Icons.error_outline,
+              size: 40,
+              color: AppColors.slate400,
             ),
-            const SizedBox(height: AppSpacing.xl),
-            if (auditorias.isEmpty)
-              const _EmptyState()
-            else
-              _AuditsTable(auditorias: auditorias),
+            const SizedBox(height: AppSpacing.md),
+            Text(
+              _error!,
+              style: AppTypography.bodySm.copyWith(color: AppColors.slate500),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: AppSpacing.lg),
+            ElevatedButton.icon(
+              onPressed: _loadAuditorias,
+              icon: const Icon(Icons.refresh, size: 16),
+              label: const Text('Reintentar'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primary600,
+                foregroundColor: Colors.white,
+                elevation: 0,
+              ),
+            ),
           ],
         ),
+      );
+    }
+
+    final List<AuditoriaDto> auditorias = _filtered;
+
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(AppSpacing.xl),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          _AuditsHeader(count: auditorias.length),
+          const SizedBox(height: AppSpacing.lg),
+          _FilterBar(selected: _filtroEstado, onChanged: _setFiltro),
+          const SizedBox(height: AppSpacing.xl),
+          if (auditorias.isEmpty)
+            const _EmptyState()
+          else
+            _AuditsTable(auditorias: auditorias),
+        ],
       ),
     );
   }
@@ -75,24 +147,21 @@ class _AuditsHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const primary100 = Color(0xFFE0E7FF);
-    const primary800 = Color(0xFF1E3A8A);
-
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
+      children: <Widget>[
         Text('Auditorías', style: AppTypography.headingLg),
         const SizedBox(width: AppSpacing.md),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
           decoration: BoxDecoration(
-            color: primary100,
+            color: AppColors.primary100,
             borderRadius: BorderRadius.circular(99),
           ),
           child: Text(
             '$count',
             style: AppTypography.bodySm.copyWith(
-              color: primary800,
+              color: AppColors.primary800,
               fontWeight: FontWeight.w600,
               fontSize: 12,
               height: 1.2,
@@ -111,13 +180,9 @@ class _AuditsHeader extends StatelessWidget {
 class _FilterBar extends StatelessWidget {
   final String selected;
   final ValueChanged<String> onChanged;
+  const _FilterBar({required this.selected, required this.onChanged});
 
-  const _FilterBar({
-    required this.selected,
-    required this.onChanged,
-  });
-
-  static const List<_FilterOption> _options = [
+  static const List<_FilterOption> _options = <_FilterOption>[
     _FilterOption('todas', 'Todas'),
     _FilterOption('pendiente', 'Pendientes'),
     _FilterOption('completada', 'Completadas'),
@@ -127,18 +192,16 @@ class _FilterBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const primary800 = Color(0xFF1E3A8A);
-
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: [
-          for (int i = 0; i < _options.length; i++) ...[
+        children: <Widget>[
+          for (int i = 0; i < _options.length; i++) ...<Widget>[
             if (i > 0) const SizedBox(width: AppSpacing.sm),
             _Chip(
               label: _options[i].label,
               isSelected: selected == _options[i].value,
-              selectedColor: primary800,
+              selectedColor: AppColors.primary800,
               onTap: () => onChanged(_options[i].value),
             ),
           ],
@@ -159,7 +222,6 @@ class _Chip extends StatelessWidget {
   final bool isSelected;
   final Color selectedColor;
   final VoidCallback onTap;
-
   const _Chip({
     required this.label,
     required this.isSelected,
@@ -169,9 +231,9 @@ class _Chip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bg = isSelected ? selectedColor : Colors.white;
-    final fg = isSelected ? Colors.white : AppColors.slate700;
-    final borderColor = isSelected ? selectedColor : AppColors.slate200;
+    final Color bg = isSelected ? selectedColor : Colors.white;
+    final Color fg = isSelected ? Colors.white : AppColors.slate700;
+    final Color borderColor = isSelected ? selectedColor : AppColors.slate200;
 
     return Material(
       color: bg,
@@ -207,8 +269,11 @@ class _Chip extends StatelessWidget {
 // TABLA
 // ─────────────────────────────────────────────────────────────────────────────
 
+// Flex por columna: ID | Sucursal | Auditor | Fecha | Score | Estado | More
+const List<int> _kAuditColFlex = <int>[2, 4, 3, 2, 1, 2, 1];
+
 class _AuditsTable extends StatelessWidget {
-  final List<Auditoria> auditorias;
+  final List<AuditoriaDto> auditorias;
   const _AuditsTable({required this.auditorias});
 
   @override
@@ -222,22 +287,23 @@ class _AuditsTable extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: Column(
-          children: [
+          children: <Widget>[
             const _TableHeaderRow(),
-            for (int i = 0; i < auditorias.length; i++)
-              _AuditRow(
-                auditoria: auditorias[i],
-                isOdd: i.isOdd,
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: auditorias.length,
+              itemBuilder: (BuildContext context, int index) => _AuditRow(
+                auditoria: auditorias[index],
+                isOdd: index.isOdd,
               ),
+            ),
           ],
         ),
       ),
     );
   }
 }
-
-// ─── Flex por columna: ID | Sucursal | Auditor | Fecha | Score | Estado | More
-const List<int> _kAuditColFlex = <int>[2, 4, 3, 2, 1, 2, 1];
 
 // ─── Header ──────────────────────────────────────────────────────────────────
 
@@ -246,7 +312,7 @@ class _TableHeaderRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final headerStyle = AppTypography.caption.copyWith(
+    final TextStyle headerStyle = AppTypography.caption.copyWith(
       fontSize: 11,
       fontWeight: FontWeight.w600,
       color: AppColors.slate600,
@@ -254,28 +320,28 @@ class _TableHeaderRow extends StatelessWidget {
     );
 
     Widget cell(String label, int flex,
-        {TextAlign align = TextAlign.left}) {
-      return Expanded(
-        flex: flex,
-        child: Text(label.toUpperCase(), style: headerStyle, textAlign: align),
-      );
-    }
+            {TextAlign align = TextAlign.left}) =>
+        Expanded(
+          flex: flex,
+          child:
+              Text(label.toUpperCase(), style: headerStyle, textAlign: align),
+        );
 
     return Container(
-      color: const Color(0xFFF8FAFC),
+      color: AppColors.slate50,
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.lg,
         vertical: AppSpacing.md,
       ),
       child: Row(
-        children: [
-          cell('ID',       _kAuditColFlex[0]),
+        children: <Widget>[
+          cell('ID', _kAuditColFlex[0]),
           cell('Sucursal', _kAuditColFlex[1]),
-          cell('Auditor',  _kAuditColFlex[2]),
-          cell('Fecha',    _kAuditColFlex[3]),
-          cell('Score',    _kAuditColFlex[4], align: TextAlign.center),
-          cell('Estado',   _kAuditColFlex[5]),
-          cell('',         _kAuditColFlex[6]),
+          cell('Auditor', _kAuditColFlex[2]),
+          cell('Fecha', _kAuditColFlex[3]),
+          cell('Score', _kAuditColFlex[4], align: TextAlign.center),
+          cell('Estado', _kAuditColFlex[5]),
+          cell('', _kAuditColFlex[6]),
         ],
       ),
     );
@@ -285,14 +351,14 @@ class _TableHeaderRow extends StatelessWidget {
 // ─── Fila ────────────────────────────────────────────────────────────────────
 
 class _AuditRow extends StatelessWidget {
-  final Auditoria auditoria;
+  final AuditoriaDto auditoria;
   final bool isOdd;
   const _AuditRow({required this.auditoria, required this.isOdd});
 
   static Color _scoreColor(int score) {
-    if (score >= 80) return const Color(0xFF10B981);
-    if (score >= 65) return const Color(0xFFF59E0B);
-    return const Color(0xFFEF4444);
+    if (score >= 80) return AppColors.success;
+    if (score >= 65) return AppColors.warning;
+    return AppColors.danger;
   }
 
   String _formatFecha(DateTime fecha) {
@@ -305,11 +371,11 @@ class _AuditRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bg = isOdd ? const Color(0xFFFAFAFA) : Colors.white;
-    final score = auditoria.puntaje;
-    final hasScore = score > 0;
-    final scoreColor = _scoreColor(score);
-    final fechaTxt = _formatFecha(auditoria.fecha);
+    final Color bg = isOdd ? AppColors.slate50 : Colors.white;
+    final int? scoreInt = auditoria.puntaje?.round();
+    final bool hasScore = scoreInt != null;
+    final Color scoreColor = _scoreColor(scoreInt ?? 0);
+    final String fechaTxt = _formatFecha(auditoria.fechaProgramada);
 
     return Container(
       decoration: BoxDecoration(
@@ -323,14 +389,14 @@ class _AuditRow extends StatelessWidget {
         vertical: AppSpacing.md,
       ),
       child: Row(
-        children: [
+        children: <Widget>[
           // ID
           Expanded(
             flex: _kAuditColFlex[0],
             child: Text(
               auditoria.id,
               style: AppTypography.monoData(12).copyWith(
-                color: const Color(0xFF1E3A8A),
+                color: AppColors.primary800,
                 fontWeight: FontWeight.w500,
               ),
               overflow: TextOverflow.ellipsis,
@@ -389,7 +455,7 @@ class _AuditRow extends StatelessWidget {
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
-                        '$score',
+                        '$scoreInt',
                         style: AppTypography.bodySm.copyWith(
                           fontSize: 12,
                           color: Colors.white,
@@ -455,8 +521,8 @@ class _EmptyState extends StatelessWidget {
       child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
+          children: <Widget>[
+            const Icon(
               Icons.inbox_outlined,
               size: 48,
               color: AppColors.slate400,

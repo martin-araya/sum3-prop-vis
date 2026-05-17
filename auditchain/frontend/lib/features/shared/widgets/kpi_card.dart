@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../app/theme/app_colors.dart';
 import '../../../app/theme/app_spacing.dart';
 
 /// Tarjeta de KPI usada en dashboards.
@@ -23,11 +24,11 @@ class KpiCard extends StatelessWidget {
   final String? delta;
   final bool? positive;
 
-  static const Color _border = Color(0xFFE2E8F0);
-  static const Color _labelColor = Color(0xFF64748B);
-  static const Color _valueColor = Color(0xFF0F172A);
-  static const Color _positiveColor = Color(0xFF059669);
-  static const Color _negativeColor = Color(0xFFDC2626);
+  static const Color _border = AppColors.slate200;
+  static const Color _labelColor = AppColors.slate500;
+  static const Color _valueColor = AppColors.slate900;
+  static const Color _positiveColor = AppColors.accent600;
+  static const Color _negativeColor = AppColors.dangerStrong;
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +83,7 @@ class _DeltaRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isPositive = positive ?? true;
     final Color color = positive == null
-        ? const Color(0xFF64748B)
+        ? AppColors.slate500
         : (isPositive
             ? KpiCard._positiveColor
             : KpiCard._negativeColor);

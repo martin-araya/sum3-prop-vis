@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../app/theme/app_colors.dart';
-import '../../../app/theme/app_spacing.dart';
 
 /// Badge tipo "pill" para representar el estado de una auditoría.
 ///
@@ -14,20 +13,20 @@ class AuditStatusBadge extends StatelessWidget {
 
   static const Map<String, _BadgeStyle> _styles = <String, _BadgeStyle>{
     'completada': _BadgeStyle(
-      background: Color(0xFFD1FAE5),
-      foreground: Color(0xFF065F46),
+      background: AppColors.successBg,
+      foreground: AppColors.successText,
     ),
     'pendiente': _BadgeStyle(
-      background: Color(0xFFFEF3C7),
-      foreground: Color(0xFF92400E),
+      background: AppColors.warningBg,
+      foreground: AppColors.warningText,
     ),
     'con_observaciones': _BadgeStyle(
-      background: Color(0xFFE0F2FE),
-      foreground: Color(0xFF075985),
+      background: AppColors.infoBg,
+      foreground: AppColors.infoText,
     ),
     'vencida': _BadgeStyle(
-      background: Color(0xFFF1F5F9),
-      foreground: Color(0xFF475569),
+      background: AppColors.neutralBg,
+      foreground: AppColors.neutralText,
     ),
   };
 
@@ -41,9 +40,9 @@ class AuditStatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _BadgeStyle style = _styles[estado] ??
-        _BadgeStyle(
-          background: AppColors.slate100,
-          foreground: AppColors.slate600,
+        const _BadgeStyle(
+          background: AppColors.neutralBg,
+          foreground: AppColors.neutralText,
         );
 
     return Container(

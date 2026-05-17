@@ -5,8 +5,9 @@ import 'package:intl/intl.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_spacing.dart';
 import '../../../../app/theme/app_typography.dart';
-import '../../../../mock/mock_data.dart';
-import '../../../../shared/widgets/audit_status_badge.dart';
+import '../../../../features/shared/widgets/audit_status_badge.dart';
+import '../../data/datasources/sucursales_remote_datasource.dart';
+import '../../data/models/sucursal_dto.dart';
 
 /// Listado de sucursales auditables.
 ///
@@ -15,25 +16,103 @@ import '../../../../shared/widgets/audit_status_badge.dart';
 ///   - Grid responsivo de tarjetas (3 / 2 / 1 columnas según ancho).
 ///
 /// Cada tarjeta navega a `/sucursales/:id` al hacer tap.
-class BranchesPage extends StatelessWidget {
+class BranchesPage extends StatefulWidget {
   const BranchesPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final sucursales = MockData.sucursales;
+  State<BranchesPage> createState() => _BranchesPageState();
+}
 
+class _BranchesPageState extends State<BranchesPage> {
+  final SucursalesRemoteDatasource _datasource = SucursalesRemoteDatasource();
+
+  List<SucursalDto> _sucursales = <SucursalDto>[];
+  bool _isLoading = true;
+  String? _error;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSucursales();
+  }
+
+  Future<void> _loadSucursales() async {
+    setState(() {
+      _isLoading = true;
+      _error = null;
+    });
+
+    try {
+      final page = await _datasource.getAll();
+      if (mounted) {
+        setState(() {
+          _sucursales = page.items;
+          _isLoading = false;
+        });
+      }
+    } on Exception catch (e) {
+      if (mounted) {
+        setState(() {
+          _error = e.toString().replaceFirst('Exception: ', '');
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.slate50,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(AppSpacing.xl),
+      body: _buildBody(),
+    );
+  }
+
+  Widget _buildBody() {
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (_error != null) {
+      return Center(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _BranchesHeader(count: sucursales.length),
-            const SizedBox(height: AppSpacing.xl),
-            _BranchesGrid(sucursales: sucursales),
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            const Icon(Icons.error_outline, size: 40, color: AppColors.slate400),
+            const SizedBox(height: AppSpacing.md),
+            Text(
+              _error!,
+              style: AppTypography.bodySm.copyWith(color: AppColors.slate500),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: AppSpacing.lg),
+            ElevatedButton.icon(
+              onPressed: _loadSucursales,
+              icon: const Icon(Icons.refresh, size: 16),
+              label: const Text('Reintentar'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primary600,
+                foregroundColor: Colors.white,
+                elevation: 0,
+              ),
+            ),
           ],
         ),
+      );
+    }
+
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(AppSpacing.xl),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          _BranchesHeader(
+            count: _sucursales.length,
+            onRefresh: _loadSucursales,
+          ),
+          const SizedBox(height: AppSpacing.xl),
+          _BranchesGrid(sucursales: _sucursales),
+        ],
       ),
     );
   }
@@ -45,28 +124,26 @@ class BranchesPage extends StatelessWidget {
 
 class _BranchesHeader extends StatelessWidget {
   final int count;
-  const _BranchesHeader({required this.count});
+  final VoidCallback onRefresh;
+  const _BranchesHeader({required this.count, required this.onRefresh});
 
   @override
   Widget build(BuildContext context) {
-    const primary100 = Color(0xFFE0E7FF);
-    const primary800 = Color(0xFF1E3A8A);
-
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
+      children: <Widget>[
         Text('Sucursales', style: AppTypography.headingLg),
         const SizedBox(width: AppSpacing.md),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
           decoration: BoxDecoration(
-            color: primary100,
+            color: AppColors.primary100,
             borderRadius: BorderRadius.circular(99),
           ),
           child: Text(
             '$count',
             style: AppTypography.bodySm.copyWith(
-              color: primary800,
+              color: AppColors.primary800,
               fontWeight: FontWeight.w600,
               fontSize: 12,
               height: 1.2,
@@ -104,15 +181,27 @@ class _BranchesHeader extends StatelessWidget {
 // ─────────────────────────────────────────────────────────────────────────────
 
 class _BranchesGrid extends StatelessWidget {
-  final List<Sucursal> sucursales;
+  final List<SucursalDto> sucursales;
   const _BranchesGrid({required this.sucursales});
 
   @override
   Widget build(BuildContext context) {
+    if (sucursales.isEmpty) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.xxl),
+          child: Text(
+            'No hay sucursales registradas.',
+            style: AppTypography.bodySm.copyWith(color: AppColors.slate500),
+          ),
+        ),
+      );
+    }
+
     return LayoutBuilder(
-      builder: (context, constraints) {
-        final w = constraints.maxWidth;
-        final cols = w > 1100 ? 3 : (w > 700 ? 2 : 1);
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final double w = constraints.maxWidth;
+        final int cols = w > 1100 ? 3 : (w > 700 ? 2 : 1);
 
         return GridView.builder(
           shrinkWrap: true,
@@ -122,9 +211,9 @@ class _BranchesGrid extends StatelessWidget {
             crossAxisCount: cols,
             crossAxisSpacing: AppSpacing.lg,
             mainAxisSpacing: AppSpacing.lg,
-            mainAxisExtent: 260,
+            mainAxisExtent: 240,
           ),
-          itemBuilder: (context, index) {
+          itemBuilder: (BuildContext context, int index) {
             return _BranchCard(sucursal: sucursales[index]);
           },
         );
@@ -138,27 +227,26 @@ class _BranchesGrid extends StatelessWidget {
 // ─────────────────────────────────────────────────────────────────────────────
 
 class _BranchCard extends StatelessWidget {
-  final Sucursal sucursal;
+  final SucursalDto sucursal;
   const _BranchCard({required this.sucursal});
 
   static Color _scoreColor(int score) {
-    if (score >= 80) return const Color(0xFF10B981);
-    if (score >= 65) return const Color(0xFFF59E0B);
-    return const Color(0xFFEF4444);
+    if (score >= 80) return AppColors.success;
+    if (score >= 65) return AppColors.warning;
+    return AppColors.danger;
   }
 
   @override
   Widget build(BuildContext context) {
-    final color = _scoreColor(sucursal.puntaje);
-
-    final esActiva = sucursal.estado == 'activa' || sucursal.estado == 'activo';
-    final estadoBadge = esActiva ? 'completada' : 'vencida';
+    final int score = sucursal.puntajePromedio.round();
+    final Color color = _scoreColor(score);
+    final String estadoBadge = sucursal.activo ? 'completada' : 'vencida';
 
     String fechaTxt;
     try {
-      fechaTxt = DateFormat.yMMMd('es').format(sucursal.ultimaAuditoria);
+      fechaTxt = DateFormat.yMMMd('es').format(sucursal.creadoEn);
     } catch (_) {
-      fechaTxt = DateFormat.yMMMd().format(sucursal.ultimaAuditoria);
+      fechaTxt = DateFormat.yMMMd().format(sucursal.creadoEn);
     }
 
     return Material(
@@ -175,10 +263,10 @@ class _BranchCard extends StatelessWidget {
           padding: const EdgeInsets.all(AppSpacing.lg),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
+            children: <Widget>[
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   Expanded(
                     child: Text(
                       sucursal.nombre,
@@ -198,7 +286,7 @@ class _BranchCard extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.sm),
               Row(
-                children: [
+                children: <Widget>[
                   const Icon(
                     Icons.location_on_outlined,
                     size: 14,
@@ -223,9 +311,9 @@ class _BranchCard extends StatelessWidget {
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: <Widget>[
                     Text(
-                      '${sucursal.puntaje}',
+                      '$score',
                       style: TextStyle(
                         fontSize: 36,
                         fontWeight: FontWeight.w600,
@@ -247,7 +335,7 @@ class _BranchCard extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.sm),
               Text(
-                'Última auditoría: $fechaTxt',
+                'Registrada: $fechaTxt',
                 style: AppTypography.caption.copyWith(
                   fontSize: 11,
                   color: AppColors.slate400,
@@ -265,7 +353,7 @@ class _BranchCard extends StatelessWidget {
                   'Ver detalles →',
                   style: AppTypography.bodySm.copyWith(
                     fontSize: 12,
-                    color: const Color(0xFF1E3A8A),
+                    color: AppColors.primary800,
                     fontWeight: FontWeight.w600,
                   ),
                 ),

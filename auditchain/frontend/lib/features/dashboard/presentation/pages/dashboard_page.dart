@@ -5,39 +5,146 @@ import 'package:intl/intl.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../../../app/theme/app_spacing.dart';
 import '../../../../app/theme/app_typography.dart';
-import '../../../../mock/mock_data.dart';
 import '../../../../shared/widgets/kpi_card.dart';
 import '../../../../shared/widgets/audit_status_badge.dart';
+import '../../../audits/data/models/auditoria_dto.dart';
+import '../../../branches/data/datasources/sucursales_remote_datasource.dart';
+import '../../../branches/data/models/sucursal_dto.dart';
+import '../../data/datasources/dashboard_remote_datasource.dart';
 
 /// Dashboard principal de AuditChain.
 ///
-/// IMPORTANTE: para que las fechas en español funcionen, en `main.dart`
-/// se debe llamar:
-///
-///   await initializeDateFormatting('es', null);
-///
-/// antes de `runApp(...)` (paquete intl).
-class DashboardPage extends StatelessWidget {
+/// Carga en paralelo:
+///   - Stats de auditorías (totales, estados, puntaje promedio)
+///   - Auditorías recientes (page 1, size 8)
+///   - Sucursales con puntaje más bajo (para "en alerta")
+class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
+
+  @override
+  State<DashboardPage> createState() => _DashboardPageState();
+}
+
+class _DashboardPageState extends State<DashboardPage> {
+  final DashboardRemoteDatasource _dashDs = DashboardRemoteDatasource();
+  final SucursalesRemoteDatasource _sucursalesDs = SucursalesRemoteDatasource();
+
+  Map<String, dynamic>? _stats;
+  List<AuditoriaDto> _recentAuditorias = <AuditoriaDto>[];
+  List<SucursalDto> _topSucursales = <SucursalDto>[];
+
+  bool _isLoading = true;
+  String? _error;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadAll();
+  }
+
+  Future<void> _loadAll() async {
+    setState(() {
+      _isLoading = true;
+      _error = null;
+    });
+
+    try {
+      // Start all three requests in parallel before awaiting any of them.
+      final statsF = _dashDs.getStats();
+      final recentF = _dashDs.getRecentAuditorias(size: 8);
+      final sucPageF = _sucursalesDs.getAll(size: 50);
+
+      final Map<String, dynamic> stats = await statsF;
+      final List<AuditoriaDto> recent = await recentF;
+      final sucPage = await sucPageF;
+
+      if (!mounted) return;
+
+      final List<SucursalDto> sorted =
+          List<SucursalDto>.from(sucPage.items)
+            ..sort((SucursalDto a, SucursalDto b) =>
+                a.puntajePromedio.compareTo(b.puntajePromedio));
+      final List<SucursalDto> top3 = sorted.take(3).toList();
+
+      setState(() {
+        _stats = stats;
+        _recentAuditorias = recent;
+        _topSucursales = top3;
+        _isLoading = false;
+      });
+    } on Exception catch (e) {
+      if (mounted) {
+        setState(() {
+          _error = e.toString().replaceFirst('Exception: ', '');
+          _isLoading = false;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.slate50,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(AppSpacing.xl),
+      body: _buildBody(),
+    );
+  }
+
+  Widget _buildBody() {
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (_error != null) {
+      return Center(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: const [
-            _DashboardHeader(),
-            SizedBox(height: AppSpacing.xl),
-            _KpiRow(),
-            SizedBox(height: AppSpacing.lg),
-            _ChartsRow(),
-            SizedBox(height: AppSpacing.lg),
-            _BottomRow(),
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            const Icon(
+              Icons.error_outline,
+              size: 40,
+              color: AppColors.slate400,
+            ),
+            const SizedBox(height: AppSpacing.md),
+            Text(
+              _error!,
+              style: AppTypography.bodySm.copyWith(color: AppColors.slate500),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: AppSpacing.lg),
+            ElevatedButton.icon(
+              onPressed: _loadAll,
+              icon: const Icon(Icons.refresh, size: 16),
+              label: const Text('Reintentar'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primary600,
+                foregroundColor: Colors.white,
+                elevation: 0,
+              ),
+            ),
           ],
         ),
+      );
+    }
+
+    final stats = _stats!;
+
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(AppSpacing.xl),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          const _DashboardHeader(),
+          const SizedBox(height: AppSpacing.xl),
+          _KpiRow(stats: stats),
+          const SizedBox(height: AppSpacing.lg),
+          _ChartsRow(stats: stats),
+          const SizedBox(height: AppSpacing.lg),
+          _BottomRow(
+            sucursales: _topSucursales,
+            auditorias: _recentAuditorias,
+          ),
+        ],
       ),
     );
   }
@@ -62,11 +169,11 @@ class _DashboardHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
+      children: <Widget>[
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Bienvenido, Carlos', style: AppTypography.displayMd),
+          children: <Widget>[
+            Text('Bienvenido', style: AppTypography.displayMd),
             const SizedBox(height: 4),
             Text(
               _capitalize(fechaHoy),
@@ -107,32 +214,38 @@ class _DashboardHeader extends StatelessWidget {
 // ─────────────────────────────────────────────────────────────────────────────
 
 class _KpiRow extends StatelessWidget {
-  const _KpiRow();
+  final Map<String, dynamic> stats;
+  const _KpiRow({required this.stats});
 
   @override
   Widget build(BuildContext context) {
-    final k = MockData.kpis;
-    final cumplimiento = k.cumplimiento.toStringAsFixed(1).replaceAll('.', ',');
-    final score = k.scorePromedio.toStringAsFixed(1).replaceAll('.', ',');
-    final total = NumberFormat.decimalPattern('es').format(k.totalAuditorias);
+    final int total = (stats['total'] as num?)?.toInt() ?? 0;
+    final int completadas = (stats['completadas'] as num?)?.toInt() ?? 0;
+    final int pendientes = (stats['pendientes'] as num?)?.toInt() ?? 0;
+    final int conObs = (stats['con_observaciones'] as num?)?.toInt() ?? 0;
+    final double puntajePromedio =
+        (stats['puntaje_promedio'] as num?)?.toDouble() ?? 0.0;
 
-    final items = <_KpiItem>[
-      _KpiItem(label: 'Total auditorías', value: total, delta: '+8,5%', positive: true),
-      _KpiItem(label: 'Cumplimiento', value: '$cumplimiento%', delta: '+1,2%', positive: true),
-      _KpiItem(label: 'Pendientes', value: '${k.pendientes}', delta: '-3,1%', positive: false),
-      _KpiItem(label: 'Auditores activos', value: '${k.auditoresActivos}', delta: '+2', positive: true),
-      _KpiItem(label: 'Score promedio', value: score),
+    final String scoreStr =
+        puntajePromedio.toStringAsFixed(1).replaceAll('.', ',');
+    final String totalStr =
+        NumberFormat.decimalPattern('es').format(total);
+
+    final List<_KpiItem> items = <_KpiItem>[
+      _KpiItem(label: 'Total auditorías', value: totalStr),
+      _KpiItem(label: 'Completadas', value: '$completadas'),
+      _KpiItem(label: 'Pendientes', value: '$pendientes'),
+      _KpiItem(label: 'Con observaciones', value: '$conObs'),
+      _KpiItem(label: 'Score promedio', value: scoreStr),
     ];
 
     return Row(
-      children: [
-        for (var i = 0; i < items.length; i++) ...[
+      children: <Widget>[
+        for (int i = 0; i < items.length; i++) ...<Widget>[
           Expanded(
             child: KpiCard(
               label: items[i].label,
               value: items[i].value,
-              delta: items[i].delta,
-              positive: items[i].positive,
             ),
           ),
           if (i < items.length - 1) const SizedBox(width: 12),
@@ -145,14 +258,7 @@ class _KpiRow extends StatelessWidget {
 class _KpiItem {
   final String label;
   final String value;
-  final String? delta;
-  final bool? positive;
-  const _KpiItem({
-    required this.label,
-    required this.value,
-    this.delta,
-    this.positive,
-  });
+  const _KpiItem({required this.label, required this.value});
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -160,47 +266,80 @@ class _KpiItem {
 // ─────────────────────────────────────────────────────────────────────────────
 
 class _ChartsRow extends StatelessWidget {
-  const _ChartsRow();
+  final Map<String, dynamic> stats;
+  const _ChartsRow({required this.stats});
 
   @override
   Widget build(BuildContext context) {
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: const [
-          Expanded(flex: 3, child: _ComplianceByRegionCard()),
-          SizedBox(width: 16),
-          Expanded(flex: 2, child: _StatusDistributionCard()),
+        children: <Widget>[
+          const Expanded(flex: 3, child: _ComplianceByRegionCard()),
+          const SizedBox(width: 16),
+          Expanded(flex: 2, child: _StatusDistributionCard(stats: stats)),
         ],
       ),
     );
   }
 }
 
+// ─── Compliance por región (datos estáticos — no hay endpoint por región) ────
+
 class _ComplianceByRegionCard extends StatelessWidget {
   const _ComplianceByRegionCard();
 
-  static const _quarterColors = <Color>[
+  static const List<Map<String, Object>> _complianceData =
+      <Map<String, Object>>[
+    <String, Object>{
+      'region': 'Norte',
+      'q1': 82.0,
+      'q2': 85.0,
+      'q3': 88.0,
+      'q4': 90.0,
+    },
+    <String, Object>{
+      'region': 'Centro',
+      'q1': 75.0,
+      'q2': 78.0,
+      'q3': 80.0,
+      'q4': 83.0,
+    },
+    <String, Object>{
+      'region': 'Sur',
+      'q1': 88.0,
+      'q2': 87.0,
+      'q3': 91.0,
+      'q4': 93.0,
+    },
+    <String, Object>{
+      'region': 'Este',
+      'q1': 70.0,
+      'q2': 74.0,
+      'q3': 76.0,
+      'q4': 79.0,
+    },
+  ];
+
+  static const List<Color> _quarterColors = <Color>[
     AppColors.primary600,
     AppColors.primary500,
     AppColors.accent600,
     AppColors.accent500,
   ];
-  static const _quarterLabels = ['Q1', 'Q2', 'Q3', 'Q4'];
+  static const List<String> _quarterLabels = <String>['Q1', 'Q2', 'Q3', 'Q4'];
 
   @override
   Widget build(BuildContext context) {
-    final data = MockData.complianceByRegion;
-
     return _DashboardCard(
       title: 'Compliance por región',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           Wrap(
             spacing: 16,
             runSpacing: 8,
-            children: List.generate(_quarterLabels.length, (i) {
+            children: List<Widget>.generate(_quarterLabels.length, (int i) {
               return _LegendDot(
                 color: _quarterColors[i],
                 label: _quarterLabels[i],
@@ -223,7 +362,9 @@ class _ComplianceByRegionCard extends StatelessWidget {
                       horizontal: 8,
                       vertical: 6,
                     ),
-                    getTooltipItem: (group, gIdx, rod, rIdx) {
+                    getTooltipItem:
+                        (BarChartGroupData group, int gIdx,
+                            BarChartRodData rod, int rIdx) {
                       return BarTooltipItem(
                         '${_quarterLabels[rIdx]}  ${rod.toY.toStringAsFixed(0)}%',
                         AppTypography.bodySm.copyWith(color: Colors.white),
@@ -243,7 +384,7 @@ class _ComplianceByRegionCard extends StatelessWidget {
                       showTitles: true,
                       reservedSize: 36,
                       interval: 5,
-                      getTitlesWidget: (value, meta) {
+                      getTitlesWidget: (double value, TitleMeta meta) {
                         if (value % 5 != 0) return const SizedBox.shrink();
                         return Padding(
                           padding: const EdgeInsets.only(right: 6),
@@ -262,15 +403,15 @@ class _ComplianceByRegionCard extends StatelessWidget {
                     sideTitles: SideTitles(
                       showTitles: true,
                       reservedSize: 30,
-                      getTitlesWidget: (value, meta) {
-                        final idx = value.toInt();
-                        if (idx < 0 || idx >= data.length) {
+                      getTitlesWidget: (double value, TitleMeta meta) {
+                        final int idx = value.toInt();
+                        if (idx < 0 || idx >= _complianceData.length) {
                           return const SizedBox.shrink();
                         }
                         return Padding(
                           padding: const EdgeInsets.only(top: 8),
                           child: Text(
-                            data[idx]['region'] as String,
+                            _complianceData[idx]['region'] as String,
                             style: AppTypography.bodySm.copyWith(
                               color: AppColors.slate700,
                               fontWeight: FontWeight.w500,
@@ -285,16 +426,18 @@ class _ComplianceByRegionCard extends StatelessWidget {
                   show: true,
                   drawVerticalLine: false,
                   horizontalInterval: 5,
-                  getDrawingHorizontalLine: (_) => FlLine(
+                  getDrawingHorizontalLine: (_) => const FlLine(
                     color: AppColors.slate200,
                     strokeWidth: 1,
-                    dashArray: const [4, 4],
+                    dashArray: <int>[4, 4],
                   ),
                 ),
                 borderData: FlBorderData(show: false),
-                barGroups: List.generate(data.length, (gIdx) {
-                  final region = data[gIdx];
-                  final values = <double>[
+                barGroups:
+                    List<BarChartGroupData>.generate(_complianceData.length,
+                        (int gIdx) {
+                  final Map<String, Object> region = _complianceData[gIdx];
+                  final List<double> values = <double>[
                     (region['q1'] as num).toDouble(),
                     (region['q2'] as num).toDouble(),
                     (region['q3'] as num).toDouble(),
@@ -303,7 +446,8 @@ class _ComplianceByRegionCard extends StatelessWidget {
                   return BarChartGroupData(
                     x: gIdx,
                     barsSpace: 4,
-                    barRods: List.generate(4, (bIdx) {
+                    barRods:
+                        List<BarChartRodData>.generate(4, (int bIdx) {
                       return BarChartRodData(
                         toY: values[bIdx],
                         color: _quarterColors[bIdx],
@@ -325,13 +469,16 @@ class _ComplianceByRegionCard extends StatelessWidget {
   }
 }
 
-class _StatusDistributionCard extends StatelessWidget {
-  const _StatusDistributionCard();
+// ─── Distribución de estados (datos reales desde stats) ─────────────────────
 
-  static const _completadaColor = Color(0xFF10B981);
-  static const _pendienteColor = Color(0xFFF59E0B);
-  static const _conObsColor = Color(0xFF38BDF8);
-  static const _vencidaColor = Color(0xFF94A3B8);
+class _StatusDistributionCard extends StatelessWidget {
+  final Map<String, dynamic> stats;
+  const _StatusDistributionCard({required this.stats});
+
+  static const Color _completadaColor = AppColors.success;
+  static const Color _pendienteColor = AppColors.warning;
+  static const Color _conObsColor = AppColors.conObs;
+  static const Color _vencidaColor = AppColors.neutral;
 
   Color _colorFor(String estado) {
     switch (estado) {
@@ -365,26 +512,33 @@ class _StatusDistributionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dataMap = MockData.auditStatusDistribution;
-    final entries = dataMap.entries.toList();
-    final total = entries.fold<int>(0, (a, b) => a + b.value);
+    final Map<String, int> dataMap = <String, int>{
+      'completada': (stats['completadas'] as num?)?.toInt() ?? 0,
+      'pendiente': (stats['pendientes'] as num?)?.toInt() ?? 0,
+      'con_observaciones':
+          (stats['con_observaciones'] as num?)?.toInt() ?? 0,
+      'vencida': (stats['vencidas'] as num?)?.toInt() ?? 0,
+    };
+    final List<MapEntry<String, int>> entries = dataMap.entries.toList();
+    final int total =
+        entries.fold<int>(0, (int a, MapEntry<String, int> b) => a + b.value);
 
     return _DashboardCard(
       title: 'Distribución de estados',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           SizedBox(
             height: 220,
             child: Stack(
               alignment: Alignment.center,
-              children: [
+              children: <Widget>[
                 PieChart(
                   PieChartData(
                     sectionsSpace: 2,
                     centerSpaceRadius: 50,
                     startDegreeOffset: -90,
-                    sections: entries.map((e) {
+                    sections: entries.map((MapEntry<String, int> e) {
                       return PieChartSectionData(
                         value: e.value.toDouble(),
                         color: _colorFor(e.key),
@@ -396,7 +550,7 @@ class _StatusDistributionCard extends StatelessWidget {
                 ),
                 Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: [
+                  children: <Widget>[
                     Text(
                       NumberFormat.decimalPattern('es').format(total),
                       style: AppTypography.displayLg.copyWith(
@@ -420,12 +574,13 @@ class _StatusDistributionCard extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.md),
           Column(
-            children: entries.map((e) {
-              final pct = total == 0 ? 0.0 : (e.value / total) * 100;
+            children: entries.map((MapEntry<String, int> e) {
+              final double pct =
+                  total == 0 ? 0.0 : (e.value / total) * 100;
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4),
                 child: Row(
-                  children: [
+                  children: <Widget>[
                     Container(
                       width: 10,
                       height: 10,
@@ -465,48 +620,74 @@ class _StatusDistributionCard extends StatelessWidget {
 // ─────────────────────────────────────────────────────────────────────────────
 
 class _BottomRow extends StatelessWidget {
-  const _BottomRow();
+  final List<SucursalDto> sucursales;
+  final List<AuditoriaDto> auditorias;
+  const _BottomRow({
+    required this.sucursales,
+    required this.auditorias,
+  });
 
   @override
   Widget build(BuildContext context) {
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: const [
-          Expanded(flex: 2, child: _SucursalesAlertaCard()),
-          SizedBox(width: 16),
-          Expanded(flex: 3, child: _AuditoriasRecientesCard()),
+        children: <Widget>[
+          Expanded(
+            flex: 2,
+            child: _SucursalesAlertaCard(sucursales: sucursales),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            flex: 3,
+            child: _AuditoriasRecientesCard(auditorias: auditorias),
+          ),
         ],
       ),
     );
   }
 }
 
-class _SucursalesAlertaCard extends StatelessWidget {
-  const _SucursalesAlertaCard();
+// ─── Sucursales en alerta ─────────────────────────────────────────────────────
 
-  Color _colorScore(int p) {
-    if (p >= 80) return const Color(0xFF10B981);
-    if (p >= 65) return const Color(0xFFF59E0B);
-    return const Color(0xFFEF4444);
+class _SucursalesAlertaCard extends StatelessWidget {
+  final List<SucursalDto> sucursales;
+  const _SucursalesAlertaCard({required this.sucursales});
+
+  Color _colorScore(double p) {
+    if (p >= 80) return AppColors.success;
+    if (p >= 65) return AppColors.warning;
+    return AppColors.danger;
   }
 
   @override
   Widget build(BuildContext context) {
-    final sucursales = [...MockData.sucursales]
-      ..sort((a, b) => a.puntaje.compareTo(b.puntaje));
-    final top3 = sucursales.take(3).toList();
+    if (sucursales.isEmpty) {
+      return _DashboardCard(
+        title: 'Sucursales en alerta',
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: AppSpacing.xl),
+            child: Text(
+              'Sin datos',
+              style:
+                  AppTypography.bodySm.copyWith(color: AppColors.slate400),
+            ),
+          ),
+        ),
+      );
+    }
 
     return _DashboardCard(
       title: 'Sucursales en alerta',
       child: Column(
-        children: [
-          for (var i = 0; i < top3.length; i++) ...[
+        children: <Widget>[
+          for (int i = 0; i < sucursales.length; i++) ...<Widget>[
             _SucursalAlertRow(
-              sucursal: top3[i],
-              color: _colorScore(top3[i].puntaje),
+              sucursal: sucursales[i],
+              color: _colorScore(sucursales[i].puntajePromedio),
             ),
-            if (i < top3.length - 1)
+            if (i < sucursales.length - 1)
               const Divider(height: 1, color: AppColors.slate100),
           ],
         ],
@@ -516,7 +697,7 @@ class _SucursalesAlertaCard extends StatelessWidget {
 }
 
 class _SucursalAlertRow extends StatelessWidget {
-  final Sucursal sucursal;
+  final SucursalDto sucursal;
   final Color color;
   const _SucursalAlertRow({required this.sucursal, required this.color});
 
@@ -528,11 +709,11 @@ class _SucursalAlertRow extends StatelessWidget {
       ),
       padding: const EdgeInsets.fromLTRB(12, 14, 12, 14),
       child: Row(
-        children: [
+        children: <Widget>[
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 Text(
                   sucursal.nombre,
                   style: AppTypography.bodyMd.copyWith(
@@ -544,13 +725,14 @@ class _SucursalAlertRow extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   sucursal.region,
-                  style: AppTypography.bodySm.copyWith(color: AppColors.slate500),
+                  style: AppTypography.bodySm
+                      .copyWith(color: AppColors.slate500),
                 ),
               ],
             ),
           ),
           Text(
-            '${sucursal.puntaje}',
+            sucursal.puntajePromedio.toStringAsFixed(0),
             style: AppTypography.headingMd.copyWith(
               color: color,
               fontWeight: FontWeight.w700,
@@ -562,36 +744,35 @@ class _SucursalAlertRow extends StatelessWidget {
   }
 }
 
+// ─── Auditorías recientes ─────────────────────────────────────────────────────
+
 class _AuditoriasRecientesCard extends StatelessWidget {
-  const _AuditoriasRecientesCard();
+  final List<AuditoriaDto> auditorias;
+  const _AuditoriasRecientesCard({required this.auditorias});
 
   Color _colorScore(int score) {
-    if (score >= 80) return const Color(0xFF10B981);
-    if (score >= 65) return const Color(0xFFF59E0B);
-    return const Color(0xFFEF4444);
+    if (score >= 80) return AppColors.success;
+    if (score >= 65) return AppColors.warning;
+    return AppColors.danger;
   }
 
   @override
   Widget build(BuildContext context) {
-    final auditorias = [...MockData.auditorias]
-      ..sort((a, b) => b.fecha.compareTo(a.fecha));
-    final recent = auditorias.take(8).toList();
-
     return _DashboardCard(
       title: 'Auditorías recientes',
       padding: EdgeInsets.zero,
       headerPadding: const EdgeInsets.fromLTRB(
           AppSpacing.lg, AppSpacing.lg, AppSpacing.lg, AppSpacing.md),
       child: Column(
-        children: [
+        children: <Widget>[
           Container(
-            color: const Color(0xFFF8FAFC),
+            color: AppColors.slate50,
             padding: const EdgeInsets.symmetric(
               horizontal: AppSpacing.lg,
               vertical: AppSpacing.sm,
             ),
-            child: Row(
-              children: const [
+            child: const Row(
+              children: <Widget>[
                 _ColHeader(text: 'ID', flex: 2),
                 _ColHeader(text: 'Sucursal', flex: 3),
                 _ColHeader(text: 'Auditor', flex: 3),
@@ -601,11 +782,31 @@ class _AuditoriasRecientesCard extends StatelessWidget {
               ],
             ),
           ),
-          for (var i = 0; i < recent.length; i++)
-            _AuditoriaRow(
-              auditoria: recent[i],
-              alt: i.isOdd,
-              color: _colorScore(recent[i].puntaje),
+          if (auditorias.isEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: AppSpacing.xl),
+              child: Center(
+                child: Text(
+                  'Sin auditorías recientes',
+                  style: AppTypography.bodySm
+                      .copyWith(color: AppColors.slate400),
+                ),
+              ),
+            )
+          else
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: auditorias.length,
+              itemBuilder: (BuildContext context, int index) {
+                final AuditoriaDto a = auditorias[index];
+                final int? scoreInt = a.puntaje?.round();
+                return _AuditoriaRow(
+                  auditoria: a,
+                  alt: index.isOdd,
+                  color: _colorScore(scoreInt ?? 0),
+                );
+              },
             ),
         ],
       ),
@@ -636,7 +837,7 @@ class _ColHeader extends StatelessWidget {
 }
 
 class _AuditoriaRow extends StatelessWidget {
-  final Auditoria auditoria;
+  final AuditoriaDto auditoria;
   final bool alt;
   final Color color;
   const _AuditoriaRow({
@@ -649,14 +850,17 @@ class _AuditoriaRow extends StatelessWidget {
   Widget build(BuildContext context) {
     String fechaTxt;
     try {
-      fechaTxt = DateFormat.MMMd('es').format(auditoria.fecha);
+      fechaTxt = DateFormat.MMMd('es').format(auditoria.fechaProgramada);
     } catch (_) {
-      fechaTxt = DateFormat.MMMd().format(auditoria.fecha);
+      fechaTxt = DateFormat.MMMd().format(auditoria.fechaProgramada);
     }
+
+    final int? scoreInt = auditoria.puntaje?.round();
+    final bool hasScore = scoreInt != null;
 
     return Container(
       decoration: BoxDecoration(
-        color: alt ? const Color(0xFFFAFBFC) : Colors.white,
+        color: alt ? AppColors.slate50 : Colors.white,
         border: const Border(
           bottom: BorderSide(color: AppColors.slate100, width: 1),
         ),
@@ -666,7 +870,7 @@ class _AuditoriaRow extends StatelessWidget {
         vertical: AppSpacing.md,
       ),
       child: Row(
-        children: [
+        children: <Widget>[
           Expanded(
             flex: 2,
             child: Text(
@@ -675,6 +879,7 @@ class _AuditoriaRow extends StatelessWidget {
                 color: AppColors.primary600,
                 fontWeight: FontWeight.w600,
               ),
+              overflow: TextOverflow.ellipsis,
             ),
           ),
           Expanded(
@@ -692,7 +897,8 @@ class _AuditoriaRow extends StatelessWidget {
             flex: 3,
             child: Text(
               auditoria.auditorNombre,
-              style: AppTypography.bodySm.copyWith(color: AppColors.slate700),
+              style:
+                  AppTypography.bodySm.copyWith(color: AppColors.slate700),
               overflow: TextOverflow.ellipsis,
             ),
           ),
@@ -700,15 +906,16 @@ class _AuditoriaRow extends StatelessWidget {
             flex: 2,
             child: Text(
               _capitalize(fechaTxt),
-              style: AppTypography.bodySm.copyWith(color: AppColors.slate700),
+              style:
+                  AppTypography.bodySm.copyWith(color: AppColors.slate700),
             ),
           ),
           Expanded(
             flex: 1,
             child: Text(
-              auditoria.puntaje == 0 ? '—' : '${auditoria.puntaje}',
+              hasScore ? '$scoreInt' : '—',
               style: AppTypography.bodySm.copyWith(
-                color: auditoria.puntaje == 0 ? AppColors.slate400 : color,
+                color: hasScore ? color : AppColors.slate400,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -756,7 +963,7 @@ class _DashboardCard extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
+        children: <Widget>[
           Padding(
             padding: headerPadding ??
                 const EdgeInsets.fromLTRB(
@@ -776,6 +983,10 @@ class _DashboardCard extends StatelessWidget {
   }
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// HELPERS
+// ─────────────────────────────────────────────────────────────────────────────
+
 class _LegendDot extends StatelessWidget {
   final Color color;
   final String label;
@@ -785,7 +996,7 @@ class _LegendDot extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: [
+      children: <Widget>[
         Container(
           width: 10,
           height: 10,

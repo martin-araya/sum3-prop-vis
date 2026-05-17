@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:auditchain/app/router/app_router.dart';
 import 'package:auditchain/app/theme/app_colors.dart';
+import 'package:auditchain/core/auth/auth_state_notifier.dart';
+import 'package:auditchain/core/storage/token_storage.dart';
+import 'package:auditchain/features/auth/data/datasources/auth_remote_datasource.dart';
+import 'package:auditchain/features/auth/data/models/auth_dto.dart';
 
 /// Página de login de AuditChain.
 ///
@@ -20,16 +23,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  static const Color _navy = Color(0xFF0A2540);
-  static const Color _primary = Color(0xFF1E3A8A);
-  static const Color _slate500 = Color(0xFF64748B);
-  static const Color _slate400 = Color(0xFF94A3B8);
-  static const Color _border = Color(0xFFE2E8F0);
-
   late final TextEditingController _emailCtrl =
       TextEditingController(text: 'admin@auditchain.cl');
   late final TextEditingController _passwordCtrl =
-      TextEditingController(text: '00000000'); // 8 chars → render como ●●●●●●●●
+      TextEditingController(text: '');
+
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -38,9 +37,35 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void _submit() {
-    isAuthenticated = true;
-    context.go('/dashboard');
+  Future<void> _submit() async {
+    if (_isLoading) return;
+    setState(() => _isLoading = true);
+
+    try {
+      final TokenResponse response = await AuthRemoteDatasource().login(
+        _emailCtrl.text.trim(),
+        _passwordCtrl.text,
+      );
+
+      await TokenStorage.saveTokens(
+        accessToken: response.accessToken,
+        refreshToken: response.refreshToken,
+      );
+
+      authStateNotifier.notifyAuthChange();
+      if (mounted) context.go('/dashboard');
+    } on Exception catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString().replaceFirst('Exception: ', '')),
+            backgroundColor: AppColors.danger,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
   }
 
   @override
@@ -62,10 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                       emailCtrl: _emailCtrl,
                       passwordCtrl: _passwordCtrl,
                       onSubmit: _submit,
-                      primary: _primary,
-                      slate500: _slate500,
-                      slate400: _slate400,
-                      border: _border,
+                      isLoading: _isLoading,
                     ),
                   ),
                 ),
@@ -76,9 +98,9 @@ class _LoginPageState extends State<LoginPage> {
           return Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              SizedBox(
+              const SizedBox(
                 width: 420,
-                child: _LeftPanel(navy: _navy),
+                child: _LeftPanel(),
               ),
               Expanded(
                 child: Center(
@@ -91,10 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                         emailCtrl: _emailCtrl,
                         passwordCtrl: _passwordCtrl,
                         onSubmit: _submit,
-                        primary: _primary,
-                        slate500: _slate500,
-                        slate400: _slate400,
-                        border: _border,
+                        isLoading: _isLoading,
                       ),
                     ),
                   ),
@@ -111,14 +130,12 @@ class _LoginPageState extends State<LoginPage> {
 // ─── PANEL IZQUIERDO ─────────────────────────────────────────────────────────
 
 class _LeftPanel extends StatelessWidget {
-  const _LeftPanel({required this.navy});
-
-  final Color navy;
+  const _LeftPanel();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: navy,
+      color: AppColors.primary900,
       padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 56),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -198,19 +215,13 @@ class _RightPanel extends StatelessWidget {
     required this.emailCtrl,
     required this.passwordCtrl,
     required this.onSubmit,
-    required this.primary,
-    required this.slate500,
-    required this.slate400,
-    required this.border,
+    required this.isLoading,
   });
 
   final TextEditingController emailCtrl;
   final TextEditingController passwordCtrl;
   final VoidCallback onSubmit;
-  final Color primary;
-  final Color slate500;
-  final Color slate400;
-  final Color border;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -223,34 +234,35 @@ class _RightPanel extends StatelessWidget {
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF0F172A),
+            color: AppColors.slate900,
             letterSpacing: -0.3,
           ),
         ),
         const SizedBox(height: 6),
         Text(
           'Ingresa tus credenciales para continuar',
-          style: TextStyle(fontSize: 14, color: slate500, height: 1.4),
+          style: const TextStyle(
+              fontSize: 14, color: AppColors.slate500, height: 1.4),
         ),
         const SizedBox(height: 28),
 
         // Email
-        _FieldLabel(text: 'Email', color: slate500),
+        const _FieldLabel(text: 'Email'),
         const SizedBox(height: 6),
         TextField(
           controller: emailCtrl,
           keyboardType: TextInputType.emailAddress,
-          decoration: _decoration(border: border, primary: primary),
+          decoration: _decoration(),
         ),
         const SizedBox(height: 16),
 
         // Password
-        _FieldLabel(text: 'Contraseña', color: slate500),
+        const _FieldLabel(text: 'Contraseña'),
         const SizedBox(height: 6),
         TextField(
           controller: passwordCtrl,
           obscureText: true,
-          decoration: _decoration(border: border, primary: primary),
+          decoration: _decoration(),
         ),
         const SizedBox(height: 24),
 
@@ -258,9 +270,9 @@ class _RightPanel extends StatelessWidget {
         SizedBox(
           height: 44,
           child: ElevatedButton(
-            onPressed: onSubmit,
+            onPressed: isLoading ? null : onSubmit,
             style: ElevatedButton.styleFrom(
-              backgroundColor: primary,
+              backgroundColor: AppColors.primary800,
               foregroundColor: Colors.white,
               elevation: 0,
               shape: RoundedRectangleBorder(
@@ -271,7 +283,16 @@ class _RightPanel extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            child: const Text('Entrar'),
+            child: isLoading
+                ? const SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Colors.white,
+                    ),
+                  )
+                : const Text('Entrar'),
           ),
         ),
         const SizedBox(height: 12),
@@ -280,9 +301,9 @@ class _RightPanel extends StatelessWidget {
         Center(
           child: Text(
             'Acceso de demostración — datos simulados',
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 11,
-              color: slate400,
+              color: AppColors.slate400,
               fontWeight: FontWeight.w400,
             ),
           ),
@@ -291,7 +312,7 @@ class _RightPanel extends StatelessWidget {
     );
   }
 
-  InputDecoration _decoration({required Color border, required Color primary}) {
+  InputDecoration _decoration() {
     return InputDecoration(
       isDense: true,
       contentPadding:
@@ -300,34 +321,33 @@ class _RightPanel extends StatelessWidget {
       fillColor: Colors.white,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide(color: border),
+        borderSide: const BorderSide(color: AppColors.slate200),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide(color: border),
+        borderSide: const BorderSide(color: AppColors.slate200),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide(color: primary, width: 1.5),
+        borderSide: const BorderSide(color: AppColors.primary800, width: 1.5),
       ),
     );
   }
 }
 
 class _FieldLabel extends StatelessWidget {
-  const _FieldLabel({required this.text, required this.color});
+  const _FieldLabel({required this.text});
 
   final String text;
-  final Color color;
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.w600,
-        color: color,
+        color: AppColors.slate500,
         letterSpacing: 0.2,
       ),
     );

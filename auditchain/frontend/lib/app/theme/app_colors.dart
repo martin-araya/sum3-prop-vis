@@ -15,6 +15,10 @@ class AppColors {
   static const Color primary700 = Color(0xFF243B53);
   static const Color primary600 = Color(0xFF1E3A8A);
   static const Color primary500 = Color(0xFF2563EB);
+  /// Indigo-100 — used as badge backgrounds throughout the app.
+  static const Color primary100 = Color(0xFFE0E7FF);
+  /// Blue-700 — used for link/email text in tables.
+  static const Color primaryLink = Color(0xFF1D4ED8);
 
   // ───────────── Accent ─────────────
   static const Color accent500 = Color(0xFF06B6D4);
@@ -23,6 +27,8 @@ class AppColors {
 
   // ───────────── Danger ─────────────
   static const Color danger = Color(0xFFEF4444);
+  /// Red-600 — slightly stronger than [danger]; used for negative KPI deltas.
+  static const Color dangerStrong = Color(0xFFDC2626);
 
   // ───────────── Success ─────────────
   static const Color success = Color(0xFF10B981);
@@ -38,6 +44,8 @@ class AppColors {
   static const Color info = Color(0xFF0EA5E9);
   static const Color infoBg = Color(0xFFE0F2FE);
   static const Color infoText = Color(0xFF075985);
+  /// Sky-400 — chart/icon accent for 'con_observaciones' status.
+  static const Color conObs = Color(0xFF38BDF8);
 
   // ───────────── Neutral (semántico) ─────────────
   static const Color neutral = Color(0xFF94A3B8);

@@ -27,8 +27,12 @@ class _UsuariosScreenState extends State<UsuariosScreen> {
     }
   }
 
-  void _abrirFormulario() {
+  void _abrirNuevo() {
     showDialog(context: context, builder: (_) => UsuarioForm(onSaved: _cargar));
+  }
+
+  void _abrirEdicion(Usuario u) {
+    showDialog(context: context, builder: (_) => UsuarioEditForm(usuario: u, onSaved: _cargar));
   }
 
   Future<void> _eliminar(String id) async {
@@ -51,14 +55,14 @@ class _UsuariosScreenState extends State<UsuariosScreen> {
     return PageLayout(
       title: 'Usuarios',
       subtitle: 'Cuentas de acceso al sistema',
-      onNew: _abrirFormulario,
+      onNew: _abrirNuevo,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           StatsRow(stats: [
             StatCard(label: 'Total', value: '${_usuarios.length}', sub: 'usuarios registrados'),
-            StatCard(label: 'Activos', value: '$activos', sub: 'con acceso', valueColor: Colors.green),
-            StatCard(label: 'Admins', value: '$admins', sub: 'con permisos totales', valueColor: const Color(0xFF00B4D8)),
+            StatCard(label: 'Activos', value: '$activos', sub: 'con acceso habilitado', valueColor: const Color(0xFF10B981)),
+            StatCard(label: 'Admins', value: '$admins', sub: 'con permisos totales', valueColor: const Color(0xFF06B6D4)),
           ]),
           const SizedBox(height: 20),
           TableCard(
@@ -66,7 +70,7 @@ class _UsuariosScreenState extends State<UsuariosScreen> {
             loading: _loading,
             headers: const ['Nombre', 'Email', 'Rol', 'Estado', 'Acciones'],
             rows: _usuarios.map((u) => [u.nombre, u.email, u.rol, u.activo ? 'activo' : 'inactivo', u.id]).toList(),
-            onEdit: (i) {},
+            onEdit: (i) => _abrirEdicion(_usuarios[i]),
             onDelete: (i) => _eliminar(_usuarios[i].id),
             estadoCol: 3,
           ),
@@ -75,6 +79,8 @@ class _UsuariosScreenState extends State<UsuariosScreen> {
     );
   }
 }
+
+// ─── Formulario de creación ───────────────────────────────────────────────────
 
 class UsuarioForm extends StatefulWidget {
   final VoidCallback onSaved;
@@ -91,11 +97,15 @@ class _UsuarioFormState extends State<UsuarioForm> {
   bool _saving = false;
 
   Future<void> _guardar() async {
+    if (_nombre.text.trim().isEmpty || _email.text.trim().isEmpty || _password.text.isEmpty) {
+      showSnack(context, 'Completa nombre, email y contraseña', error: true);
+      return;
+    }
     setState(() => _saving = true);
     try {
       await ApiService.createUsuario({
-        'nombre': _nombre.text,
-        'email': _email.text,
+        'nombre': _nombre.text.trim(),
+        'email': _email.text.trim(),
         'password': _password.text,
         'rol': _rol,
         'activo': true,
@@ -118,7 +128,84 @@ class _UsuarioFormState extends State<UsuarioForm> {
       FormField2(label: 'Nombre *', controller: _nombre),
       FormField2(label: 'Email *', controller: _email),
       FormField2(label: 'Contraseña *', controller: _password, obscure: true),
-      DropdownField(label: 'Rol', value: _rol, items: const ['admin','supervisor','auditor'], onChanged: (v) => setState(() => _rol = v!)),
+      DropdownField(
+        label: 'Rol',
+        value: _rol,
+        items: const ['admin', 'supervisor', 'auditor'],
+        onChanged: (v) => setState(() => _rol = v!),
+      ),
+    ],
+  );
+}
+
+// ─── Formulario de edición ────────────────────────────────────────────────────
+
+class UsuarioEditForm extends StatefulWidget {
+  final Usuario usuario;
+  final VoidCallback onSaved;
+  const UsuarioEditForm({super.key, required this.usuario, required this.onSaved});
+  @override
+  State<UsuarioEditForm> createState() => _UsuarioEditFormState();
+}
+
+class _UsuarioEditFormState extends State<UsuarioEditForm> {
+  final _nombre = TextEditingController();
+  final _email = TextEditingController();
+  String _rol = 'auditor';
+  bool _activo = true;
+  bool _saving = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _nombre.text = widget.usuario.nombre;
+    _email.text = widget.usuario.email;
+    _rol = widget.usuario.rol;
+    _activo = widget.usuario.activo;
+  }
+
+  Future<void> _guardar() async {
+    if (_nombre.text.trim().isEmpty || _email.text.trim().isEmpty) {
+      showSnack(context, 'Nombre y email son requeridos', error: true);
+      return;
+    }
+    setState(() => _saving = true);
+    try {
+      await ApiService.updateUsuario(widget.usuario.id, {
+        'nombre': _nombre.text.trim(),
+        'email': _email.text.trim(),
+        'rol': _rol,
+        'activo': _activo,
+      });
+      widget.onSaved();
+      if (mounted) Navigator.pop(context);
+      if (mounted) showSnack(context, 'Usuario actualizado');
+    } catch (e) {
+      if (mounted) showSnack(context, e.toString(), error: true);
+    }
+    setState(() => _saving = false);
+  }
+
+  @override
+  Widget build(BuildContext context) => FormDialog(
+    title: 'Editar Usuario',
+    saving: _saving,
+    onSave: _guardar,
+    fields: [
+      FormField2(label: 'Nombre *', controller: _nombre),
+      FormField2(label: 'Email *', controller: _email),
+      DropdownField(
+        label: 'Rol',
+        value: _rol,
+        items: const ['admin', 'supervisor', 'auditor'],
+        onChanged: (v) => setState(() => _rol = v!),
+      ),
+      DropdownField(
+        label: 'Estado',
+        value: _activo ? 'activo' : 'inactivo',
+        items: const ['activo', 'inactivo'],
+        onChanged: (v) => setState(() => _activo = v == 'activo'),
+      ),
     ],
   );
 }

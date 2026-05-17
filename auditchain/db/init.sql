@@ -1,123 +1,195 @@
--- AuditChain Database Init
+-- =============================================================================
+-- init.sql — AuditChain Database Schema
 -- Compatible con PostgreSQL 16
+-- Ejecutar: docker-compose down -v && docker-compose up db
+-- =============================================================================
 
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-SET row_security = off;
+-- =============================================================================
+-- BLOQUE 1: SCHEMA + EXTENSIONES + ENUMS
+-- =============================================================================
 
-CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
+DROP SCHEMA IF EXISTS auditchain CASCADE;
+CREATE SCHEMA auditchain;
 
-CREATE FUNCTION public.recalcular_puntaje_sucursal() RETURNS trigger LANGUAGE plpgsql AS $$
-DECLARE target_id UUID;
+SET search_path TO auditchain, public;
+
+-- Extensiones
+CREATE EXTENSION IF NOT EXISTS pgcrypto;   -- gen_random_uuid()
+CREATE EXTENSION IF NOT EXISTS citext;     -- email case-insensitive
+CREATE EXTENSION IF NOT EXISTS pg_trgm;   -- búsqueda fuzzy
+CREATE EXTENSION IF NOT EXISTS unaccent;  -- búsqueda sin tildes
+
+-- ENUMs nativos
+CREATE TYPE auditchain.enum_rol_usuario AS ENUM (
+    'admin',
+    'auditor'
+);
+
+CREATE TYPE auditchain.enum_estado_auditoria AS ENUM (
+    'pendiente',
+    'completada',
+    'con_observaciones',
+    'vencida'
+);
+
+-- [FIN BLOQUE 1: SCHEMA + EXTENSIONES + ENUMS]
+
+-- =============================================================================
+-- BLOQUE 2: TABLA USUARIOS
+-- =============================================================================
+
+CREATE TABLE auditchain.usuarios (
+    id             UUID        NOT NULL DEFAULT gen_random_uuid(),
+    nombre         VARCHAR(200) NOT NULL,
+    email          CITEXT      NOT NULL,
+    password_hash  TEXT        NOT NULL,
+    rol            auditchain.enum_rol_usuario NOT NULL DEFAULT 'auditor',
+    activo         BOOLEAN     NOT NULL DEFAULT true,
+    creado_en      TIMESTAMPTZ NOT NULL DEFAULT now(),
+    actualizado_en TIMESTAMPTZ NOT NULL DEFAULT now(),
+
+    CONSTRAINT pk_usuarios                 PRIMARY KEY (id),
+    CONSTRAINT uq_usuarios_email           UNIQUE (email),
+    CONSTRAINT ck_usuarios_nombre_no_vacio CHECK (nombre <> '')
+);
+
+CREATE INDEX ix_usuarios_rol ON auditchain.usuarios (rol);
+
+-- [FIN BLOQUE 2: TABLA USUARIOS]
+
+-- =============================================================================
+-- BLOQUE 3: TABLAS SUCURSALES + AUDITORES
+-- =============================================================================
+
+CREATE TABLE auditchain.sucursales (
+    id               UUID         NOT NULL DEFAULT gen_random_uuid(),
+    nombre           VARCHAR(200) NOT NULL,
+    region           VARCHAR(100) NOT NULL,
+    direccion        TEXT,
+    puntaje_promedio NUMERIC(5,2)          DEFAULT 0.00,
+    activo           BOOLEAN      NOT NULL DEFAULT true,
+    creado_en        TIMESTAMPTZ  NOT NULL DEFAULT now(),
+    actualizado_en   TIMESTAMPTZ  NOT NULL DEFAULT now(),
+
+    CONSTRAINT pk_sucursales                  PRIMARY KEY (id),
+    CONSTRAINT ck_sucursales_nombre_no_vacio  CHECK (nombre <> ''),
+    CONSTRAINT ck_sucursales_puntaje_rango    CHECK (puntaje_promedio BETWEEN 0.00 AND 100.00)
+);
+
+CREATE INDEX ix_sucursales_region ON auditchain.sucursales (region);
+CREATE INDEX ix_sucursales_activo ON auditchain.sucursales (activo);
+
+-- -----------------------------------------------------------------------------
+
+CREATE TABLE auditchain.auditores (
+    id             UUID         NOT NULL DEFAULT gen_random_uuid(),
+    usuario_id     UUID         NOT NULL,
+    nombre         VARCHAR(200) NOT NULL,
+    email          CITEXT       NOT NULL,
+    region         VARCHAR(100),
+    activo         BOOLEAN      NOT NULL DEFAULT true,
+    creado_en      TIMESTAMPTZ  NOT NULL DEFAULT now(),
+    actualizado_en TIMESTAMPTZ  NOT NULL DEFAULT now(),
+
+    CONSTRAINT pk_auditores                     PRIMARY KEY (id),
+    CONSTRAINT uq_auditores_email               UNIQUE (email),
+    CONSTRAINT fk_auditores_usuario_id_usuarios FOREIGN KEY (usuario_id)
+        REFERENCES auditchain.usuarios (id) ON DELETE RESTRICT
+);
+
+CREATE INDEX ix_auditores_usuario_id ON auditchain.auditores (usuario_id);
+CREATE INDEX ix_auditores_region     ON auditchain.auditores (region);
+
+-- [FIN BLOQUE 3: TABLAS SUCURSALES + AUDITORES]
+
+-- =============================================================================
+-- BLOQUE 4: TABLA AUDITORIAS + FUNCIONES + TRIGGERS
+-- =============================================================================
+
+CREATE TABLE auditchain.auditorias (
+    id                UUID         NOT NULL DEFAULT gen_random_uuid(),
+    sucursal_id       UUID         NOT NULL,
+    auditor_id        UUID         NOT NULL,
+    fecha_programada  TIMESTAMPTZ  NOT NULL,
+    fecha_realizada   TIMESTAMPTZ,
+    puntaje           NUMERIC(5,2),
+    estado            auditchain.enum_estado_auditoria NOT NULL DEFAULT 'pendiente',
+    observaciones     TEXT,
+    creado_en         TIMESTAMPTZ  NOT NULL DEFAULT now(),
+    actualizado_en    TIMESTAMPTZ  NOT NULL DEFAULT now(),
+
+    CONSTRAINT pk_auditorias                        PRIMARY KEY (id),
+    CONSTRAINT fk_auditorias_sucursal_id_sucursales FOREIGN KEY (sucursal_id)
+        REFERENCES auditchain.sucursales (id) ON DELETE RESTRICT,
+    CONSTRAINT fk_auditorias_auditor_id_auditores   FOREIGN KEY (auditor_id)
+        REFERENCES auditchain.auditores (id) ON DELETE RESTRICT,
+    CONSTRAINT ck_auditorias_puntaje_rango          CHECK (puntaje BETWEEN 0.00 AND 100.00)
+);
+
+CREATE INDEX ix_auditorias_sucursal_id      ON auditchain.auditorias (sucursal_id);
+CREATE INDEX ix_auditorias_auditor_id       ON auditchain.auditorias (auditor_id);
+CREATE INDEX ix_auditorias_estado           ON auditchain.auditorias (estado);
+CREATE INDEX ix_auditorias_fecha_programada ON auditchain.auditorias (fecha_programada);
+CREATE INDEX ix_auditorias_sucursal_estado  ON auditchain.auditorias (sucursal_id, estado);
+
+-- -----------------------------------------------------------------------------
+-- FUNCIÓN + TRIGGERS: actualizado_en automático
+-- -----------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION auditchain.actualizar_timestamp()
+RETURNS TRIGGER
+LANGUAGE plpgsql AS $$
 BEGIN
-    IF TG_OP = 'DELETE' THEN target_id := OLD.sucursal_id;
-    ELSE target_id := NEW.sucursal_id;
-    END IF;
-    UPDATE public.sucursales
-    SET puntaje_promedio = COALESCE((SELECT ROUND(AVG(puntaje)::NUMERIC,2) FROM public.auditorias WHERE sucursal_id = target_id), 0),
-    updated_at = NOW() WHERE id = target_id;
-    RETURN NULL;
-END; $$;
+    NEW.actualizado_en = now();
+    RETURN NEW;
+END;
+$$;
 
-CREATE FUNCTION public.set_updated_at() RETURNS trigger LANGUAGE plpgsql AS $$
-BEGIN NEW.updated_at := NOW(); RETURN NEW; END; $$;
+CREATE TRIGGER trg_actualizar_ts_usuarios
+    BEFORE UPDATE ON auditchain.usuarios
+    FOR EACH ROW EXECUTE FUNCTION auditchain.actualizar_timestamp();
 
-CREATE TABLE public.usuarios (
-    id uuid DEFAULT gen_random_uuid() NOT NULL,
-    nombre varchar(120) NOT NULL,
-    email varchar(255) NOT NULL,
-    hashed_password varchar(255) NOT NULL,
-    rol varchar(20) DEFAULT 'auditor' NOT NULL,
-    activo boolean DEFAULT true NOT NULL,
-    created_at timestamptz DEFAULT now() NOT NULL,
-    updated_at timestamptz DEFAULT now() NOT NULL,
-    CONSTRAINT usuarios_rol_check CHECK (rol IN ('admin','supervisor','auditor'))
-);
+CREATE TRIGGER trg_actualizar_ts_sucursales
+    BEFORE UPDATE ON auditchain.sucursales
+    FOR EACH ROW EXECUTE FUNCTION auditchain.actualizar_timestamp();
 
-CREATE TABLE public.sucursales (
-    id uuid DEFAULT gen_random_uuid() NOT NULL,
-    nombre varchar(150) NOT NULL,
-    region varchar(100) NOT NULL,
-    direccion varchar(255),
-    estado varchar(20) DEFAULT 'activo' NOT NULL,
-    puntaje_promedio numeric(5,2) DEFAULT 0.00 NOT NULL,
-    created_at timestamptz DEFAULT now() NOT NULL,
-    updated_at timestamptz DEFAULT now() NOT NULL,
-    CONSTRAINT sucursales_estado_check CHECK (estado IN ('activo','inactivo'))
-);
+CREATE TRIGGER trg_actualizar_ts_auditores
+    BEFORE UPDATE ON auditchain.auditores
+    FOR EACH ROW EXECUTE FUNCTION auditchain.actualizar_timestamp();
 
-CREATE TABLE public.auditores (
-    id uuid DEFAULT gen_random_uuid() NOT NULL,
-    nombre varchar(120) NOT NULL,
-    email varchar(255) NOT NULL,
-    region varchar(100),
-    estado varchar(20) DEFAULT 'activo' NOT NULL,
-    usuario_id uuid,
-    created_at timestamptz DEFAULT now() NOT NULL,
-    updated_at timestamptz DEFAULT now() NOT NULL,
-    CONSTRAINT auditores_estado_check CHECK (estado IN ('activo','inactivo'))
-);
+CREATE TRIGGER trg_actualizar_ts_auditorias
+    BEFORE UPDATE ON auditchain.auditorias
+    FOR EACH ROW EXECUTE FUNCTION auditchain.actualizar_timestamp();
 
-CREATE TABLE public.auditorias (
-    id uuid DEFAULT gen_random_uuid() NOT NULL,
-    sucursal_id uuid NOT NULL,
-    auditor_id uuid NOT NULL,
-    fecha date NOT NULL,
-    puntaje smallint NOT NULL,
-    estado varchar(25) DEFAULT 'pendiente' NOT NULL,
-    notas text,
-    created_at timestamptz DEFAULT now() NOT NULL,
-    updated_at timestamptz DEFAULT now() NOT NULL,
-    CONSTRAINT auditorias_estado_check CHECK (estado IN ('pendiente','completada','con_observaciones')),
-    CONSTRAINT auditorias_puntaje_check CHECK (puntaje >= 0 AND puntaje <= 100)
-);
+-- -----------------------------------------------------------------------------
+-- FUNCIÓN + TRIGGER: recalcular puntaje_promedio en sucursales
+-- -----------------------------------------------------------------------------
 
-ALTER TABLE ONLY public.usuarios ADD CONSTRAINT usuarios_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY public.usuarios ADD CONSTRAINT usuarios_email_key UNIQUE (email);
-ALTER TABLE ONLY public.sucursales ADD CONSTRAINT sucursales_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY public.auditores ADD CONSTRAINT auditores_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY public.auditores ADD CONSTRAINT auditores_email_key UNIQUE (email);
-ALTER TABLE ONLY public.auditorias ADD CONSTRAINT auditorias_pkey PRIMARY KEY (id);
+CREATE OR REPLACE FUNCTION auditchain.recalcular_puntaje_sucursal()
+RETURNS TRIGGER
+LANGUAGE plpgsql AS $$
+DECLARE
+    v_sucursal_id UUID;
+BEGIN
+    -- En DELETE solo existe OLD; en INSERT/UPDATE solo existe NEW
+    v_sucursal_id := COALESCE(NEW.sucursal_id, OLD.sucursal_id);
 
-ALTER TABLE ONLY public.auditores ADD CONSTRAINT auditores_usuario_id_fkey FOREIGN KEY (usuario_id) REFERENCES public.usuarios(id) ON DELETE SET NULL;
-ALTER TABLE ONLY public.auditorias ADD CONSTRAINT auditorias_sucursal_id_fkey FOREIGN KEY (sucursal_id) REFERENCES public.sucursales(id) ON DELETE RESTRICT;
-ALTER TABLE ONLY public.auditorias ADD CONSTRAINT auditorias_auditor_id_fkey FOREIGN KEY (auditor_id) REFERENCES public.auditores(id) ON DELETE RESTRICT;
+    UPDATE auditchain.sucursales
+    SET puntaje_promedio = (
+        SELECT COALESCE(AVG(puntaje), 0.00)
+        FROM auditchain.auditorias
+        WHERE sucursal_id = v_sucursal_id
+          AND estado = 'completada'
+          AND puntaje IS NOT NULL
+    )
+    WHERE id = v_sucursal_id;
 
-CREATE INDEX idx_sucursales_estado ON public.sucursales(estado);
-CREATE INDEX idx_sucursales_region ON public.sucursales(region);
-CREATE INDEX idx_auditores_estado ON public.auditores(estado);
-CREATE INDEX idx_auditorias_sucursal_id ON public.auditorias(sucursal_id);
-CREATE INDEX idx_auditorias_auditor_id ON public.auditorias(auditor_id);
-CREATE INDEX idx_auditorias_fecha ON public.auditorias(fecha DESC);
+    RETURN NULL;  -- AFTER trigger: valor de retorno ignorado
+END;
+$$;
 
-CREATE TRIGGER trg_updated_at_usuarios BEFORE UPDATE ON public.usuarios FOR EACH ROW EXECUTE FUNCTION public.set_updated_at();
-CREATE TRIGGER trg_updated_at_sucursales BEFORE UPDATE ON public.sucursales FOR EACH ROW EXECUTE FUNCTION public.set_updated_at();
-CREATE TRIGGER trg_updated_at_auditores BEFORE UPDATE ON public.auditores FOR EACH ROW EXECUTE FUNCTION public.set_updated_at();
-CREATE TRIGGER trg_updated_at_auditorias BEFORE UPDATE ON public.auditorias FOR EACH ROW EXECUTE FUNCTION public.set_updated_at();
-CREATE TRIGGER trg_recalcular_puntaje AFTER INSERT OR UPDATE OR DELETE ON public.auditorias FOR EACH ROW EXECUTE FUNCTION public.recalcular_puntaje_sucursal();
+CREATE TRIGGER trg_puntaje_sucursal
+    AFTER INSERT OR UPDATE OR DELETE ON auditchain.auditorias
+    FOR EACH ROW EXECUTE FUNCTION auditchain.recalcular_puntaje_sucursal();
 
-INSERT INTO public.usuarios (id, nombre, email, hashed_password, rol, activo) VALUES
-('45795fb3-8756-4d08-ad95-606b59c22122', 'Admin Principal', 'admin@auditchain.cl', 'hash_demo', 'admin', true),
-('b1c2d3e4-f5a6-7890-abcd-ef1234567890', 'Supervisor Zona', 'supervisor@auditchain.cl', 'hash_demo', 'supervisor', true);
-
-INSERT INTO public.sucursales (id, nombre, region, direccion, estado) VALUES
-('37c5c733-434e-4310-b5e9-c01822b41ea6', 'Sucursal Centro', 'Región Metropolitana', 'Av. Libertador Bernardo OHiggins 1234', 'activo'),
-('48d6d844-545f-4421-c6fa-d12933b52fb7', 'Sucursal Providencia', 'Región Metropolitana', 'Av. Providencia 2140', 'activo'),
-('59e7e955-656e-5532-d7eb-e23a44c63ec8', 'Sucursal Maipú', 'Región Metropolitana', 'Av. Américo Vespucio Sur 1200', 'inactivo');
-
-INSERT INTO public.auditores (id, nombre, email, region, estado, usuario_id) VALUES
-('796d71ef-4775-4c03-8e38-7beac16a3ed6', 'Valentina Rojas', 'v.rojas@auditchain.cl', 'Región Metropolitana', 'activo', '45795fb3-8756-4d08-ad95-606b59c22122'),
-('8a7e82f0-5886-5d14-9f49-8cfbd27b4fe7', 'Matías Fernández', 'm.fernandez@auditchain.cl', 'Región de Valparaíso', 'activo', 'b1c2d3e4-f5a6-7890-abcd-ef1234567890'),
-('9b8f93a1-6997-6e25-ae5a-9dacc38c5af8', 'Catalina Muñoz', 'c.munoz@auditchain.cl', 'Región Metropolitana', 'inactivo', null);
-
-INSERT INTO public.auditorias (sucursal_id, auditor_id, fecha, puntaje, estado, notas) VALUES
-('37c5c733-434e-4310-b5e9-c01822b41ea6', '796d71ef-4775-4c03-8e38-7beac16a3ed6', '2025-03-15', 87, 'completada', 'Sin observaciones relevantes'),
-('48d6d844-545f-4421-c6fa-d12933b52fb7', '8a7e82f0-5886-5d14-9f49-8cfbd27b4fe7', '2025-03-18', 72, 'con_observaciones', 'Señalética dañada en entrada'),
-('59e7e955-656e-5532-d7eb-e23a44c63ec8', '796d71ef-4775-4c03-8e38-7beac16a3ed6', '2025-03-20', 55, 'con_observaciones', 'Uniforme incorrecto y vitrina desordenada'),
-('37c5c733-434e-4310-b5e9-c01822b41ea6', '9b8f93a1-6997-6e25-ae5a-9dacc38c5af8', '2025-04-02', 91, 'completada', 'Excelente cumplimiento de estándares');
+-- [FIN BLOQUE 4: TABLA AUDITORIAS + FUNCIONES + TRIGGERS]

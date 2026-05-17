@@ -15,7 +15,6 @@ class AppTopbar extends StatelessWidget implements PreferredSizeWidget {
   const AppTopbar({super.key});
 
   static const double _height = 64;
-  static const Color _border = Color(0xFFE2E8F0);
 
   @override
   Size get preferredSize => const Size.fromHeight(_height);
@@ -32,7 +31,7 @@ class AppTopbar extends StatelessWidget implements PreferredSizeWidget {
         height: _height,
         decoration: const BoxDecoration(
           color: Colors.white,
-          border: Border(bottom: BorderSide(color: _border)),
+          border: Border(bottom: BorderSide(color: AppColors.slate200)),
         ),
         padding: EdgeInsets.symmetric(horizontal: AppSpacing.lg),
         child: Row(
@@ -86,7 +85,7 @@ class _SearchField extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.slate50,
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: const Color(0xFFE2E8F0)),
+          border: Border.all(color: AppColors.slate200),
         ),
         child: Row(
           children: <Widget>[
@@ -154,7 +153,7 @@ class _NotificationBell extends StatelessWidget {
               ),
               padding: const EdgeInsets.symmetric(horizontal: 5),
               decoration: BoxDecoration(
-                color: const Color(0xFFEF4444),
+                color: AppColors.danger,
                 shape: BoxShape.circle,
                 border: Border.all(color: Colors.white, width: 1.5),
               ),
