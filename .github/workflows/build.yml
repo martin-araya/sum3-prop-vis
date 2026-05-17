@@ -57,20 +57,20 @@ jobs:
           cache: true
 
       - name: Instalar dependencias
-        working-directory: auditchain/frontend
+        working-directory: auditchain/mobile
         run: flutter pub get
 
       - name: Build APK debug
-        working-directory: auditchain/frontend
+        working-directory: auditchain/mobile
         run: |
           flutter build apk --debug \
-            --dart-define=API_URL=https://auditchain-backend.railway.app/api
+            --dart-define=API_URL=http://10.0.2.2:8000/api
 
       - name: Subir artefacto APK
         uses: actions/upload-artifact@v4
         with:
           name: auditchain-android-debug
-          path: auditchain/frontend/build/app/outputs/flutter-apk/app-debug.apk
+          path: auditchain/mobile/build/app/outputs/flutter-apk/app-debug.apk
           retention-days: 30
 
   # ── RESUMEN ──────────────────────────────────────────────────────────────────
