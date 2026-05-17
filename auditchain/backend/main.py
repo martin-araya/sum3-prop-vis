@@ -1,8 +1,16 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import usuarios, sucursales, auditores, auditorias, auth
+from seed import seed
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    seed()
+    yield
 
 app = FastAPI(
+    lifespan=lifespan,
     title="AuditChain API",
     description="Sistema de auditoría para franquicias y cadenas comerciales",
     version="1.0.0"

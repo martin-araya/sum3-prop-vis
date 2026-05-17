@@ -53,15 +53,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
-                    width: 72, height: 72,
+                    width: 88, height: 88,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF06B6D4),
-                      borderRadius: BorderRadius.circular(16),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Center(
-                      child: Text('AC', style: GoogleFonts.inter(
-                          color: Colors.white, fontWeight: FontWeight.bold, fontSize: 28)),
-                    ),
+                    padding: const EdgeInsets.all(8),
+                    child: Image.asset('assets/logo.png', fit: BoxFit.contain),
                   ),
                   const SizedBox(height: 16),
                   Text('AuditChain', style: GoogleFonts.inter(
@@ -118,7 +116,37 @@ class _LoginScreenState extends State<LoginScreen> {
                                 color: const Color(0xFFEF4444), fontSize: 13)),
                           ),
                         ],
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 12),
+                        InkWell(
+                          onTap: () {
+                            _emailCtrl.text = 'auditor@auditchain.cl';
+                            _passCtrl.text = 'Auditor1234';
+                          },
+                          borderRadius: BorderRadius.circular(8),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF06B6D4).withAlpha(20),
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: const Color(0xFF06B6D4).withAlpha(60)),
+                            ),
+                            child: Row(children: [
+                              const Icon(Icons.info_outline_rounded,
+                                  size: 14, color: Color(0xFF06B6D4)),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  'Demo: auditor@auditchain.cl / Auditor1234',
+                                  style: GoogleFonts.inter(
+                                      fontSize: 11, color: const Color(0xFF06B6D4)),
+                                ),
+                              ),
+                              const Icon(Icons.touch_app_rounded,
+                                  size: 14, color: Color(0xFF06B6D4)),
+                            ]),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
                         SizedBox(
                           height: 48,
                           child: ElevatedButton(
