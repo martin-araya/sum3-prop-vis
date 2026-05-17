@@ -57,7 +57,9 @@ class _ReportesScreenState extends State<ReportesScreen> {
 
   List<String> get _regiones {
     final set = <String>{'Todas'};
-    for (final s in _sucursales) set.add(s.region);
+    for (final s in _sucursales) {
+      set.add(s.region);
+    }
     return set.toList();
   }
 
@@ -122,7 +124,7 @@ class _ReportesScreenState extends State<ReportesScreen> {
   // ── Export CSV ─────────────────────────────────────────────────────────────
 
   void _exportarCSV() {
-    final header = 'ID,Sucursal,Auditor,Fecha,Puntaje,Estado,Notas';
+    const header = 'ID,Sucursal,Auditor,Fecha,Puntaje,Estado,Notas';
     final rows = _auditoriasRegion.map((a) {
       final suc = _sucursales.firstWhere((s) => s.id == a.sucursalId,
           orElse: () => Sucursal(id: '', nombre: a.sucursalId, region: '', estado: '', puntajePromedio: 0));

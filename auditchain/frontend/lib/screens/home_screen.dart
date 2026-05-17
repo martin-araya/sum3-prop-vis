@@ -58,22 +58,13 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Row(
           children: [
             Container(
-              width: 30,
-              height: 30,
+              width: 30, height: 30,
               decoration: BoxDecoration(
-                color: const Color(0xFF06B6D4),
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(6),
               ),
-              child: Center(
-                child: Text(
-                  'AC',
-                  style: GoogleFonts.inter(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 11,
-                  ),
-                ),
-              ),
+              padding: const EdgeInsets.all(3),
+              child: Image.asset('assets/logo.png', fit: BoxFit.contain),
             ),
             const SizedBox(width: 8),
             Text(

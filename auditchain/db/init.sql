@@ -103,8 +103,8 @@ CREATE TRIGGER trg_updated_at_auditorias BEFORE UPDATE ON public.auditorias FOR 
 CREATE TRIGGER trg_recalcular_puntaje AFTER INSERT OR UPDATE OR DELETE ON public.auditorias FOR EACH ROW EXECUTE FUNCTION public.recalcular_puntaje_sucursal();
 
 INSERT INTO public.usuarios (id, nombre, email, hashed_password, rol, activo) VALUES
-('45795fb3-8756-4d08-ad95-606b59c22122', 'Admin Principal', 'admin@auditchain.cl', 'hash_demo', 'admin', true),
-('b1c2d3e4-f5a6-7890-abcd-ef1234567890', 'Supervisor Zona', 'supervisor@auditchain.cl', 'hash_demo', 'supervisor', true);
+('45795fb3-8756-4d08-ad95-606b59c22122', 'Admin Principal', 'admin@auditchain.cl', '60fe74406e7f353ed979f350f2fbb6a2e8690a5fa7d1b0c32983d1d8b3f95f67', 'admin', true),
+('b1c2d3e4-f5a6-7890-abcd-ef1234567890', 'Supervisor Zona', 'supervisor@auditchain.cl', '05bd415216a71d7cddca64e7cba081bd7e1e03cb8d355adb276923c88c6d4c52', 'supervisor', true);
 
 INSERT INTO public.sucursales (id, nombre, region, direccion, estado) VALUES
 ('37c5c733-434e-4310-b5e9-c01822b41ea6', 'Sucursal Centro', 'Región Metropolitana', 'Av. Libertador Bernardo OHiggins 1234', 'activo'),

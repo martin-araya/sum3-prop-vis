@@ -205,7 +205,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         _kpiCard(
           label: 'Total auditorías',
           value: '$_total',
-          sub: '${_completadas} completadas',
+          sub: '$_completadas completadas',
           icon: Icons.assignment_rounded,
         ),
         const SizedBox(width: 16),
@@ -258,11 +258,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(color: const Color(0xFFE2E8F0)),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
-              color: const Color(0x060F172A),
+              color: Color(0x060F172A),
               blurRadius: 4,
-              offset: const Offset(0, 2),
+              offset: Offset(0, 2),
             ),
           ],
         ),
@@ -605,11 +605,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: const Color(0xFFE2E8F0)),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: const Color(0x060F172A),
+            color: Color(0x060F172A),
             blurRadius: 4,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
       ),
@@ -641,11 +641,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: const Color(0xFFE2E8F0)),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: const Color(0x060F172A),
+            color: Color(0x060F172A),
             blurRadius: 4,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
       ),
@@ -762,11 +762,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: const Color(0xFFE2E8F0)),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: const Color(0x060F172A),
+            color: Color(0x060F172A),
             blurRadius: 4,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
           ),
         ],
       ),

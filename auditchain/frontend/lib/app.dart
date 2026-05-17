@@ -24,12 +24,12 @@ class AuditChainApp extends StatelessWidget {
 
     return ThemeData(
       useMaterial3: true,
-      colorScheme: ColorScheme.light(
+      colorScheme: const ColorScheme.light(
         primary: primary,
         onPrimary: Colors.white,
         secondary: accent,
         onSecondary: Colors.white,
-        error: const Color(0xFFEF4444),
+        error: Color(0xFFEF4444),
         surface: surface,
         onSurface: primaryDark,
       ),

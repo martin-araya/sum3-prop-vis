@@ -87,7 +87,9 @@ class _SucursalesScreenState extends State<SucursalesScreen> {
       final q = _busqueda.toLowerCase();
       if (q.isNotEmpty &&
           !s.nombre.toLowerCase().contains(q) &&
-          !s.id.toLowerCase().contains(q)) return false;
+          !s.id.toLowerCase().contains(q)) {
+        return false;
+      }
       if (_filtroRegion != 'Todas' && s.region != _filtroRegion) return false;
       if (_filtroEstado != 'Todos' && s.estado != _filtroEstado) return false;
       return true;
@@ -613,12 +615,13 @@ class _SucursalFormState extends State<SucursalForm> {
       }
       widget.onSaved();
       if (mounted) Navigator.pop(context);
-      if (mounted)
+      if (mounted) {
         showSnack(
             context,
             widget.sucursal != null
                 ? 'Sucursal actualizada'
                 : 'Sucursal creada');
+      }
     } catch (e) {
       if (mounted) showSnack(context, e.toString(), error: true);
     }
