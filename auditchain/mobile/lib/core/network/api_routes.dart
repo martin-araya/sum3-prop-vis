@@ -2,7 +2,7 @@
 class ApiRoutes {
   static const String _base = String.fromEnvironment(
     'API_URL',
-    defaultValue: 'http://10.0.2.2:8000/api',
+    defaultValue: 'http://192.168.1.43:8000/api',
   );
 
   static String get base => _base;
